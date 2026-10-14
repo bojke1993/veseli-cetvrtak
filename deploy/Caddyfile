@@ -1,0 +1,9 @@
+# /etc/caddy/Caddyfile — HTTPS with automatic Let's Encrypt certificates.
+# Replace the domain (a free DuckDNS name works, e.g. veseli-cetvrtak.duckdns.org).
+veseli-cetvrtak.duckdns.org {
+	encode gzip
+	reverse_proxy 127.0.0.1:8080 {
+		# Server-Sent Events must not be buffered
+		flush_interval -1
+	}
+}

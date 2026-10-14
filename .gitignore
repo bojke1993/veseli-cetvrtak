@@ -1,0 +1,8 @@
+node_modules/
+dist/
+server/public/
+coverage/
+.env
+*.log
+.mysql-memory-server/
+.localdb/

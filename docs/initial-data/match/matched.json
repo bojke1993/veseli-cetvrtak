@@ -1,0 +1,6257 @@
+[
+ {
+  "sheet": "EL 2526",
+  "row": 2,
+  "day": "2025-12-04",
+  "kolo": "14 (T1)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 500,
+  "potential": null,
+  "win": 5700,
+  "status": "Dobitan",
+  "games": 5,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Hifi -",
+    "name": "Hifi",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "012640",
+     "boxName": "HIFI, NADIR",
+     "team": "PRS",
+     "min": "22:01",
+     "pts": 17,
+     "gameCode": 131,
+     "elRound": 14,
+     "score": 1,
+     "people": {
+      "name": "HIFI, NADIR",
+      "club": "PRS",
+      "clubName": "Paris Basketball",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/19d44ea8-559e-4ae0-9560-af4d0d8c7fc6.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "LUNDBERG, IFFE",
+     "score": 0.633
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "I. Mike -",
+    "name": "I. Mike",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "011836",
+     "boxName": "MIKE, ISIAHA",
+     "team": "MUN",
+     "min": "21:55",
+     "pts": 7,
+     "gameCode": 132,
+     "elRound": 14,
+     "score": 1,
+     "people": {
+      "name": "MIKE, ISIAHA",
+      "club": "MUN",
+      "clubName": "FC Bayern Munich",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/ecbfbe3b-017a-4082-b76b-5ad895a1b047.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "MICHINEAU, DAVID",
+     "score": 0.3
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Dinvidi +",
+    "name": "Dinvidi",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "014162",
+     "boxName": "DINWIDDIE, SPENCER",
+     "team": "MUN",
+     "min": "30:31",
+     "pts": 25,
+     "gameCode": 132,
+     "elRound": 14,
+     "score": 0.875,
+     "people": {
+      "name": "DINWIDDIE, SPENCER",
+      "club": "MUN",
+      "clubName": "FC Bayern Munich",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/fe9bce7b-1731-4d27-bb83-60b8d352e92c.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "SIRVYDIS, DEIVIDAS",
+     "score": 0.625
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Ndiaye +",
+    "name": "Ndiaye",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "012731",
+     "boxName": "NDIAYE, MBAYE",
+     "team": "ASV",
+     "min": "11:28",
+     "pts": 7,
+     "gameCode": 133,
+     "elRound": 14,
+     "score": 1,
+     "people": {
+      "name": "NDIAYE, MBAYE",
+      "club": "ASV",
+      "clubName": "LDLC ASVEL Villeurbanne",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/f5a73145-a679-43f2-992b-3caaeb9ac9cc.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "ODIASE, TAI",
+     "score": 0.667
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 3,
+  "day": "2025-12-05",
+  "kolo": "14 (T2)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 700,
+  "potential": null,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 4,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Nunn -",
+    "name": "Nunn",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "012774",
+     "boxName": "NUNN, KENDRICK",
+     "team": "PAN",
+     "min": "33:16",
+     "pts": 23,
+     "gameCode": 139,
+     "elRound": 14,
+     "score": 1,
+     "people": {
+      "name": "NUNN, KENDRICK",
+      "club": "PAN",
+      "clubName": "Panathinaikos AKTOR Athens",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/6a45d41a-03f4-482a-b7ed-40adc56d5af8.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "NIANG, SALIOU",
+     "score": 0.4
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Faried +",
+    "name": "Faried",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "011284",
+     "boxName": "FARIED, KENNETH",
+     "team": "PAN",
+     "min": "14:17",
+     "pts": 2,
+     "gameCode": 139,
+     "elRound": 14,
+     "score": 1,
+     "people": {
+      "name": "FARIED, KENNETH",
+      "club": "PAN",
+      "clubName": "Panathinaikos AKTOR Athens",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/fbabd4a4-b08e-456e-b82a-c31a44ca371a.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "BUTLER, JARED",
+     "score": 0.633
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Shengelia +",
+    "name": "Shengelia",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "001133",
+     "boxName": "SHENGELIA, TORNIKE",
+     "team": "BAR",
+     "min": "32:30",
+     "pts": 15,
+     "gameCode": 137,
+     "elRound": 14,
+     "score": 1,
+     "people": {
+      "name": "SHENGELIA, TORNIKE",
+      "club": "BAR",
+      "clubName": "FC Barcelona",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/45cc5a88-23f5-4a53-9139-22ebee644841.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "VESELY, JAN",
+     "score": 0.5
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Bertans +",
+    "name": "Bertans",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "003458",
+     "boxName": "BERTANS, DAVIS",
+     "team": "DUB",
+     "min": "25:01",
+     "pts": 6,
+     "gameCode": 140,
+     "elRound": 14,
+     "score": 1,
+     "people": {
+      "name": "BERTANS, DAVIS",
+      "club": "DUB",
+      "clubName": "Dubai Basketball",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/7210d5c7-adf0-4fb2-a475-1b92cab15443.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "DUNSTON, BRYANT",
+     "score": 0.543
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 4,
+  "day": "2025-12-11",
+  "kolo": "15 (T1)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 1000,
+  "potential": null,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 5,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "De Kolo -",
+    "name": "De Kolo",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "002100",
+     "boxName": "DE COLO, NANDO",
+     "team": "ASV",
+     "min": "27:04",
+     "pts": 16,
+     "gameCode": 141,
+     "elRound": 15,
+     "score": 0.6,
+     "people": {
+      "name": "DE COLO, NANDO",
+      "club": "ULK",
+      "clubName": "Fenerbahce Beko Istanbul",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/768e4710-28ed-4e85-b513-3b5f613b9eb2.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "LO, MAODO",
+     "score": 0.429
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Sorkin +",
+    "name": "Sorkin",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "011219",
+     "boxName": "SORKIN, ROMAN",
+     "team": "TEL",
+     "min": "27:37",
+     "pts": 26,
+     "gameCode": 141,
+     "elRound": 15,
+     "score": 1,
+     "people": {
+      "name": "SORKIN, ROMAN",
+      "club": "TEL",
+      "clubName": "Maccabi Rapyd Tel Aviv",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/3b33706b-7e4e-4914-a4ff-074e7ffb43e1.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "SHAHRVIN, ENZO",
+     "score": 0.667
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Taylor +",
+    "name": "Taylor",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "011217",
+     "boxName": "TAYLOR, KAMERON",
+     "team": "PAM",
+     "min": "25:11",
+     "pts": 20,
+     "gameCode": 146,
+     "elRound": 15,
+     "score": 1,
+     "people": {
+      "name": "TAYLOR, KAMERON",
+      "club": "PAM",
+      "clubName": "Valencia Basket",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/ada7d8f8-abd5-4d14-9565-f537659a98f6.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "VILLAR, RAFA",
+     "score": 0.5
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Tawares +",
+    "name": "Tawares",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "005791",
+     "boxName": "TAVARES, WALTER",
+     "team": "MAD",
+     "min": "28:34",
+     "pts": 11,
+     "gameCode": 145,
+     "elRound": 15,
+     "score": 1,
+     "people": {
+      "name": "TAVARES, WALTER",
+      "club": "MAD",
+      "clubName": "Real Madrid",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/90f9344a-3a6f-406e-bd33-8218abd2e8f6.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "FELIZ, ANDRES",
+     "score": 0.543
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 5,
+  "day": "2025-12-12",
+  "kolo": "15 (T2)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 500,
+  "potential": null,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 5,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Punter -",
+    "name": "Punter",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "009862",
+     "boxName": "PUNTER, KEVIN",
+     "team": "BAR",
+     "min": "24:50",
+     "pts": 24,
+     "gameCode": 148,
+     "elRound": 15,
+     "score": 1,
+     "people": {
+      "name": "PUNTER, KEVIN",
+      "club": "BAR",
+      "clubName": "FC Barcelona",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/139997de-48ae-4035-9c35-75b504c82992.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "FOURNIER, EVAN",
+     "score": 0.571
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Oturu -",
+    "name": "Oturu",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "012788",
+     "boxName": "OTURU, DAN",
+     "team": "HTA",
+     "min": "28:22",
+     "pts": 21,
+     "gameCode": 150,
+     "elRound": 15,
+     "score": 1,
+     "people": {
+      "name": "OTURU, DAN",
+      "club": "HTA",
+      "clubName": "Hapoel IBI Tel Aviv",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/3bdc3cf1-638b-4095-8b2b-099d31ce686b.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "ZAGARS, ARTURS",
+     "score": 0.475
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "CMM -",
+    "name": "CMM",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "009048",
+     "boxName": "MILLER-MCINTYRE, CODI",
+     "team": "RED",
+     "min": "30:14",
+     "pts": 6,
+     "gameCode": 149,
+     "elRound": 15,
+     "score": 0.97,
+     "people": {
+      "name": "MILLER-MCINTYRE, CODI",
+      "club": "RED",
+      "clubName": "Crvena Zvezda Meridianbet Belgrade",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/be4091ef-8325-4cc1-b7f9-d8e71b0f732d.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "BIRCH, KHEM",
+     "score": 0.633
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Edwards -",
+    "name": "Edwards",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "011987",
+     "boxName": "EDWARDS, CARSEN",
+     "team": "VIR",
+     "min": "22:45",
+     "pts": 2,
+     "gameCode": 150,
+     "elRound": 15,
+     "score": 1,
+     "people": {
+      "name": "EDWARDS, CARSEN",
+      "club": "VIR",
+      "clubName": "Virtus Bologna",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/1f0da376-0fcd-4071-88cc-d7dc6ac40243.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "HAYES, KEVARRIUS",
+     "score": 0.475
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 6,
+  "day": "2025-12-16",
+  "kolo": "16 (T1)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 500,
+  "potential": null,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 6,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Milutinov +",
+    "name": "Milutinov",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "003941",
+     "boxName": "MILUTINOV, NIKOLA",
+     "team": "OLY",
+     "min": "25:32",
+     "pts": 13,
+     "gameCode": 155,
+     "elRound": 16,
+     "score": 1,
+     "people": {
+      "name": "MILUTINOV, NIKOLA",
+      "club": "OLY",
+      "clubName": "Olympiacos Piraeus",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/eaac00b9-51c3-4824-83b3-5d1c9ce00881.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "MILJENOVIC, STEFAN",
+     "score": 0.5
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Odzelej -",
+    "name": "Odzelej",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "011982",
+     "boxName": "OJELEYE, SEMI",
+     "team": "RED",
+     "min": "28:21",
+     "pts": 10,
+     "gameCode": 154,
+     "elRound": 16,
+     "score": 0.571,
+     "people": {
+      "name": "OJELEYE, SEMI",
+      "club": "RED",
+      "clubName": "Crvena Zvezda Meridianbet Belgrade",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/e54b9baf-ae85-4aed-9ef7-da71859be0c3.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "OKEKE, CHUMA",
+     "score": 0.429
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Butler +",
+    "name": "Butler",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "014163",
+     "boxName": "BUTLER, JARED",
+     "team": "RED",
+     "min": "26:50",
+     "pts": 27,
+     "gameCode": 154,
+     "elRound": 16,
+     "score": 1,
+     "people": {
+      "name": "BUTLER, JARED",
+      "club": "RED",
+      "clubName": "Crvena Zvezda Meridianbet Belgrade",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/926f8dbb-c1ff-46cc-a86e-3a68f78a11f9.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "PUNTER, KEVIN",
+     "score": 0.5
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "C. Jones +",
+    "name": "C. Jones",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "010568",
+     "boxName": "JONES, CHRIS",
+     "team": "HTA",
+     "min": "21:29",
+     "pts": 15,
+     "gameCode": 154,
+     "elRound": 16,
+     "score": 1,
+     "people": {
+      "name": "JONES, CHRIS",
+      "club": "HTA",
+      "clubName": "Hapoel IBI Tel Aviv",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/62f1e81b-7c88-4cb1-9eb8-9054a68c2625.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "HOMMES, DAULTON",
+     "score": 0.36
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 7,
+  "day": "2025-12-18",
+  "kolo": "17 (T1)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 1000,
+  "potential": null,
+  "win": 11000,
+  "status": "Dobitan",
+  "games": 4,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "L. Walker -",
+    "name": "L. Walker",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "013403",
+     "boxName": "WALKER IV, LONNIE",
+     "team": "TEL",
+     "min": "18:41",
+     "pts": 14,
+     "gameCode": 162,
+     "elRound": 17,
+     "score": 1,
+     "people": {
+      "name": "WALKER IV, LONNIE",
+      "club": "TEL",
+      "clubName": "Maccabi Rapyd Tel Aviv",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/596dc864-a996-4d21-8131-ea85deb006b7.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "CAVALIERE, LEOPOLD",
+     "score": 0.556
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Oturu -",
+    "name": "Oturu",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "012788",
+     "boxName": "OTURU, DAN",
+     "team": "HTA",
+     "min": "27:30",
+     "pts": 6,
+     "gameCode": 163,
+     "elRound": 17,
+     "score": 1,
+     "people": {
+      "name": "OTURU, DAN",
+      "club": "HTA",
+      "clubName": "Hapoel IBI Tel Aviv",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/3bdc3cf1-638b-4095-8b2b-099d31ce686b.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "ZAGARS, ARTURS",
+     "score": 0.475
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Kampaco -",
+    "name": "Kampaco",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "005928",
+     "boxName": "CAMPAZZO, FACUNDO",
+     "team": "MAD",
+     "min": "25:25",
+     "pts": 7,
+     "gameCode": 164,
+     "elRound": 17,
+     "score": 1,
+     "people": {
+      "name": "CAMPAZZO, FACUNDO",
+      "club": "MAD",
+      "clubName": "Real Madrid",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/c5274543-662b-4958-b6fa-3bf42b944255.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "RICCI, GIAMPAOLO",
+     "score": 0.528
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "M'Baye +",
+    "name": "M'Baye",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "007993",
+     "boxName": "M'BAYE, AMATH",
+     "team": "PRS",
+     "min": "21:48",
+     "pts": 10,
+     "gameCode": 164,
+     "elRound": 17,
+     "score": 1,
+     "people": {
+      "name": "M'BAYE, AMATH",
+      "club": "PRS",
+      "clubName": "Paris Basketball",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/29eebe44-7b24-44c5-8dd5-b085a3d056d5.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "FAYE, MOUHAMED",
+     "score": 0.6
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 8,
+  "day": "2025-12-19",
+  "kolo": "17 (T2)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 500,
+  "potential": null,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 6,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Forest +",
+    "name": "Forest",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "013367",
+     "boxName": "FORREST, TRENT",
+     "team": "BAS",
+     "min": "35:37",
+     "pts": 9,
+     "gameCode": 168,
+     "elRound": 17,
+     "score": 1,
+     "people": {
+      "name": "FORREST, TRENT",
+      "club": "BAS",
+      "clubName": "Kosner Baskonia Vitoria-Gasteiz",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/a329afc2-80e5-4cee-a08d-34c5d734cb3e.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "NORRIS, MILES",
+     "score": 0.5
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Vezenkov -",
+    "name": "Vezenkov",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "003469",
+     "boxName": "VEZENKOV, SASHA",
+     "team": "OLY",
+     "min": "29:43",
+     "pts": 17,
+     "gameCode": 169,
+     "elRound": 17,
+     "score": 1,
+     "people": {
+      "name": "VEZENKOV, SASHA",
+      "club": "OLY",
+      "clubName": "Olympiacos Piraeus",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/9e32629d-7b41-4a3e-8506-2c7e4b92859d.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "MARINKOVIC, VANJA",
+     "score": 0.4
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Kodi +",
+    "name": "Kodi",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "009048",
+     "boxName": "MILLER-MCINTYRE, CODI",
+     "team": "RED",
+     "min": "31:22",
+     "pts": 21,
+     "gameCode": 167,
+     "elRound": 17,
+     "score": 0.95,
+     "people": {
+      "name": "MILLER-MCINTYRE, CODI",
+      "club": "RED",
+      "clubName": "Crvena Zvezda Meridianbet Belgrade",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/be4091ef-8325-4cc1-b7f9-d8e71b0f732d.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "SIMMONS, KOBI",
+     "score": 0.712
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Tubelis +",
+    "name": "Tubelis",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "008192",
+     "boxName": "TUBELIS, AZUOLAS",
+     "team": "ZAL",
+     "min": "11:26",
+     "pts": 6,
+     "gameCode": 170,
+     "elRound": 17,
+     "score": 1,
+     "people": {
+      "name": "TUBELIS, AZUOLAS",
+      "club": "ZAL",
+      "clubName": "Zalgiris Kaunas",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/c7627328-e2bd-4989-9dd1-2abcaddf021d.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "THEIS, DANIEL",
+     "score": 0.571
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 9,
+  "day": "2025-12-23",
+  "kolo": "18 (T1)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 500,
+  "potential": null,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 7,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Nunn -",
+    "name": "Nunn",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "012774",
+     "boxName": "NUNN, KENDRICK",
+     "team": "PAN",
+     "min": "29:57",
+     "pts": 21,
+     "gameCode": 176,
+     "elRound": 18,
+     "score": 1,
+     "people": {
+      "name": "NUNN, KENDRICK",
+      "club": "PAN",
+      "clubName": "Panathinaikos AKTOR Athens",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/6a45d41a-03f4-482a-b7ed-40adc56d5af8.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "DE COLO, NANDO",
+     "score": 0.38
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Nwora +",
+    "name": "Nwora",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "013363",
+     "boxName": "NWORA, JORDAN",
+     "team": "RED",
+     "min": "14:56",
+     "pts": 3,
+     "gameCode": 174,
+     "elRound": 18,
+     "score": 1,
+     "people": {
+      "name": "NWORA, JORDAN",
+      "club": "RED",
+      "clubName": "Crvena Zvezda Meridianbet Belgrade",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/07e28b94-3ed7-4077-bfea-0272d3bdea67.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "KALINIC, NIKOLA",
+     "score": 0.475
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Ouattara +",
+    "name": "Ouattara",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "004197",
+     "boxName": "OUATTARA, YAKUBA",
+     "team": "PRS",
+     "min": "23:09",
+     "pts": 9,
+     "gameCode": 174,
+     "elRound": 18,
+     "score": 1,
+     "people": {
+      "name": "OUATTARA, YAKUBA",
+      "club": "PRS",
+      "clubName": "Paris Basketball",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/7a130397-0f2a-47a2-adc3-eed775bcbf37.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "ATAMNA, ADAM",
+     "score": 0.5
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Dinvidi -",
+    "name": "Dinvidi",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "014162",
+     "boxName": "DINWIDDIE, SPENCER",
+     "team": "MUN",
+     "min": "09:15",
+     "pts": 0,
+     "gameCode": 171,
+     "elRound": 18,
+     "score": 0.875,
+     "people": {
+      "name": "DINWIDDIE, SPENCER",
+      "club": "MUN",
+      "clubName": "FC Bayern Munich",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/fe9bce7b-1731-4d27-bb83-60b8d352e92c.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "SIRVYDIS, DEIVIDAS",
+     "score": 0.625
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 10,
+  "day": "2025-12-26",
+  "kolo": "18 (T2)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 500,
+  "potential": null,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 3,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Lundberg +",
+    "name": "Lundberg",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "010781",
+     "boxName": "LUNDBERG, IFFE",
+     "team": "TEL",
+     "min": "20:39",
+     "pts": 3,
+     "gameCode": 179,
+     "elRound": 18,
+     "score": 1,
+     "people": {
+      "name": "LUNDBERG, IFFE",
+      "club": "TEL",
+      "clubName": "Maccabi Rapyd Tel Aviv",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/f0599430-9879-413d-962e-8c7aed154fa2.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "FOURNIER, EVAN",
+     "score": 0.375
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Bruno +",
+    "name": "Bruno",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "013667",
+     "boxName": "FERNANDO, BRUNO",
+     "team": "PAR",
+     "min": "17:30",
+     "pts": 6,
+     "gameCode": 179,
+     "elRound": 18,
+     "score": 0.95,
+     "people": {
+      "name": "FERNANDO, BRUNO",
+      "club": "PAR",
+      "clubName": "Partizan Mozzart Bet Belgrade",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/771c73d1-4537-447b-b668-043882902961.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "TAYLOR, BRANDON",
+     "score": 0.543
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Sorkin +",
+    "name": "Sorkin",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "011219",
+     "boxName": "SORKIN, ROMAN",
+     "team": "TEL",
+     "min": "22:02",
+     "pts": 17,
+     "gameCode": 179,
+     "elRound": 18,
+     "score": 1,
+     "people": {
+      "name": "SORKIN, ROMAN",
+      "club": "TEL",
+      "clubName": "Maccabi Rapyd Tel Aviv",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/3b33706b-7e4e-4914-a4ff-074e7ffb43e1.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "MORGAN, MATTHEW",
+     "score": 0.5
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Calathes -",
+    "name": "Calathes",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "001932",
+     "boxName": "CALATHES, NICK",
+     "team": "PAR",
+     "min": "12:59",
+     "pts": 3,
+     "gameCode": 179,
+     "elRound": 18,
+     "score": 1,
+     "people": {
+      "name": "CALATHES, NICK",
+      "club": "PAR",
+      "clubName": "Partizan Mozzart Bet Belgrade",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/485a2561-f9f3-4ba8-b5b8-1631294c4c99.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "TAVARES, WALTER",
+     "score": 0.571
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 11,
+  "day": "2025-12-30",
+  "kolo": "19 (T1)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 500,
+  "potential": null,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 4,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "E. Bryant +",
+    "name": "E. Bryant",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "009846",
+     "boxName": "BRYANT, ELIJAH",
+     "team": "HTA",
+     "min": "29:03",
+     "pts": 14,
+     "gameCode": 182,
+     "elRound": 19,
+     "score": 1,
+     "people": {
+      "name": "BRYANT, ELIJAH",
+      "club": "HTA",
+      "clubName": "Hapoel IBI Tel Aviv",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/c344f0a6-f545-4bfe-b59b-61f8ccce3c0e.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "BROWN, STERLING",
+     "score": 0.3
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Francisko -",
+    "name": "Francisko",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "007975",
+     "boxName": "FRANCISCO, SYLVAIN",
+     "team": "ZAL",
+     "min": "26:06",
+     "pts": 13,
+     "gameCode": 182,
+     "elRound": 19,
+     "score": 1,
+     "people": {
+      "name": "FRANCISCO, SYLVAIN",
+      "club": "ZAL",
+      "clubName": "Zalgiris Kaunas",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/bab9d21f-1fbd-401a-8b26-f9b350a4c47d.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "BADIO, BRANCOU",
+     "score": 0.422
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Rhoden -",
+    "name": "Rhoden",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "poništen",
+    "match": {
+     "code": "012618",
+     "boxName": "MASSA, BODIAN",
+     "team": "ASV",
+     "min": "20:37",
+     "pts": 8,
+     "gameCode": 183,
+     "elRound": 19,
+     "score": 0.475,
+     "people": {
+      "name": "MASSA, BODIAN",
+      "club": "ASV",
+      "clubName": "LDLC ASVEL Villeurbanne",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/29043d63-a741-4970-a849-8f2b865bd4ea.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "MUURINEN, MIIKKA",
+     "score": 0.429
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Thies -",
+    "name": "Thies",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "010390",
+     "boxName": "HAYES, KEVARRIUS",
+     "team": "MCO",
+     "min": "23:03",
+     "pts": 15,
+     "gameCode": 181,
+     "elRound": 19,
+     "score": 0.75,
+     "people": {
+      "name": "HAYES, KEVARRIUS",
+      "club": "MCO",
+      "clubName": "AS Monaco",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/f8b50ed9-1f5a-4e02-9046-4ec6bd379217.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "CALE, MYLES",
+     "score": 0.57
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 12,
+  "day": "2026-01-08",
+  "kolo": "21 (T1)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 500,
+  "potential": null,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 4,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Smailagic +",
+    "name": "Smailagic",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "011051",
+     "boxName": "SMAILAGIC, ALEN",
+     "team": "VIR",
+     "min": "13:49",
+     "pts": 2,
+     "gameCode": 204,
+     "elRound": 21,
+     "score": 1,
+     "people": {
+      "name": "SMAILAGIC, ALEN",
+      "club": "VIR",
+      "clubName": "Virtus Bologna",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/ae9cae56-3e7e-4f67-ad21-e0926b9f159b.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "MIROTIC, NIKOLA",
+     "score": 0.444
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Mirotic +",
+    "name": "Mirotic",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "000796",
+     "boxName": "MIROTIC, NIKOLA",
+     "team": "MCO",
+     "min": "18:14",
+     "pts": 13,
+     "gameCode": 203,
+     "elRound": 21,
+     "score": 1,
+     "people": {
+      "name": "MIROTIC, NIKOLA",
+      "club": "MCO",
+      "clubName": "AS Monaco",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/14a40cc3-7032-4b61-937f-fe2d2cd2001b.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "BIBEROVIC, TARIK",
+     "score": 0.556
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Kampaco -",
+    "name": "Kampaco",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "005928",
+     "boxName": "CAMPAZZO, FACUNDO",
+     "team": "MAD",
+     "min": "22:59",
+     "pts": 15,
+     "gameCode": 202,
+     "elRound": 21,
+     "score": 1,
+     "people": {
+      "name": "CAMPAZZO, FACUNDO",
+      "club": "MAD",
+      "clubName": "Real Madrid",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/c5274543-662b-4958-b6fa-3bf42b944255.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "SAKO, NEAL",
+     "score": 0.429
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Thies -",
+    "name": "Thies",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "poništen",
+    "match": {
+     "code": "010390",
+     "boxName": "HAYES, KEVARRIUS",
+     "team": "MCO",
+     "min": "24:54",
+     "pts": 15,
+     "gameCode": 203,
+     "elRound": 21,
+     "score": 0.75,
+     "people": {
+      "name": "HAYES, KEVARRIUS",
+      "club": "MCO",
+      "clubName": "AS Monaco",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/f8b50ed9-1f5a-4e02-9046-4ec6bd379217.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "LYLES, TREY",
+     "score": 0.6
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 13,
+  "day": "2026-01-09",
+  "kolo": "21 (T2)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 1000,
+  "potential": null,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 5,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Milutinov -",
+    "name": "Milutinov",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "003941",
+     "boxName": "MILUTINOV, NIKOLA",
+     "team": "OLY",
+     "min": "23:24",
+     "pts": 14,
+     "gameCode": 209,
+     "elRound": 21,
+     "score": 1,
+     "people": {
+      "name": "MILUTINOV, NIKOLA",
+      "club": "OLY",
+      "clubName": "Olympiacos Piraeus",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/eaac00b9-51c3-4824-83b3-5d1c9ce00881.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "MILTON, SHAKE",
+     "score": 0.556
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Calathes +",
+    "name": "Calathes",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "001932",
+     "boxName": "CALATHES, NICK",
+     "team": "PAR",
+     "min": "16:22",
+     "pts": 6,
+     "gameCode": 208,
+     "elRound": 21,
+     "score": 1,
+     "people": {
+      "name": "CALATHES, NICK",
+      "club": "PAR",
+      "clubName": "Partizan Mozzart Bet Belgrade",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/485a2561-f9f3-4ba8-b5b8-1631294c4c99.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "CALE, MYLES",
+     "score": 0.571
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Peters -",
+    "name": "Peters",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "008829",
+     "boxName": "PETERS, ALEC",
+     "team": "OLY",
+     "min": "14:46",
+     "pts": 4,
+     "gameCode": 209,
+     "elRound": 21,
+     "score": 1,
+     "people": {
+      "name": "PETERS, ALEC",
+      "club": "OLY",
+      "clubName": "Olympiacos Piraeus",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/8feddbf2-03c1-4130-95fe-246f938a74d6.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "PUNTER, KEVIN",
+     "score": 0.5
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Shengelia +",
+    "name": "Shengelia",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "001133",
+     "boxName": "SHENGELIA, TORNIKE",
+     "team": "BAR",
+     "min": "27:40",
+     "pts": 13,
+     "gameCode": 208,
+     "elRound": 21,
+     "score": 1,
+     "people": {
+      "name": "SHENGELIA, TORNIKE",
+      "club": "BAR",
+      "clubName": "FC Barcelona",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/45cc5a88-23f5-4a53-9139-22ebee644841.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "VESELY, JAN",
+     "score": 0.5
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 14,
+  "day": "2026-01-15",
+  "kolo": "22 (T2)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 1000,
+  "potential": null,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 6,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Osman -",
+    "name": "Osman",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "004088",
+     "boxName": "OSMAN, CEDI",
+     "team": "PAN",
+     "min": "34:38",
+     "pts": 20,
+     "gameCode": 212,
+     "elRound": 22,
+     "score": 1,
+     "people": {
+      "name": "OSMAN, CEDI",
+      "club": "PAN",
+      "clubName": "Panathinaikos AKTOR Athens",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/dd9f197a-73d3-4d91-a3d5-63b9d7fe0bcc.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "OSMANI, ERCAN",
+     "score": 0.833
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Francisko -",
+    "name": "Francisko",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "007975",
+     "boxName": "FRANCISCO, SYLVAIN",
+     "team": "ZAL",
+     "min": "29:25",
+     "pts": 22,
+     "gameCode": 213,
+     "elRound": 22,
+     "score": 1,
+     "people": {
+      "name": "FRANCISCO, SYLVAIN",
+      "club": "ZAL",
+      "clubName": "Zalgiris Kaunas",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/bab9d21f-1fbd-401a-8b26-f9b350a4c47d.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "FERRARI, FRANCESCO",
+     "score": 0.844
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Butler",
+    "name": "Butler",
+    "line": null,
+    "dir": null,
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "014163",
+     "boxName": "BUTLER, JARED",
+     "team": "RED",
+     "min": "17:03",
+     "pts": 18,
+     "gameCode": 216,
+     "elRound": 22,
+     "score": 1,
+     "people": {
+      "name": "BUTLER, JARED",
+      "club": "RED",
+      "clubName": "Crvena Zvezda Meridianbet Belgrade",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/926f8dbb-c1ff-46cc-a86e-3a68f78a11f9.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "BOOKER, DEVIN",
+     "score": 0.5
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Nebo +",
+    "name": "Nebo",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "011199",
+     "boxName": "NEBO, JOSH",
+     "team": "MIL",
+     "min": "22:06",
+     "pts": 12,
+     "gameCode": 216,
+     "elRound": 22,
+     "score": 1,
+     "people": {
+      "name": "NEBO, JOSH",
+      "club": "MIL",
+      "clubName": "EA7 Emporio Armani Milan",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/2d5f84ef-ad28-4415-96b2-685be51d4a2f.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "DIMITRIJEVIC, NENO",
+     "score": 0.712
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 15,
+  "day": "2026-01-16",
+  "kolo": "22 (T3)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 500,
+  "potential": null,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 3,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Thompson +",
+    "name": "Thompson",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "011078",
+     "boxName": "THOMPSON, DARIUS",
+     "team": "PAM",
+     "min": "13:39",
+     "pts": 1,
+     "gameCode": 217,
+     "elRound": 22,
+     "score": 1,
+     "people": {
+      "name": "THOMPSON, DARIUS",
+      "club": "PAM",
+      "clubName": "Valencia Basket",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/881d7dbd-8ffa-4eef-ba14-e0ea68c1be29.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "SATORANSKY, TOMAS",
+     "score": 0.543
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "E. Bryant +",
+    "name": "E. Bryant",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "009846",
+     "boxName": "BRYANT, ELIJAH",
+     "team": "HTA",
+     "min": "33:58",
+     "pts": 17,
+     "gameCode": 218,
+     "elRound": 22,
+     "score": 1,
+     "people": {
+      "name": "BRYANT, ELIJAH",
+      "club": "HTA",
+      "clubName": "Hapoel IBI Tel Aviv",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/c344f0a6-f545-4bfe-b59b-61f8ccce3c0e.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "BRIZUELA, DARIO",
+     "score": 0.225
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Motley -",
+    "name": "Motley",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "011157",
+     "boxName": "MOTLEY, JOHNATHAN",
+     "team": "HTA",
+     "min": "19:23",
+     "pts": 10,
+     "gameCode": 218,
+     "elRound": 22,
+     "score": 1,
+     "people": {
+      "name": "MOTLEY, JOHNATHAN",
+      "club": "HTA",
+      "clubName": "Hapoel IBI Tel Aviv",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/0a172ed5-656d-4894-811a-8794788bf5f2.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "MELLI, NICOLO",
+     "score": 0.5
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Maledon +",
+    "name": "Maledon",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "007027",
+     "boxName": "MALEDON, THEO",
+     "team": "MAD",
+     "min": "14:36",
+     "pts": 6,
+     "gameCode": 220,
+     "elRound": 22,
+     "score": 1,
+     "people": {
+      "name": "MALEDON, THEO",
+      "club": "MAD",
+      "clubName": "Real Madrid",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/3a8b14b1-12d8-4d17-a3f2-ad7db16f6822.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "HORTON TUCKER, TALEN",
+     "score": 0.543
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 16,
+  "day": "2026-01-20",
+  "kolo": "23 (T1)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 500,
+  "potential": null,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 9,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Maledon +",
+    "name": "Maledon",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "007027",
+     "boxName": "MALEDON, THEO",
+     "team": "MAD",
+     "min": "20:05",
+     "pts": 9,
+     "gameCode": 227,
+     "elRound": 23,
+     "score": 1,
+     "people": {
+      "name": "MALEDON, THEO",
+      "club": "MAD",
+      "clubName": "Real Madrid",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/3a8b14b1-12d8-4d17-a3f2-ad7db16f6822.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "MANNION, NICCOLO",
+     "score": 0.571
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Nedovic -",
+    "name": "Nedovic",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "000848",
+     "boxName": "NEDOVIC, NEMANJA",
+     "team": "MCO",
+     "min": "13:38",
+     "pts": 5,
+     "gameCode": 221,
+     "elRound": 23,
+     "score": 1,
+     "people": {
+      "name": "NEDOVIC, NEMANJA",
+      "club": "MCO",
+      "clubName": "AS Monaco",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/664a91ef-82db-43d9-81c7-30bcbb9d8139.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "JACKSON, EDWIN",
+     "score": 0.543
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Bruno +",
+    "name": "Bruno",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "013667",
+     "boxName": "FERNANDO, BRUNO",
+     "team": "PAR",
+     "min": "17:58",
+     "pts": 8,
+     "gameCode": 226,
+     "elRound": 23,
+     "score": 0.95,
+     "people": {
+      "name": "FERNANDO, BRUNO",
+      "club": "PAR",
+      "clubName": "Partizan Mozzart Bet Belgrade",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/771c73d1-4537-447b-b668-043882902961.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "CABOCLO, BRUNO",
+     "score": 0.95
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Luwawu -",
+    "name": "Luwawu",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "012080",
+     "boxName": "LUWAWU-CABARROT, TIMOTHE",
+     "team": "BAS",
+     "min": "25:45",
+     "pts": 17,
+     "gameCode": 225,
+     "elRound": 23,
+     "score": 1,
+     "people": {
+      "name": "LUWAWU-CABARROT, TIMOTHE",
+      "club": "BAS",
+      "clubName": "Kosner Baskonia Vitoria-Gasteiz",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/96750db7-50f9-49bb-9fcc-56ed731ccce3.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "LAVI, GUR",
+     "score": 0.5
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 17,
+  "day": "2026-01-22",
+  "kolo": "24 (T1)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 1000,
+  "potential": null,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 6,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Lundberg -",
+    "name": "Lundberg",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "010781",
+     "boxName": "LUNDBERG, IFFE",
+     "team": "TEL",
+     "min": "28:39",
+     "pts": 16,
+     "gameCode": 233,
+     "elRound": 24,
+     "score": 1,
+     "people": {
+      "name": "LUNDBERG, IFFE",
+      "club": "TEL",
+      "clubName": "Maccabi Rapyd Tel Aviv",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/f0599430-9879-413d-962e-8c7aed154fa2.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "MONTERO, JEAN",
+     "score": 0.375
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Vezenkov +",
+    "name": "Vezenkov",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "003469",
+     "boxName": "VEZENKOV, SASHA",
+     "team": "OLY",
+     "min": "25:55",
+     "pts": 19,
+     "gameCode": 231,
+     "elRound": 24,
+     "score": 1,
+     "people": {
+      "name": "VEZENKOV, SASHA",
+      "club": "OLY",
+      "clubName": "Olympiacos Piraeus",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/9e32629d-7b41-4a3e-8506-2c7e4b92859d.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "HEZONJA, MARIO",
+     "score": 0.375
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "K. Hayes +",
+    "name": "K. Hayes",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "010390",
+     "boxName": "HAYES, KEVARRIUS",
+     "team": "MCO",
+     "min": "20:09",
+     "pts": 0,
+     "gameCode": 235,
+     "elRound": 24,
+     "score": 1,
+     "people": {
+      "name": "HAYES, KEVARRIUS",
+      "club": "MCO",
+      "clubName": "AS Monaco",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/f8b50ed9-1f5a-4e02-9046-4ec6bd379217.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "FARIED, KENNETH",
+     "score": 0.5
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Lucic +",
+    "name": "Lucic",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "001288",
+     "boxName": "LUCIC, VLADIMIR",
+     "team": "MUN",
+     "min": "30:51",
+     "pts": 19,
+     "gameCode": 232,
+     "elRound": 24,
+     "score": 1,
+     "people": {
+      "name": "LUCIC, VLADIMIR",
+      "club": "MUN",
+      "clubName": "FC Bayern Munich",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/c1901dfd-8e25-4833-a576-ac4ab82d75a6.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "MCKISSIC, SHAQUIELLE",
+     "score": 0.5
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 18,
+  "day": "2026-01-23",
+  "kolo": "24 (T2)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 500,
+  "potential": null,
+  "win": 5500,
+  "status": "Dobitan",
+  "games": 4,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Jekiri +",
+    "name": "Jekiri",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "009733",
+     "boxName": "JEKIRI, TONYE",
+     "team": "PAR",
+     "min": "17:22",
+     "pts": 7,
+     "gameCode": 239,
+     "elRound": 24,
+     "score": 1,
+     "people": {
+      "name": "JEKIRI, TONYE",
+      "club": "PAR",
+      "clubName": "Partizan Mozzart Bet Belgrade",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/995f6e1a-5ce1-46cf-a462-48e2ab5234e5.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "SELJAAS, ZACHARY",
+     "score": 0.475
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Moneke -",
+    "name": "Moneke",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "012201",
+     "boxName": "MONEKE, CHIMA",
+     "team": "RED",
+     "min": "32:48",
+     "pts": 13,
+     "gameCode": 240,
+     "elRound": 24,
+     "score": 1,
+     "people": {
+      "name": "MONEKE, CHIMA",
+      "club": "RED",
+      "clubName": "Crvena Zvezda Meridianbet Belgrade",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/aa0efbb3-86a1-48df-8206-0aacbba5e0b4.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "SHENGELIA, TORNIKE",
+     "score": 0.543
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Blakeney +",
+    "name": "Blakeney",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "013402",
+     "boxName": "BLAKENEY, ANTONIO",
+     "team": "HTA",
+     "min": "24:30",
+     "pts": 13,
+     "gameCode": 239,
+     "elRound": 24,
+     "score": 1,
+     "people": {
+      "name": "BLAKENEY, ANTONIO",
+      "club": "HTA",
+      "clubName": "Hapoel IBI Tel Aviv",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/ea09b983-45e0-4140-a486-085bfe2cc4f6.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "AKELE, NICOLA",
+     "score": 0.5
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "W. Hernangomez -",
+    "name": "W. Hernangomez",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "003196",
+     "boxName": "HERNANGOMEZ, WILLY",
+     "team": "BAR",
+     "min": "14:21",
+     "pts": 3,
+     "gameCode": 238,
+     "elRound": 24,
+     "score": 1,
+     "people": {
+      "name": "HERNANGOMEZ, WILLY",
+      "club": "BAR",
+      "clubName": "FC Barcelona",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/2b0a03c6-90ec-400a-8b01-6c4c8c234234.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "FERNANDO, BRUNO",
+     "score": 0.3
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 19,
+  "day": "2026-01-29",
+  "kolo": "25 (T2)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 1000,
+  "potential": null,
+  "win": 11000,
+  "status": "Dobitan",
+  "games": 5,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Obst -",
+    "name": "Obst",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "004508",
+     "boxName": "OBST, ANDREAS",
+     "team": "MUN",
+     "min": "23:26",
+     "pts": 13,
+     "gameCode": 243,
+     "elRound": 25,
+     "score": 1,
+     "people": {
+      "name": "OBST, ANDREAS",
+      "club": "MUN",
+      "clubName": "FC Bayern Munich",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/d3d714e5-0b66-497b-afbd-2587ac9e856c.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "TONUT, STEFANO",
+     "score": 0.4
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Oturu -",
+    "name": "Oturu",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "012788",
+     "boxName": "OTURU, DAN",
+     "team": "HTA",
+     "min": "17:17",
+     "pts": 10,
+     "gameCode": 243,
+     "elRound": 25,
+     "score": 1,
+     "people": {
+      "name": "OTURU, DAN",
+      "club": "HTA",
+      "clubName": "Hapoel IBI Tel Aviv",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/3bdc3cf1-638b-4095-8b2b-099d31ce686b.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "MONTERO, JEAN",
+     "score": 0.429
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Blat +",
+    "name": "Blat",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "011193",
+     "boxName": "BLATT, TAMIR",
+     "team": "TEL",
+     "min": "23:49",
+     "pts": 9,
+     "gameCode": 245,
+     "elRound": 25,
+     "score": 1,
+     "people": {
+      "name": "BLATT, TAMIR",
+      "club": "TEL",
+      "clubName": "Maccabi Rapyd Tel Aviv",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/780f9309-2c9f-4a43-be7f-9f7a7182d133.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "HOLLATZ, JUSTUS",
+     "score": 0.5
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Walkup -",
+    "name": "Walkup",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "008855",
+     "boxName": "WALKUP, THOMAS",
+     "team": "OLY",
+     "min": "22:21",
+     "pts": 3,
+     "gameCode": 244,
+     "elRound": 25,
+     "score": 1,
+     "people": {
+      "name": "WALKUP, THOMAS",
+      "club": "OLY",
+      "clubName": "Olympiacos Piraeus",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/5a798730-2697-4550-b3b3-df119a860b18.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "MALCOLM, COLLIN",
+     "score": 0.429
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 20,
+  "day": "2026-01-30",
+  "kolo": "25 (T3)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 500,
+  "potential": null,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 4,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Avramovic +",
+    "name": "Avramovic",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "003983",
+     "boxName": "AVRAMOVIC, ALEKSA",
+     "team": "DUB",
+     "min": "16:50",
+     "pts": 11,
+     "gameCode": 249,
+     "elRound": 25,
+     "score": 1,
+     "people": {
+      "name": "AVRAMOVIC, ALEKSA",
+      "club": "DUB",
+      "clubName": "Dubai Basketball",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/261a3a73-c380-4f6e-82bb-643fff9c7494.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "CANKA, ABRAMO",
+     "score": 0.528
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Forest +",
+    "name": "Forest",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "013367",
+     "boxName": "FORREST, TRENT",
+     "team": "BAS",
+     "min": "22:58",
+     "pts": 16,
+     "gameCode": 248,
+     "elRound": 25,
+     "score": 1,
+     "people": {
+      "name": "FORREST, TRENT",
+      "club": "BAS",
+      "clubName": "Kosner Baskonia Vitoria-Gasteiz",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/a329afc2-80e5-4cee-a08d-34c5d734cb3e.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "SHORTS, TJ",
+     "score": 0.5
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Mck. Wright +",
+    "name": "Mck. Wright",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "012606",
+     "boxName": "WRIGHT IV, MCKINLEY",
+     "team": "DUB",
+     "min": "28:06",
+     "pts": 16,
+     "gameCode": 249,
+     "elRound": 25,
+     "score": 1,
+     "people": {
+      "name": "WRIGHT IV, MCKINLEY",
+      "club": "DUB",
+      "clubName": "Dubai Basketball",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/fe4b23d9-6151-4758-a15f-0339607df198.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "WRIGHT, MOSES",
+     "score": 0.6
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Slukas -",
+    "name": "Slukas",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "001926",
+     "boxName": "SLOUKAS, KOSTAS",
+     "team": "PAN",
+     "min": "27:45",
+     "pts": 26,
+     "gameCode": 250,
+     "elRound": 25,
+     "score": 1,
+     "people": {
+      "name": "SLOUKAS, KOSTAS",
+      "club": "PAN",
+      "clubName": "Panathinaikos AKTOR Athens",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/0a26c0f0-41a7-4ffc-8de1-e7cecbcc8338.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "VILDOZA, LUCA",
+     "score": 0.633
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 21,
+  "day": "2026-02-03",
+  "kolo": "26 (T1)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 500,
+  "potential": null,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 9,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Kalinic +",
+    "name": "Kalinic",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "004866",
+     "boxName": "KALINIC, NIKOLA",
+     "team": "RED",
+     "min": "20:57",
+     "pts": 5,
+     "gameCode": 252,
+     "elRound": 26,
+     "score": 1,
+     "people": {
+      "name": "KALINIC, NIKOLA",
+      "club": "RED",
+      "clubName": "Crvena Zvezda Meridianbet Belgrade",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/8b1112da-0b01-4305-b27a-c6424ef1f54f.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "BALDWIN IV, WADE",
+     "score": 0.556
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Sorkin -",
+    "name": "Sorkin",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "011219",
+     "boxName": "SORKIN, ROMAN",
+     "team": "TEL",
+     "min": "16:54",
+     "pts": 10,
+     "gameCode": 257,
+     "elRound": 26,
+     "score": 1,
+     "people": {
+      "name": "SORKIN, ROMAN",
+      "club": "TEL",
+      "clubName": "Maccabi Rapyd Tel Aviv",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/3b33706b-7e4e-4914-a4ff-074e7ffb43e1.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "MORGAN, JEREMY",
+     "score": 0.5
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Obst +",
+    "name": "Obst",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "004508",
+     "boxName": "OBST, ANDREAS",
+     "team": "MUN",
+     "min": "32:20",
+     "pts": 26,
+     "gameCode": 256,
+     "elRound": 26,
+     "score": 1,
+     "people": {
+      "name": "OBST, ANDREAS",
+      "club": "MUN",
+      "clubName": "FC Bayern Munich",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/d3d714e5-0b66-497b-afbd-2587ac9e856c.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "FORREST, TRENT",
+     "score": 0.5
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Hezonja -",
+    "name": "Hezonja",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "003108",
+     "boxName": "HEZONJA, MARIO",
+     "team": "MAD",
+     "min": "26:45",
+     "pts": 13,
+     "gameCode": 258,
+     "elRound": 26,
+     "score": 1,
+     "people": {
+      "name": "HEZONJA, MARIO",
+      "club": "MAD",
+      "clubName": "Real Madrid",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/c415b3ab-6a2d-4ff4-8504-5119fca3c9f6.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "NEDOVIC, NEMANJA",
+     "score": 0.543
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 22,
+  "day": "2026-02-05",
+  "kolo": "27 (T1)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 1000,
+  "potential": null,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 5,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Sterling -",
+    "name": "Sterling",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "012720",
+     "boxName": "BROWN, STERLING",
+     "team": "PAR",
+     "min": "30:27",
+     "pts": 16,
+     "gameCode": 265,
+     "elRound": 27,
+     "score": 0.95,
+     "people": {
+      "name": "BROWN, STERLING",
+      "club": "PAR",
+      "clubName": "Partizan Mozzart Bet Belgrade",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/7e089e46-481e-44e5-9fa0-192215101609.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "STEVENS, LAMAR",
+     "score": 0.5
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Strazel +",
+    "name": "Strazel",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "008099",
+     "boxName": "STRAZEL, MATTHEW",
+     "team": "MCO",
+     "min": "19:38",
+     "pts": 8,
+     "gameCode": 262,
+     "elRound": 27,
+     "score": 1,
+     "people": {
+      "name": "STRAZEL, MATTHEW",
+      "club": "MCO",
+      "clubName": "AS Monaco",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/62264af8-6ced-4c06-9917-b872092fe532.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "KRAMER, DAVID",
+     "score": 0.429
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Mitoglou +",
+    "name": "Mitoglou",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "007866",
+     "boxName": "MITOGLOU, KONSTANTINOS",
+     "team": "PAN",
+     "min": "12:24",
+     "pts": 7,
+     "gameCode": 265,
+     "elRound": 27,
+     "score": 1,
+     "people": {
+      "name": "MITOGLOU, KONSTANTINOS",
+      "club": "PAN",
+      "clubName": "Panathinaikos AKTOR Athens",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/786a3466-8cef-47d3-86c6-487cc42cab85.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "MIROTIC, NIKOLA",
+     "score": 0.429
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Jessup -",
+    "name": "Jessup",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "013290",
+     "boxName": "JESSUP, JUSTINIAN",
+     "team": "MUN",
+     "min": "20:54",
+     "pts": 8,
+     "gameCode": 262,
+     "elRound": 27,
+     "score": 1,
+     "people": {
+      "name": "JESSUP, JUSTINIAN",
+      "club": "MUN",
+      "clubName": "FC Bayern Munich",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/39bd9e57-57f4-4de4-8afd-3cb14d2db192.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "PUERTO, JOSEP",
+     "score": 0.57
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 23,
+  "day": "2026-02-06",
+  "kolo": "27 (T2)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 500,
+  "potential": null,
+  "win": 6000,
+  "status": "Dobitan",
+  "games": 5,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Sorkin +",
+    "name": "Sorkin",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "011219",
+     "boxName": "SORKIN, ROMAN",
+     "team": "TEL",
+     "min": "29:22",
+     "pts": 15,
+     "gameCode": 268,
+     "elRound": 27,
+     "score": 1,
+     "people": {
+      "name": "SORKIN, ROMAN",
+      "club": "TEL",
+      "clubName": "Maccabi Rapyd Tel Aviv",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/3b33706b-7e4e-4914-a4ff-074e7ffb43e1.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "NORRIS, MILES",
+     "score": 0.5
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Butler +",
+    "name": "Butler",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "014163",
+     "boxName": "BUTLER, JARED",
+     "team": "RED",
+     "min": "19:12",
+     "pts": 16,
+     "gameCode": 268,
+     "elRound": 27,
+     "score": 1,
+     "people": {
+      "name": "BUTLER, JARED",
+      "club": "RED",
+      "clubName": "Crvena Zvezda Meridianbet Belgrade",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/926f8dbb-c1ff-46cc-a86e-3a68f78a11f9.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "VAUTIER, BASTIEN",
+     "score": 0.571
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Izundu -",
+    "name": "Izundu",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "014029",
+     "boxName": "IZUNDU, EBUKA",
+     "team": "RED",
+     "min": "17:26",
+     "pts": 4,
+     "gameCode": 268,
+     "elRound": 27,
+     "score": 1,
+     "people": {
+      "name": "IZUNDU, EBUKA",
+      "club": "RED",
+      "clubName": "Crvena Zvezda Meridianbet Belgrade",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/34d169ce-3794-4b52-bfca-d9646efe4a24.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "BRIZUELA, DARIO",
+     "score": 0.375
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Kurucs -",
+    "name": "Kurucs",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "005713",
+     "boxName": "KURUCS, RODIONS",
+     "team": "BAS",
+     "min": "24:35",
+     "pts": 6,
+     "gameCode": 267,
+     "elRound": 27,
+     "score": 1,
+     "people": {
+      "name": "KURUCS, RODIONS",
+      "club": "BAS",
+      "clubName": "Kosner Baskonia Vitoria-Gasteiz",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/6ca0b78a-ccb0-45b3-ad2f-e10aff32f0fc.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "BROOKS, ARMONI",
+     "score": 0.5
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 24,
+  "day": "2026-02-12",
+  "kolo": "28 (T1)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 1000,
+  "potential": null,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 5,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Dorsey -",
+    "name": "Dorsey",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "009849",
+     "boxName": "DORSEY, TYLER",
+     "team": "OLY",
+     "min": "24:18",
+     "pts": 17,
+     "gameCode": 272,
+     "elRound": 28,
+     "score": 1,
+     "people": {
+      "name": "DORSEY, TYLER",
+      "club": "OLY",
+      "clubName": "Olympiacos Piraeus",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/bc74ec12-71a8-425e-9ff8-e50eefec1f62.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "DOKOSSI, ALLAN",
+     "score": 0.5
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Nwora -",
+    "name": "Nwora",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "013363",
+     "boxName": "NWORA, JORDAN",
+     "team": "RED",
+     "min": "30:08",
+     "pts": 21,
+     "gameCode": 272,
+     "elRound": 28,
+     "score": 1,
+     "people": {
+      "name": "NWORA, JORDAN",
+      "club": "RED",
+      "clubName": "Crvena Zvezda Meridianbet Belgrade",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/07e28b94-3ed7-4077-bfea-0272d3bdea67.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "ANGOLA, BRAIAN",
+     "score": 0.5
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Bolomboj +",
+    "name": "Bolomboj",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "009035",
+     "boxName": "BOLOMBOY, JOEL",
+     "team": "RED",
+     "min": "13:26",
+     "pts": 9,
+     "gameCode": 272,
+     "elRound": 28,
+     "score": 1,
+     "people": {
+      "name": "BOLOMBOY, JOEL",
+      "club": "RED",
+      "clubName": "Crvena Zvezda Meridianbet Belgrade",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCbqcoI/bb62f12b-8d35-4487-a402-e86621caa387.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "DIBARTOLOMEO, JOHN",
+     "score": 0.417
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Angola -",
+    "name": "Angola",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "010465",
+     "boxName": "ANGOLA, BRAIAN",
+     "team": "ASV",
+     "min": "25:43",
+     "pts": 8,
+     "gameCode": 274,
+     "elRound": 28,
+     "score": 1,
+     "people": {
+      "name": "ANGOLA, BRAIAN",
+      "club": "ASV",
+      "clubName": "LDLC ASVEL Villeurbanne",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCaiEI5/8a77bddd-1d92-4ec1-b784-9b71ba9cea1a.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "SHENGELIA, TORNIKE",
+     "score": 0.5
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 25,
+  "day": "2026-02-13",
+  "kolo": "28 (T2)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 500,
+  "potential": null,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 5,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Huanco -",
+    "name": "Huanco",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "012712",
+     "boxName": "HERNANGOMEZ, JUANCHO",
+     "team": "PAN",
+     "min": "37:03",
+     "pts": 18,
+     "gameCode": 279,
+     "elRound": 28,
+     "score": 0.792,
+     "people": {
+      "name": "HERNANGOMEZ, JUANCHO",
+      "club": "PAN",
+      "clubName": "Panathinaikos AKTOR Athens",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/12459ba1-e2c3-4832-95de-3fbe43770024.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "GUDURIC, MARKO",
+     "score": 0.57
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Washington +",
+    "name": "Washington",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "013370",
+     "boxName": "WASHINGTON, DUANE",
+     "team": "PAR",
+     "min": "26:14",
+     "pts": 13,
+     "gameCode": 276,
+     "elRound": 28,
+     "score": 1,
+     "people": {
+      "name": "WASHINGTON, DUANE",
+      "club": "PAR",
+      "clubName": "Partizan Mozzart Bet Belgrade",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/0a809d60-836f-43a3-b73e-646935e87e78.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "MANNION, NICCOLO",
+     "score": 0.444
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Calathes +",
+    "name": "Calathes",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "001932",
+     "boxName": "CALATHES, NICK",
+     "team": "PAR",
+     "min": "22:15",
+     "pts": 5,
+     "gameCode": 276,
+     "elRound": 28,
+     "score": 1,
+     "people": {
+      "name": "CALATHES, NICK",
+      "club": "PAR",
+      "clubName": "Partizan Mozzart Bet Belgrade",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/485a2561-f9f3-4ba8-b5b8-1631294c4c99.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "TAVARES, WALTER",
+     "score": 0.571
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Nunn -",
+    "name": "Nunn",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "012774",
+     "boxName": "NUNN, KENDRICK",
+     "team": "PAN",
+     "min": "34:57",
+     "pts": 17,
+     "gameCode": 279,
+     "elRound": 28,
+     "score": 1,
+     "people": {
+      "name": "NUNN, KENDRICK",
+      "club": "PAN",
+      "clubName": "Panathinaikos AKTOR Athens",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/6a45d41a-03f4-482a-b7ed-40adc56d5af8.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "BEGARIN, JUHANN",
+     "score": 0.475
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 26,
+  "day": "2026-02-25",
+  "kolo": "29 (T1)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 500,
+  "potential": null,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 4,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Bolomboj +",
+    "name": "Bolomboj",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "009035",
+     "boxName": "BOLOMBOY, JOEL",
+     "team": "RED",
+     "min": "16:39",
+     "pts": 9,
+     "gameCode": 286,
+     "elRound": 29,
+     "score": 1,
+     "people": {
+      "name": "BOLOMBOY, JOEL",
+      "club": "RED",
+      "clubName": "Crvena Zvezda Meridianbet Belgrade",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCbqcoI/bb62f12b-8d35-4487-a402-e86621caa387.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "BEAUBOIS, RODRIGUE",
+     "score": 0.375
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Smailagic +",
+    "name": "Smailagic",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "011051",
+     "boxName": "SMAILAGIC, ALEN",
+     "team": "VIR",
+     "min": "24:48",
+     "pts": 19,
+     "gameCode": 282,
+     "elRound": 29,
+     "score": 1,
+     "people": {
+      "name": "SMAILAGIC, ALEN",
+      "club": "VIR",
+      "clubName": "Virtus Bologna",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/ae9cae56-3e7e-4f67-ad21-e0926b9f159b.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "KALINIC, NIKOLA",
+     "score": 0.444
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Babb +",
+    "name": "Babb",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "poništen",
+    "match": {
+     "code": "010391",
+     "boxName": "WEILER-BABB, NICK",
+     "team": "IST",
+     "min": "DNP",
+     "pts": 0,
+     "gameCode": 286,
+     "elRound": 29,
+     "score": 1,
+     "people": {
+      "name": "WEILER-BABB, NICK",
+      "club": "IST",
+      "clubName": "Anadolu Efes Istanbul",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/e23682a9-5374-4706-b343-36f49f61236d.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "BACOT JR., ARMANDO",
+     "score": 0.4
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Punter -",
+    "name": "Punter",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "009862",
+     "boxName": "PUNTER, KEVIN",
+     "team": "BAR",
+     "min": "32:25",
+     "pts": 27,
+     "gameCode": 282,
+     "elRound": 29,
+     "score": 1,
+     "people": {
+      "name": "PUNTER, KEVIN",
+      "club": "BAR",
+      "clubName": "FC Barcelona",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/139997de-48ae-4035-9c35-75b504c82992.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "FOURNIER, EVAN",
+     "score": 0.571
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 27,
+  "day": "2026-02-26",
+  "kolo": "29 (T2)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 1000,
+  "potential": null,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 6,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Kampaco -",
+    "name": "Kampaco",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "005928",
+     "boxName": "CAMPAZZO, FACUNDO",
+     "team": "MAD",
+     "min": "18:32",
+     "pts": 4,
+     "gameCode": 290,
+     "elRound": 29,
+     "score": 1,
+     "people": {
+      "name": "CAMPAZZO, FACUNDO",
+      "club": "MAD",
+      "clubName": "Real Madrid",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/c5274543-662b-4958-b6fa-3bf42b944255.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "RICCI, GIAMPAOLO",
+     "score": 0.528
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "E. Bryant +",
+    "name": "E. Bryant",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "009846",
+     "boxName": "BRYANT, ELIJAH",
+     "team": "HTA",
+     "min": "29:58",
+     "pts": 25,
+     "gameCode": 288,
+     "elRound": 29,
+     "score": 1,
+     "people": {
+      "name": "BRYANT, ELIJAH",
+      "club": "HTA",
+      "clubName": "Hapoel IBI Tel Aviv",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/c344f0a6-f545-4bfe-b59b-61f8ccce3c0e.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "GRANT, JERIAN",
+     "score": 0.4
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "TJ Shorts -",
+    "name": "TJ Shorts",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "012608",
+     "boxName": "SHORTS, TJ",
+     "team": "PAN",
+     "min": "30:17",
+     "pts": 14,
+     "gameCode": 289,
+     "elRound": 29,
+     "score": 1,
+     "people": {
+      "name": "SHORTS, TJ",
+      "club": "PAN",
+      "clubName": "Panathinaikos AKTOR Athens",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/c0323c00-43ae-41c3-ba0a-cffbb4e3854b.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "JONES, CHRIS",
+     "score": 0.444
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Obst -",
+    "name": "Obst",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "poništen",
+    "match": {
+     "code": "013367",
+     "boxName": "FORREST, TRENT",
+     "team": "BAS",
+     "min": "17:22",
+     "pts": 6,
+     "gameCode": 285,
+     "elRound": 29,
+     "score": 0.5,
+     "people": {
+      "name": "FORREST, TRENT",
+      "club": "BAS",
+      "clubName": "Kosner Baskonia Vitoria-Gasteiz",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/a329afc2-80e5-4cee-a08d-34c5d734cb3e.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "ROBINSON, JUSTIN",
+     "score": 0.375
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 28,
+  "day": "2026-03-05",
+  "kolo": "30 (T1)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 1000,
+  "potential": null,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 4,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Hezonja -",
+    "name": "Hezonja",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "003108",
+     "boxName": "HEZONJA, MARIO",
+     "team": "MAD",
+     "min": "24:24",
+     "pts": 19,
+     "gameCode": 295,
+     "elRound": 30,
+     "score": 1,
+     "people": {
+      "name": "HEZONJA, MARIO",
+      "club": "MAD",
+      "clubName": "Real Madrid",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/c415b3ab-6a2d-4ff4-8504-5119fca3c9f6.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "NEDOVIC, NEMANJA",
+     "score": 0.543
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Brooks -",
+    "name": "Brooks",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "013384",
+     "boxName": "BROOKS, ARMONI",
+     "team": "MIL",
+     "min": "15:32",
+     "pts": 11,
+     "gameCode": 291,
+     "elRound": 30,
+     "score": 1,
+     "people": {
+      "name": "BROOKS, ARMONI",
+      "club": "MIL",
+      "clubName": "EA7 Emporio Armani Milan",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/8c4d5e17-01aa-4f77-99b1-207d7c82d195.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "BAIOCCHI, MATTEO",
+     "score": 0.5
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Shengelia +",
+    "name": "Shengelia",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "001133",
+     "boxName": "SHENGELIA, TORNIKE",
+     "team": "BAR",
+     "min": "25:08",
+     "pts": 15,
+     "gameCode": 291,
+     "elRound": 30,
+     "score": 1,
+     "people": {
+      "name": "SHENGELIA, TORNIKE",
+      "club": "BAR",
+      "clubName": "FC Barcelona",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/45cc5a88-23f5-4a53-9139-22ebee644841.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "VESELY, JAN",
+     "score": 0.5
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Gos -",
+    "name": "Gos",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "007982",
+     "boxName": "WILLIAMS-GOSS, NIGEL",
+     "team": "ZAL",
+     "min": "27:44",
+     "pts": 4,
+     "gameCode": 296,
+     "elRound": 30,
+     "score": 1,
+     "people": {
+      "name": "WILLIAMS-GOSS, NIGEL",
+      "club": "ZAL",
+      "clubName": "Zalgiris Kaunas",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/657693b6-df7a-4f83-b8d6-10c2ed158dce.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "NEBO, JOSH",
+     "score": 0.633
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 29,
+  "day": "2026-03-06",
+  "kolo": "30 (T2)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 500,
+  "potential": null,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 4,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Fournier -",
+    "name": "Fournier",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "013380",
+     "boxName": "FOURNIER, EVAN",
+     "team": "OLY",
+     "min": "24:32",
+     "pts": 5,
+     "gameCode": 300,
+     "elRound": 30,
+     "score": 1,
+     "people": {
+      "name": "FOURNIER, EVAN",
+      "club": "OLY",
+      "clubName": "Olympiacos Piraeus",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/948551c5-285e-44d1-8a50-35cd9b019e97.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "FARIED, KENNETH",
+     "score": 0.571
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Izundu +",
+    "name": "Izundu",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "014029",
+     "boxName": "IZUNDU, EBUKA",
+     "team": "RED",
+     "min": "12:29",
+     "pts": 9,
+     "gameCode": 299,
+     "elRound": 30,
+     "score": 1,
+     "people": {
+      "name": "IZUNDU, EBUKA",
+      "club": "RED",
+      "clubName": "Crvena Zvezda Meridianbet Belgrade",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/34d169ce-3794-4b52-bfca-d9646efe4a24.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "MILUTINOV, NIKOLA",
+     "score": 0.333
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Moneke +",
+    "name": "Moneke",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "012201",
+     "boxName": "MONEKE, CHIMA",
+     "team": "RED",
+     "min": "24:31",
+     "pts": 22,
+     "gameCode": 299,
+     "elRound": 30,
+     "score": 1,
+     "people": {
+      "name": "MONEKE, CHIMA",
+      "club": "RED",
+      "clubName": "Crvena Zvezda Meridianbet Belgrade",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/aa0efbb3-86a1-48df-8206-0aacbba5e0b4.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "JONES, TYRIQUE",
+     "score": 0.5
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Omoruyi -",
+    "name": "Omoruyi",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "014207",
+     "boxName": "OMORUYI, EUGENE",
+     "team": "BAS",
+     "min": "24:28",
+     "pts": 17,
+     "gameCode": 298,
+     "elRound": 30,
+     "score": 1,
+     "people": {
+      "name": "OMORUYI, EUGENE",
+      "club": "BAS",
+      "clubName": "Kosner Baskonia Vitoria-Gasteiz",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/22e77d9a-90d9-49f1-9121-a7063fa9c19d.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "JOSEPH, CORY",
+     "score": 0.475
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 30,
+  "day": "2026-03-12",
+  "kolo": "31 (T2)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 1000,
+  "potential": null,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 6,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Forrest +",
+    "name": "Forrest",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "013367",
+     "boxName": "FORREST, TRENT",
+     "team": "BAS",
+     "min": "16:06",
+     "pts": 5,
+     "gameCode": 308,
+     "elRound": 31,
+     "score": 1,
+     "people": {
+      "name": "FORREST, TRENT",
+      "club": "BAS",
+      "clubName": "Kosner Baskonia Vitoria-Gasteiz",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/a329afc2-80e5-4cee-a08d-34c5d734cb3e.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "SHORTS, TJ",
+     "score": 0.5
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Mck. Wright +",
+    "name": "Mck. Wright",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "012606",
+     "boxName": "WRIGHT IV, MCKINLEY",
+     "team": "DUB",
+     "min": "25:58",
+     "pts": 11,
+     "gameCode": 308,
+     "elRound": 31,
+     "score": 1,
+     "people": {
+      "name": "WRIGHT IV, MCKINLEY",
+      "club": "DUB",
+      "clubName": "Dubai Basketball",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/fe4b23d9-6151-4758-a15f-0339607df198.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "WRIGHT, MOSES",
+     "score": 0.6
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Hezonja +",
+    "name": "Hezonja",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "003108",
+     "boxName": "HEZONJA, MARIO",
+     "team": "MAD",
+     "min": "21:43",
+     "pts": 16,
+     "gameCode": 303,
+     "elRound": 31,
+     "score": 1,
+     "people": {
+      "name": "HEZONJA, MARIO",
+      "club": "MAD",
+      "clubName": "Real Madrid",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/c415b3ab-6a2d-4ff4-8504-5119fca3c9f6.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "NEDOVIC, NEMANJA",
+     "score": 0.543
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Dimitrijevic -",
+    "name": "Dimitrijevic",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "006085",
+     "boxName": "DIMITRIJEVIC, NENO",
+     "team": "MUN",
+     "min": "16:13",
+     "pts": 2,
+     "gameCode": 301,
+     "elRound": 31,
+     "score": 1,
+     "people": {
+      "name": "DIMITRIJEVIC, NENO",
+      "club": "MUN",
+      "clubName": "FC Bayern Munich",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCbqcoI/d0eaec8a-4e8d-4c13-b312-b4597ffbc2a9.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "DIAKITE, MAMADI",
+     "score": 0.364
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 31,
+  "day": "2026-03-13",
+  "kolo": "31 (T3)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 500,
+  "potential": null,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 3,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Izundu +",
+    "name": "Izundu",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "014029",
+     "boxName": "IZUNDU, EBUKA",
+     "team": "RED",
+     "min": "18:17",
+     "pts": 13,
+     "gameCode": 307,
+     "elRound": 31,
+     "score": 1,
+     "people": {
+      "name": "IZUNDU, EBUKA",
+      "club": "RED",
+      "clubName": "Crvena Zvezda Meridianbet Belgrade",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/34d169ce-3794-4b52-bfca-d9646efe4a24.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "BRIZUELA, DARIO",
+     "score": 0.375
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "L. Walker -",
+    "name": "L. Walker",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "013403",
+     "boxName": "WALKER IV, LONNIE",
+     "team": "TEL",
+     "min": "25:19",
+     "pts": 16,
+     "gameCode": 309,
+     "elRound": 31,
+     "score": 1,
+     "people": {
+      "name": "WALKER IV, LONNIE",
+      "club": "TEL",
+      "clubName": "Maccabi Rapyd Tel Aviv",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/596dc864-a996-4d21-8131-ea85deb006b7.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "CALE, MYLES",
+     "score": 0.3
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Horton-Tucker +",
+    "name": "Horton-Tucker",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "014124",
+     "boxName": "HORTON TUCKER, TALEN",
+     "team": "ULK",
+     "min": "24:35",
+     "pts": 14,
+     "gameCode": 307,
+     "elRound": 31,
+     "score": 1,
+     "people": {
+      "name": "HORTON TUCKER, TALEN",
+      "club": "ULK",
+      "clubName": "Fenerbahce Beko Istanbul",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/286f23c5-49f8-4ae7-b54d-c9bbe5e3f3e0.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "PUNTER, KEVIN",
+     "score": 0.4
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Blakeney -",
+    "name": "Blakeney",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "013402",
+     "boxName": "BLAKENEY, ANTONIO",
+     "team": "HTA",
+     "min": "21:16",
+     "pts": 8,
+     "gameCode": 310,
+     "elRound": 31,
+     "score": 1,
+     "people": {
+      "name": "BLAKENEY, ANTONIO",
+      "club": "HTA",
+      "clubName": "Hapoel IBI Tel Aviv",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/ea09b983-45e0-4140-a486-085bfe2cc4f6.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "BOOKER, DEVIN",
+     "score": 0.375
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 32,
+  "day": "2026-03-19",
+  "kolo": "32 (T1)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 500,
+  "potential": null,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 6,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Fournier -",
+    "name": "Fournier",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "013380",
+     "boxName": "FOURNIER, EVAN",
+     "team": "OLY",
+     "min": "17:09",
+     "pts": 6,
+     "gameCode": 313,
+     "elRound": 32,
+     "score": 1,
+     "people": {
+      "name": "FOURNIER, EVAN",
+      "club": "OLY",
+      "clubName": "Olympiacos Piraeus",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/948551c5-285e-44d1-8a50-35cd9b019e97.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "PUNTER, KEVIN",
+     "score": 0.571
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Obst -",
+    "name": "Obst",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "004508",
+     "boxName": "OBST, ANDREAS",
+     "team": "MUN",
+     "min": "28:05",
+     "pts": 10,
+     "gameCode": 311,
+     "elRound": 32,
+     "score": 1,
+     "people": {
+      "name": "OBST, ANDREAS",
+      "club": "MUN",
+      "clubName": "FC Bayern Munich",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/d3d714e5-0b66-497b-afbd-2587ac9e856c.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "FORREST, TRENT",
+     "score": 0.5
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Mck. Wright -",
+    "name": "Mck. Wright",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "012606",
+     "boxName": "WRIGHT IV, MCKINLEY",
+     "team": "DUB",
+     "min": "31:25",
+     "pts": 2,
+     "gameCode": 311,
+     "elRound": 32,
+     "score": 1,
+     "people": {
+      "name": "WRIGHT IV, MCKINLEY",
+      "club": "DUB",
+      "clubName": "Dubai Basketball",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/fe4b23d9-6151-4758-a15f-0339607df198.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "WAINRIGHT, ISH",
+     "score": 0.375
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Petrusev +",
+    "name": "Petrusev",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "011194",
+     "boxName": "PETRUSEV, FILIP",
+     "team": "DUB",
+     "min": "13:00",
+     "pts": 2,
+     "gameCode": 311,
+     "elRound": 32,
+     "score": 1,
+     "people": {
+      "name": "PETRUSEV, FILIP",
+      "club": "DUB",
+      "clubName": "Dubai Basketball",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/e51a295f-bae6-49d2-b0a9-083e0e32666c.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "PETERS, ALEC",
+     "score": 0.5
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 33,
+  "day": "2026-03-20",
+  "kolo": "32 (T2)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 500,
+  "potential": null,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 4,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Lessort +",
+    "name": "Lessort",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "003842",
+     "boxName": "LESSORT, MATHIAS",
+     "team": "PAN",
+     "min": "17:05",
+     "pts": 3,
+     "gameCode": 319,
+     "elRound": 32,
+     "score": 1,
+     "people": {
+      "name": "LESSORT, MATHIAS",
+      "club": "PAN",
+      "clubName": "Panathinaikos AKTOR Athens",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/6c2a56e1-1c47-4771-9b90-bbcc97becc70.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "SHORTS, TJ",
+     "score": 0.5
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Moneke -",
+    "name": "Moneke",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "012201",
+     "boxName": "MONEKE, CHIMA",
+     "team": "RED",
+     "min": "22:40",
+     "pts": 12,
+     "gameCode": 319,
+     "elRound": 32,
+     "score": 1,
+     "people": {
+      "name": "MONEKE, CHIMA",
+      "club": "RED",
+      "clubName": "Crvena Zvezda Meridianbet Belgrade",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/aa0efbb3-86a1-48df-8206-0aacbba5e0b4.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "OKEKE, CHUMA",
+     "score": 0.667
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Motiejunas +",
+    "name": "Motiejunas",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "poništen",
+    "match": {
+     "code": "LCZ",
+     "boxName": "MOTIEJUNAS, DONATAS",
+     "team": "RED",
+     "min": "DNP",
+     "pts": 0,
+     "gameCode": 319,
+     "elRound": 32,
+     "score": 1,
+     "people": {
+      "name": "MOTIEJUNAS, DONATAS",
+      "club": "RED",
+      "clubName": "Crvena Zvezda Meridianbet Belgrade",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/b9453f11-74b4-498e-8490-e5cbc1b25255.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "LESSORT, MATHIAS",
+     "score": 0.475
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Sorkin -",
+    "name": "Sorkin",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "011219",
+     "boxName": "SORKIN, ROMAN",
+     "team": "TEL",
+     "min": "29:08",
+     "pts": 23,
+     "gameCode": 318,
+     "elRound": 32,
+     "score": 1,
+     "people": {
+      "name": "SORKIN, ROMAN",
+      "club": "TEL",
+      "clubName": "Maccabi Rapyd Tel Aviv",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/3b33706b-7e4e-4914-a4ff-074e7ffb43e1.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "DOWTIN JR, JEFFREY",
+     "score": 0.5
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 34,
+  "day": "2026-03-24",
+  "kolo": "33 (T1)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 500,
+  "potential": null,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 8,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Fournier -",
+    "name": "Fournier",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "013380",
+     "boxName": "FOURNIER, EVAN",
+     "team": "OLY",
+     "min": "24:03",
+     "pts": 12,
+     "gameCode": 327,
+     "elRound": 33,
+     "score": 1,
+     "people": {
+      "name": "FOURNIER, EVAN",
+      "club": "OLY",
+      "clubName": "Olympiacos Piraeus",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/948551c5-285e-44d1-8a50-35cd9b019e97.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "PUNTER, KEVIN",
+     "score": 0.571
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Milton +",
+    "name": "Milton",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "014007",
+     "boxName": "MILTON, SHAKE",
+     "team": "PAR",
+     "min": "15:19",
+     "pts": 2,
+     "gameCode": 325,
+     "elRound": 33,
+     "score": 1,
+     "people": {
+      "name": "MILTON, SHAKE",
+      "club": "PAR",
+      "clubName": "Partizan Mozzart Bet Belgrade",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/913386b0-4099-4b7c-9b5f-40d18c8c023a.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "MALEDON, THEO",
+     "score": 0.571
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Oturu +",
+    "name": "Oturu",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "012788",
+     "boxName": "OTURU, DAN",
+     "team": "HTA",
+     "min": "17:20",
+     "pts": 10,
+     "gameCode": 326,
+     "elRound": 33,
+     "score": 1,
+     "people": {
+      "name": "OTURU, DAN",
+      "club": "HTA",
+      "clubName": "Hapoel IBI Tel Aviv",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/3bdc3cf1-638b-4095-8b2b-099d31ce686b.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "MONTERO, JEAN",
+     "score": 0.429
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "PJ Dozier -",
+    "name": "PJ Dozier",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "012742",
+     "boxName": "DOZIER, PJ",
+     "team": "IST",
+     "min": "23:46",
+     "pts": 13,
+     "gameCode": 323,
+     "elRound": 33,
+     "score": 1,
+     "people": {
+      "name": "DOZIER, PJ",
+      "club": "IST",
+      "clubName": "Anadolu Efes Istanbul",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/ac43e15a-c08d-42ed-a896-599ef9c4c3fc.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "DORSEY, TYLER",
+     "score": 0.364
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 35,
+  "day": "2026-03-26",
+  "kolo": "34 (T1)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 1000,
+  "potential": null,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 4,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Blatt +",
+    "name": "Blatt",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "011193",
+     "boxName": "BLATT, TAMIR",
+     "team": "TEL",
+     "min": "15:03",
+     "pts": 4,
+     "gameCode": 333,
+     "elRound": 34,
+     "score": 1,
+     "people": {
+      "name": "BLATT, TAMIR",
+      "club": "TEL",
+      "clubName": "Maccabi Rapyd Tel Aviv",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/780f9309-2c9f-4a43-be7f-9f7a7182d133.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "WEILER-BABB, NICK",
+     "score": 0.5
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Lucic -",
+    "name": "Lucic",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "001288",
+     "boxName": "LUCIC, VLADIMIR",
+     "team": "MUN",
+     "min": "23:35",
+     "pts": 7,
+     "gameCode": 332,
+     "elRound": 34,
+     "score": 1,
+     "people": {
+      "name": "LUCIC, VLADIMIR",
+      "club": "MUN",
+      "clubName": "FC Bayern Munich",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/c1901dfd-8e25-4833-a576-ac4ab82d75a6.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "ANDERSON, JUSTIN",
+     "score": 0.475
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Mck. Wirght -",
+    "name": "Mck. Wirght",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "012606",
+     "boxName": "WRIGHT IV, MCKINLEY",
+     "team": "DUB",
+     "min": "36:23",
+     "pts": 26,
+     "gameCode": 333,
+     "elRound": 34,
+     "score": 0.6,
+     "people": {
+      "name": "WRIGHT IV, MCKINLEY",
+      "club": "DUB",
+      "clubName": "Dubai Basketball",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/fe4b23d9-6151-4758-a15f-0339607df198.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "DOWTIN JR, JEFFREY",
+     "score": 0.24
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Tavares -",
+    "name": "Tavares",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "005791",
+     "boxName": "TAVARES, WALTER",
+     "team": "MAD",
+     "min": "26:51",
+     "pts": 10,
+     "gameCode": 335,
+     "elRound": 34,
+     "score": 1,
+     "people": {
+      "name": "TAVARES, WALTER",
+      "club": "MAD",
+      "clubName": "Real Madrid",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/90f9344a-3a6f-406e-bd33-8218abd2e8f6.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "EDWARDS, CARSEN",
+     "score": 0.571
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 36,
+  "day": "2026-03-27",
+  "kolo": "34 (T2)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 500,
+  "potential": null,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 5,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Bruno +",
+    "name": "Bruno",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "013667",
+     "boxName": "FERNANDO, BRUNO",
+     "team": "PAR",
+     "min": "19:33",
+     "pts": 4,
+     "gameCode": 340,
+     "elRound": 34,
+     "score": 0.95,
+     "people": {
+      "name": "FERNANDO, BRUNO",
+      "club": "PAR",
+      "clubName": "Partizan Mozzart Bet Belgrade",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/771c73d1-4537-447b-b668-043882902961.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "BOSTON JR., BRANDON",
+     "score": 0.543
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Osman -",
+    "name": "Osman",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "004088",
+     "boxName": "OSMAN, CEDI",
+     "team": "PAN",
+     "min": "22:39",
+     "pts": 8,
+     "gameCode": 339,
+     "elRound": 34,
+     "score": 1,
+     "people": {
+      "name": "OSMAN, CEDI",
+      "club": "PAN",
+      "clubName": "Panathinaikos AKTOR Athens",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/dd9f197a-73d3-4d91-a3d5-63b9d7fe0bcc.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "BOSTON JR., BRANDON",
+     "score": 0.5
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Blossomgame +",
+    "name": "Blossomgame",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "011231",
+     "boxName": "BLOSSOMGAME, JARON",
+     "team": "MCO",
+     "min": "31:10",
+     "pts": 14,
+     "gameCode": 339,
+     "elRound": 34,
+     "score": 1,
+     "people": {
+      "name": "BLOSSOMGAME, JARON",
+      "club": "MCO",
+      "clubName": "AS Monaco",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/47740cf2-cdbf-4529-9cbe-3954f423f542.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "BOLOMBOY, JOEL",
+     "score": 0.4
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Nwora -",
+    "name": "Nwora",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "013363",
+     "boxName": "NWORA, JORDAN",
+     "team": "RED",
+     "min": "33:55",
+     "pts": 26,
+     "gameCode": 337,
+     "elRound": 34,
+     "score": 1,
+     "people": {
+      "name": "NWORA, JORDAN",
+      "club": "RED",
+      "clubName": "Crvena Zvezda Meridianbet Belgrade",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/07e28b94-3ed7-4077-bfea-0272d3bdea67.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "KALINIC, NIKOLA",
+     "score": 0.475
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 37,
+  "day": "2026-04-02",
+  "kolo": "35 (T2)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 1000,
+  "potential": null,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 6,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Dobric +",
+    "name": "Dobric",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "004007",
+     "boxName": "DOBRIC, OGNJEN",
+     "team": "RED",
+     "min": "13:09",
+     "pts": 0,
+     "gameCode": 342,
+     "elRound": 35,
+     "score": 1,
+     "people": {
+      "name": "DOBRIC, OGNJEN",
+      "club": "RED",
+      "clubName": "Crvena Zvezda Meridianbet Belgrade",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/80c68581-78c5-44b8-b3ea-21555bfaff4f.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "DOWTIN JR, JEFFREY",
+     "score": 0.5
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Robinson -",
+    "name": "Robinson",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "014008",
+     "boxName": "ROBINSON, JUSTIN",
+     "team": "PRS",
+     "min": "16:22",
+     "pts": 8,
+     "gameCode": 344,
+     "elRound": 35,
+     "score": 1,
+     "people": {
+      "name": "ROBINSON, JUSTIN",
+      "club": "PRS",
+      "clubName": "Paris Basketball",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/37224ff3-e0d3-48a2-b1a0-fb72065b24f8.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "CARTER, TYSON",
+     "score": 0.475
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Clark +",
+    "name": "Clark",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "013699",
+     "boxName": "CLARK III, JIMMY",
+     "team": "TEL",
+     "min": "26:19",
+     "pts": 17,
+     "gameCode": 341,
+     "elRound": 35,
+     "score": 1,
+     "people": {
+      "name": "CLARK III, JIMMY",
+      "club": "TEL",
+      "clubName": "Maccabi Rapyd Tel Aviv",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/fc0e527c-4d5c-479e-a067-3701084cf554.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "JONES, CARLIK",
+     "score": 0.475
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Ouattara +",
+    "name": "Ouattara",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "004197",
+     "boxName": "OUATTARA, YAKUBA",
+     "team": "PRS",
+     "min": "11:31",
+     "pts": 3,
+     "gameCode": 344,
+     "elRound": 35,
+     "score": 1,
+     "people": {
+      "name": "OUATTARA, YAKUBA",
+      "club": "PRS",
+      "clubName": "Paris Basketball",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/7a130397-0f2a-47a2-adc3-eed775bcbf37.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "PARRA, JOEL",
+     "score": 0.5
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 38,
+  "day": "2026-04-03",
+  "kolo": "35 (T3)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 500,
+  "potential": null,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 3,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Fournier -",
+    "name": "Fournier",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "013380",
+     "boxName": "FOURNIER, EVAN",
+     "team": "OLY",
+     "min": "22:10",
+     "pts": 3,
+     "gameCode": 349,
+     "elRound": 35,
+     "score": 1,
+     "people": {
+      "name": "FOURNIER, EVAN",
+      "club": "OLY",
+      "clubName": "Olympiacos Piraeus",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/948551c5-285e-44d1-8a50-35cd9b019e97.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "FRISCH, CLEMENT",
+     "score": 0.429
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Dorsey +",
+    "name": "Dorsey",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "009849",
+     "boxName": "DORSEY, TYLER",
+     "team": "OLY",
+     "min": "15:31",
+     "pts": 13,
+     "gameCode": 349,
+     "elRound": 35,
+     "score": 1,
+     "people": {
+      "name": "DORSEY, TYLER",
+      "club": "OLY",
+      "clubName": "Olympiacos Piraeus",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/bc74ec12-71a8-425e-9ff8-e50eefec1f62.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "MOORE, OMARI",
+     "score": 0.5
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Montero +",
+    "name": "Montero",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "010042",
+     "boxName": "MONTERO, JEAN",
+     "team": "PAM",
+     "min": "25:23",
+     "pts": 11,
+     "gameCode": 350,
+     "elRound": 35,
+     "score": 1,
+     "people": {
+      "name": "MONTERO, JEAN",
+      "club": "PAM",
+      "clubName": "Valencia Basket",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/1f77a5c9-ccef-4bda-b0e8-11e4f1a8d9d8.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "MORRIS, MONTE",
+     "score": 0.679
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Smailagic +",
+    "name": "Smailagic",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "011051",
+     "boxName": "SMAILAGIC, ALEN",
+     "team": "VIR",
+     "min": "04:16",
+     "pts": 2,
+     "gameCode": 350,
+     "elRound": 35,
+     "score": 1,
+     "people": {
+      "name": "SMAILAGIC, ALEN",
+      "club": "VIR",
+      "clubName": "Virtus Bologna",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/ae9cae56-3e7e-4f67-ad21-e0926b9f159b.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "MCKISSIC, SHAQUIELLE",
+     "score": 0.444
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2526",
+  "row": 39,
+  "day": "2026-04-07",
+  "kolo": "36 (T1)",
+  "season": "E2025",
+  "payer": null,
+  "stake": 1000,
+  "potential": null,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 8,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Fournier -",
+    "name": "Fournier",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "013380",
+     "boxName": "FOURNIER, EVAN",
+     "team": "OLY",
+     "min": "05:18",
+     "pts": 0,
+     "gameCode": 355,
+     "elRound": 36,
+     "score": 1,
+     "people": {
+      "name": "FOURNIER, EVAN",
+      "club": "OLY",
+      "clubName": "Olympiacos Piraeus",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/948551c5-285e-44d1-8a50-35cd9b019e97.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "PUNTER, KEVIN",
+     "score": 0.571
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Hayes-Davis -",
+    "name": "Hayes-Davis",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "008962",
+     "boxName": "HAYES-DAVIS, NIGEL",
+     "team": "PAN",
+     "min": "25:00",
+     "pts": 14,
+     "gameCode": 353,
+     "elRound": 36,
+     "score": 1,
+     "people": {
+      "name": "HAYES-DAVIS, NIGEL",
+      "club": "PAN",
+      "clubName": "Panathinaikos AKTOR Athens",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCbqcoH/2db79cc7-9c4d-4bf2-99ea-d118e1487a69.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "BERTANS, DAVIS",
+     "score": 0.528
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Obst +",
+    "name": "Obst",
+    "line": null,
+    "dir": "više",
+    "pts": null,
+    "outcome": "promašaj",
+    "match": {
+     "code": "004508",
+     "boxName": "OBST, ANDREAS",
+     "team": "MUN",
+     "min": "31:02",
+     "pts": 11,
+     "gameCode": 357,
+     "elRound": 36,
+     "score": 1,
+     "people": {
+      "name": "OBST, ANDREAS",
+      "club": "MUN",
+      "clubName": "FC Bayern Munich",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/d3d714e5-0b66-497b-afbd-2587ac9e856c.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "FORREST, TRENT",
+     "score": 0.5
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Butler -",
+    "name": "Butler",
+    "line": null,
+    "dir": "manje",
+    "pts": null,
+    "outcome": "pogodak",
+    "match": {
+     "code": "014163",
+     "boxName": "BUTLER, JARED",
+     "team": "RED",
+     "min": "13:10",
+     "pts": 3,
+     "gameCode": 352,
+     "elRound": 36,
+     "score": 1,
+     "people": {
+      "name": "BUTLER, JARED",
+      "club": "RED",
+      "clubName": "Crvena Zvezda Meridianbet Belgrade",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/926f8dbb-c1ff-46cc-a86e-3a68f78a11f9.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "BOOKER, DEVIN",
+     "score": 0.5
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2627",
+  "row": 2,
+  "day": "2026-09-24",
+  "kolo": "1. (T1)",
+  "season": "E2026",
+  "payer": "Simara",
+  "stake": 500,
+  "potential": 6507,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 7,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Francisco 15.5- (18)",
+    "name": "Francisco",
+    "line": 15.5,
+    "dir": "manje",
+    "pts": 18,
+    "outcome": "promašaj",
+    "match": {
+     "code": "007975",
+     "boxName": "FRANCISCO, SYLVAIN",
+     "team": "PAN",
+     "min": "21:53",
+     "pts": 18,
+     "gameCode": 7,
+     "elRound": 1,
+     "score": 1.15,
+     "people": {
+      "name": "FRANCISCO, SYLVAIN",
+      "club": "ZAL",
+      "clubName": "Zalgiris Kaunas",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/bab9d21f-1fbd-401a-8b26-f9b350a4c47d.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "FRISCH, CLEMENT",
+     "score": 0.406
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Chris Jones 8.5+ (15)",
+    "name": "Chris Jones",
+    "line": 8.5,
+    "dir": "više",
+    "pts": 15,
+    "outcome": "pogodak",
+    "match": {
+     "code": "010568",
+     "boxName": "JONES, CHRIS",
+     "team": "RED",
+     "min": "18:44",
+     "pts": 15,
+     "gameCode": 1,
+     "elRound": 1,
+     "score": 1.15,
+     "people": {
+      "name": "JONES, CHRIS",
+      "club": "HTA",
+      "clubName": "Hapoel IBI Tel Aviv",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/62f1e81b-7c88-4cb1-9eb8-9054a68c2625.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "JONES, KAI",
+     "score": 0.6
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Bonga 9.5- (5)",
+    "name": "Bonga",
+    "line": 9.5,
+    "dir": "manje",
+    "pts": 5,
+    "outcome": "pogodak",
+    "match": {
+     "code": "006760",
+     "boxName": "BONGA, ISAAC",
+     "team": "PAN",
+     "min": "16:56",
+     "pts": 5,
+     "gameCode": 7,
+     "elRound": 1,
+     "score": 1.15,
+     "people": {
+      "name": "BONGA, ISAAC",
+      "club": "PAR",
+      "clubName": "Partizan Mozzart Bet Belgrade",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/a838b518-6e96-4482-b67f-90f52f979588.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "GACH, BOTH",
+     "score": 0.53
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "DJ Stewart 12.5- (8)",
+    "name": "DJ Stewart",
+    "line": 12.5,
+    "dir": "manje",
+    "pts": 8,
+    "outcome": "pogodak",
+    "match": {
+     "code": "012700",
+     "boxName": "STEWART, DJ",
+     "team": "BAS",
+     "min": "25:44",
+     "pts": 8,
+     "gameCode": 5,
+     "elRound": 1,
+     "score": 1.15,
+     "people": {
+      "name": "STEWART, DJ",
+      "club": "BAS",
+      "clubName": "Kosner Baskonia Vitoria-Gasteiz",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCjnONy/3227ae52-09cc-4723-a410-4cc76c99a30b.png",
+      "season": "E2026"
+     }
+    },
+    "runnerUp": {
+     "boxName": "TAVARES, WALTER",
+     "score": 0.535
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2627",
+  "row": 3,
+  "day": "2026-09-25",
+  "kolo": "1. (T2)",
+  "season": "E2026",
+  "payer": "Lakićević",
+  "stake": 500,
+  "potential": 5848,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 3,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Guduric 10.5- (18)",
+    "name": "Guduric",
+    "line": 10.5,
+    "dir": "manje",
+    "pts": 18,
+    "outcome": "promašaj",
+    "match": {
+     "code": "004004",
+     "boxName": "GUDURIC, MARKO",
+     "team": "MIL",
+     "min": "29:20",
+     "pts": 17,
+     "gameCode": 10,
+     "elRound": 1,
+     "score": 0.85,
+     "people": {
+      "name": "GUDURIC, MARKO",
+      "club": "MIL",
+      "clubName": "EA7 Emporio Armani Milan",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/ac49a13d-0aaa-4ce6-9fda-1292739525ca.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "ALSTON JR., DERRICK",
+     "score": 0.393
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "K. Hayes 7.5- (10)",
+    "name": "K. Hayes",
+    "line": 7.5,
+    "dir": "manje",
+    "pts": 10,
+    "outcome": "promašaj",
+    "match": {
+     "code": "010390",
+     "boxName": "HAYES, KEVARRIUS",
+     "team": "PAR",
+     "min": "16:38",
+     "pts": 10,
+     "gameCode": 10,
+     "elRound": 1,
+     "score": 1.15,
+     "people": {
+      "name": "HAYES, KEVARRIUS",
+      "club": "MCO",
+      "clubName": "AS Monaco",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/f8b50ed9-1f5a-4e02-9046-4ec6bd379217.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "RIVERO, JASIEL",
+     "score": 0.35
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Hall 7.5+ (13)",
+    "name": "Hall",
+    "line": 7.5,
+    "dir": "više",
+    "pts": 13,
+    "outcome": "pogodak",
+    "match": {
+     "code": "011205",
+     "boxName": "HALL, DEVON",
+     "team": "MIL",
+     "min": "27:52",
+     "pts": 13,
+     "gameCode": 10,
+     "elRound": 1,
+     "score": 1.15,
+     "people": {
+      "name": "HALL, DEVON",
+      "club": "ULK",
+      "clubName": "Fenerbahce Beko Istanbul",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/691073bc-264c-4124-93e8-82c09abb8d5a.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "HORTON TUCKER, TALEN",
+     "score": 0.53
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Saint-Supery 5.5- (7)",
+    "name": "Saint-Supery",
+    "line": 5.5,
+    "dir": "manje",
+    "pts": 7,
+    "outcome": "promašaj",
+    "match": {
+     "code": "011706",
+     "boxName": "SAINT-SUPERY, MARIO",
+     "team": "PAM",
+     "min": "16:26",
+     "pts": 7,
+     "gameCode": 8,
+     "elRound": 1,
+     "score": 1.15,
+     "people": {
+      "name": "SAINT-SUPERY, MARIO",
+      "club": "PAM",
+      "clubName": "Valencia Basket",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCjnONy/444fcffe-f94d-4843-bdb7-801ba2b9b2cc.png",
+      "season": "E2026"
+     }
+    },
+    "runnerUp": {
+     "boxName": "BROWN, ANTHONY",
+     "score": 0.495
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2627",
+  "row": 4,
+  "day": "2026-09-29",
+  "kolo": "2. (T1)",
+  "season": "E2026",
+  "payer": "Ivanišević",
+  "stake": 500,
+  "potential": 6516,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 8,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Weiler-Babb 4.5+ (2)",
+    "name": "Weiler-Babb",
+    "line": 4.5,
+    "dir": "više",
+    "pts": 2,
+    "outcome": "promašaj",
+    "match": {
+     "code": "010391",
+     "boxName": "WEILER-BABB, NICK",
+     "team": "RED",
+     "min": "16:59",
+     "pts": 2,
+     "gameCode": 12,
+     "elRound": 2,
+     "score": 1.15,
+     "people": {
+      "name": "WEILER-BABB, NICK",
+      "club": "IST",
+      "clubName": "Anadolu Efes Istanbul",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/e23682a9-5374-4706-b343-36f49f61236d.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "GERMAN, EUGENE",
+     "score": 0.483
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Luwawu-Cabarrot 15.5- (0)",
+    "name": "Luwawu-Cabarrot",
+    "line": 15.5,
+    "dir": "manje",
+    "pts": 0,
+    "outcome": "pogodak",
+    "match": {
+     "code": "012080",
+     "boxName": "LUWAWU-CABARROT, TIMOTHE",
+     "team": "MAD",
+     "min": "10:48",
+     "pts": 0,
+     "gameCode": 11,
+     "elRound": 2,
+     "score": 1.15,
+     "people": {
+      "name": "LUWAWU-CABARROT, TIMOTHE",
+      "club": "BAS",
+      "clubName": "Kosner Baskonia Vitoria-Gasteiz",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/96750db7-50f9-49bb-9fcc-56ed731ccce3.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "HACKETT, DANIEL",
+     "score": 0.381
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Obst 13.5+ (8)",
+    "name": "Obst",
+    "line": 13.5,
+    "dir": "više",
+    "pts": 8,
+    "outcome": "promašaj",
+    "match": {
+     "code": "004508",
+     "boxName": "OBST, ANDREAS",
+     "team": "MUN",
+     "min": "21:38",
+     "pts": 8,
+     "gameCode": 17,
+     "elRound": 2,
+     "score": 1.15,
+     "people": {
+      "name": "OBST, ANDREAS",
+      "club": "MUN",
+      "clubName": "FC Bayern Munich",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/d3d714e5-0b66-497b-afbd-2587ac9e856c.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "ODIASE, TAI",
+     "score": 0.483
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Jekiri 8.5- (15)",
+    "name": "Jekiri",
+    "line": 8.5,
+    "dir": "manje",
+    "pts": 15,
+    "outcome": "promašaj",
+    "match": {
+     "code": "009733",
+     "boxName": "JEKIRI, TONYE",
+     "team": "PAR",
+     "min": "21:30",
+     "pts": 15,
+     "gameCode": 18,
+     "elRound": 2,
+     "score": 1.15,
+     "people": {
+      "name": "JEKIRI, TONYE",
+      "club": "PAR",
+      "clubName": "Partizan Mozzart Bet Belgrade",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/995f6e1a-5ce1-46cf-a462-48e2ab5234e5.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "MONTERO, JEAN",
+     "score": 0.467
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2627",
+  "row": 5,
+  "day": "2026-10-01",
+  "kolo": "3. (T1)",
+  "season": "E2026",
+  "payer": "Tozislav",
+  "stake": 500,
+  "potential": 6340,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 4,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Fournier 11.5- (6)",
+    "name": "Fournier",
+    "line": 11.5,
+    "dir": "manje",
+    "pts": 6,
+    "outcome": "pogodak",
+    "match": {
+     "code": "013380",
+     "boxName": "FOURNIER, EVAN",
+     "team": "OLY",
+     "min": "20:00",
+     "pts": 6,
+     "gameCode": 23,
+     "elRound": 3,
+     "score": 1.15,
+     "people": {
+      "name": "FOURNIER, EVAN",
+      "club": "OLY",
+      "clubName": "Olympiacos Piraeus",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/948551c5-285e-44d1-8a50-35cd9b019e97.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "GRIGONIS, MARIUS",
+     "score": 0.421
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Saric 12.5+ (13)",
+    "name": "Saric",
+    "line": 12.5,
+    "dir": "više",
+    "pts": 13,
+    "outcome": "pogodak",
+    "match": {
+     "code": "003112",
+     "boxName": "SARIC, DARIO",
+     "team": "IST",
+     "min": "24:19",
+     "pts": 13,
+     "gameCode": 21,
+     "elRound": 3,
+     "score": 1.15,
+     "people": {
+      "name": "SARIC, DARIO",
+      "club": "IST",
+      "clubName": "Anadolu Efes Istanbul",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCjnONz/afdb2e3e-694e-44f2-a8d9-d97aa89dd86e.png",
+      "season": "E2026"
+     }
+    },
+    "runnerUp": {
+     "boxName": "BROWN, STERLING",
+     "score": 0.506
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Carter 7.5- (10)",
+    "name": "Carter",
+    "line": 7.5,
+    "dir": "manje",
+    "pts": 10,
+    "outcome": "promašaj",
+    "match": {
+     "code": "011305",
+     "boxName": "CARTER, TYSON",
+     "team": "RED",
+     "min": "19:52",
+     "pts": 11,
+     "gameCode": 21,
+     "elRound": 3,
+     "score": 0.85,
+     "people": {
+      "name": "CARTER, TYSON",
+      "club": "RED",
+      "clubName": "Crvena Zvezda Meridianbet Belgrade",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/5fc0955e-a1d4-4815-9570-ec96ab919f97.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "EDWARDS, CARSEN",
+     "score": 0.483
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Tyrique Jones 6.5+ (2)",
+    "name": "Tyrique Jones",
+    "line": 6.5,
+    "dir": "više",
+    "pts": 2,
+    "outcome": "promašaj",
+    "match": {
+     "code": "011981",
+     "boxName": "JONES, TYRIQUE",
+     "team": "OLY",
+     "min": "03:22",
+     "pts": 2,
+     "gameCode": 23,
+     "elRound": 3,
+     "score": 1.15,
+     "people": {
+      "name": "JONES, TYRIQUE",
+      "club": "OLY",
+      "clubName": "Olympiacos Piraeus",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/a4d5dc10-f5f0-432a-82b0-f92a5171bea6.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "JONES, DAMIAN",
+     "score": 0.721
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2627",
+  "row": 6,
+  "day": "2026-10-02",
+  "kolo": "3. (T2)",
+  "season": "E2026",
+  "payer": "Tozislav",
+  "stake": 500,
+  "potential": 6178,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 6,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Badio 8.5- (0)",
+    "name": "Badio",
+    "line": 8.5,
+    "dir": "manje",
+    "pts": 0,
+    "outcome": "pogodak",
+    "match": {
+     "code": "007527",
+     "boxName": "BADIO, BRANCOU",
+     "team": "PAN",
+     "min": "15:17",
+     "pts": 0,
+     "gameCode": 30,
+     "elRound": 3,
+     "score": 1.15,
+     "people": {
+      "name": "BADIO, BRANCOU",
+      "club": "PAM",
+      "clubName": "Valencia Basket",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/24556d2c-01db-4a9c-a2d0-e2607a4fae52.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "SAINT-SUPERY, MARIO",
+     "score": 0.72
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Sorkin 12.5- (13)",
+    "name": "Sorkin",
+    "line": 12.5,
+    "dir": "manje",
+    "pts": 13,
+    "outcome": "promašaj",
+    "match": {
+     "code": "011219",
+     "boxName": "SORKIN, ROMAN",
+     "team": "TEL",
+     "min": "20:51",
+     "pts": 13,
+     "gameCode": 30,
+     "elRound": 3,
+     "score": 1.15,
+     "people": {
+      "name": "SORKIN, ROMAN",
+      "club": "TEL",
+      "clubName": "Maccabi Rapyd Tel Aviv",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/3b33706b-7e4e-4914-a4ff-074e7ffb43e1.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "HAYES-DAVIS, NIGEL",
+     "score": 0.372
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Voigtmann 5.5+ (2)",
+    "name": "Voigtmann",
+    "line": 5.5,
+    "dir": "više",
+    "pts": 2,
+    "outcome": "promašaj",
+    "match": {
+     "code": "007201",
+     "boxName": "VOIGTMANN, JOHANNES",
+     "team": "MUN",
+     "min": "16:09",
+     "pts": 2,
+     "gameCode": 28,
+     "elRound": 3,
+     "score": 1.15,
+     "people": {
+      "name": "VOIGTMANN, JOHANNES",
+      "club": "MUN",
+      "clubName": "FC Bayern Munich",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/f25b3c46-64c0-4108-8168-c0ac3aa4a6bb.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "KORKMAZ, FURKAN",
+     "score": 0.525
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Washington 13.5- (20)",
+    "name": "Washington",
+    "line": 13.5,
+    "dir": "manje",
+    "pts": 20,
+    "outcome": "promašaj",
+    "match": {
+     "code": "013370",
+     "boxName": "WASHINGTON, DUANE",
+     "team": "MUN",
+     "min": "22:57",
+     "pts": 20,
+     "gameCode": 28,
+     "elRound": 3,
+     "score": 1.15,
+     "people": {
+      "name": "WASHINGTON, DUANE",
+      "club": "PAR",
+      "clubName": "Partizan Mozzart Bet Belgrade",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/0a809d60-836f-43a3-b73e-646935e87e78.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "BINGHAM, MARCUS",
+     "score": 0.483
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2627",
+  "row": 7,
+  "day": "2026-10-08",
+  "kolo": "4. (T2)",
+  "season": "E2026",
+  "payer": "Simara",
+  "stake": 500,
+  "potential": 6011,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 6,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Badio 5.5- (7)",
+    "name": "Badio",
+    "line": 5.5,
+    "dir": "manje",
+    "pts": 7,
+    "outcome": "promašaj",
+    "match": {
+     "code": "007527",
+     "boxName": "BADIO, BRANCOU",
+     "team": "PAN",
+     "min": "19:47",
+     "pts": 7,
+     "gameCode": 36,
+     "elRound": 4,
+     "score": 1.15,
+     "people": {
+      "name": "BADIO, BRANCOU",
+      "club": "PAM",
+      "clubName": "Valencia Basket",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/24556d2c-01db-4a9c-a2d0-e2607a4fae52.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "SY, BANDJA",
+     "score": 0.483
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "K. Hayes 5.5+ (5)",
+    "name": "K. Hayes",
+    "line": 5.5,
+    "dir": "više",
+    "pts": 5,
+    "outcome": "promašaj",
+    "match": {
+     "code": "010390",
+     "boxName": "HAYES, KEVARRIUS",
+     "team": "PAR",
+     "min": "16:23",
+     "pts": 5,
+     "gameCode": 35,
+     "elRound": 4,
+     "score": 1.15,
+     "people": {
+      "name": "HAYES, KEVARRIUS",
+      "club": "MCO",
+      "clubName": "AS Monaco",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/f8b50ed9-1f5a-4e02-9046-4ec6bd379217.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "HAYES-DAVIS, NIGEL",
+     "score": 0.45
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Hayes-Davis 12.5+ (19)",
+    "name": "Hayes-Davis",
+    "line": 12.5,
+    "dir": "više",
+    "pts": 19,
+    "outcome": "pogodak",
+    "match": {
+     "code": "008962",
+     "boxName": "HAYES-DAVIS, NIGEL",
+     "team": "PAN",
+     "min": "26:16",
+     "pts": 19,
+     "gameCode": 36,
+     "elRound": 4,
+     "score": 1.15,
+     "people": {
+      "name": "HAYES-DAVIS, NIGEL",
+      "club": "PAN",
+      "clubName": "Panathinaikos AKTOR Athens",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCbqcoH/2db79cc7-9c4d-4bf2-99ea-d118e1487a69.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "JONES, CARLIK",
+     "score": 0.372
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Feliz 6.5+ (9)",
+    "name": "Feliz",
+    "line": 6.5,
+    "dir": "više",
+    "pts": 9,
+    "outcome": "pogodak",
+    "match": {
+     "code": "011247",
+     "boxName": "FELIZ, ANDRES",
+     "team": "MAD",
+     "min": "18:33",
+     "pts": 9,
+     "gameCode": 35,
+     "elRound": 4,
+     "score": 1.15,
+     "people": {
+      "name": "FELIZ, ANDRES",
+      "club": "MAD",
+      "clubName": "Real Madrid",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/88b1e489-c8a9-4cd8-8137-db11145b579a.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "MELLI, NICOLO",
+     "score": 0.75
+    }
+   }
+  ]
+ },
+ {
+  "sheet": "EL 2627",
+  "row": 8,
+  "day": "2026-10-09",
+  "kolo": "4. (T3)",
+  "season": "E2026",
+  "payer": "Lakićević",
+  "stake": 500,
+  "potential": 6173,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 3,
+  "picks": [
+   {
+    "member": "Tozislav",
+    "raw": "Parra 8.5+ (4)",
+    "name": "Parra",
+    "line": 8.5,
+    "dir": "više",
+    "pts": 4,
+    "outcome": "promašaj",
+    "match": {
+     "code": "007464",
+     "boxName": "PARRA, JOEL",
+     "team": "BAR",
+     "min": "18:53",
+     "pts": 4,
+     "gameCode": 39,
+     "elRound": 4,
+     "score": 1.15,
+     "people": {
+      "name": "PARRA, JOEL",
+      "club": "BAR",
+      "clubName": "FC Barcelona",
+      "position": "Forward",
+      "photo": "https://media-cdn.cortextech.io/f7ed6b45-8416-4bfc-8d40-51b9635dae75.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "SANTOS, MARCIO",
+     "score": 0.467
+    }
+   },
+   {
+    "member": "Ivanišević",
+    "raw": "Gabriel 4.5+ (12)",
+    "name": "Gabriel",
+    "line": 4.5,
+    "dir": "više",
+    "pts": 12,
+    "outcome": "pogodak",
+    "match": {
+     "code": "013383",
+     "boxName": "GABRIEL, WENYEN",
+     "team": "BES",
+     "min": "17:41",
+     "pts": 14,
+     "gameCode": 38,
+     "elRound": 4,
+     "score": 0.85,
+     "people": {
+      "name": "GABRIEL, WENYEN",
+      "club": "MUN",
+      "clubName": "FC Bayern Munich",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/b2a934ec-11e0-4328-b9e4-2fefc29b4578.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "GRIGONIS, MARIUS",
+     "score": 0.557
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "Strazel 11.5+ (7)",
+    "name": "Strazel",
+    "line": 11.5,
+    "dir": "više",
+    "pts": 7,
+    "outcome": "promašaj",
+    "match": {
+     "code": "008099",
+     "boxName": "STRAZEL, MATTHEW",
+     "team": "IST",
+     "min": "18:13",
+     "pts": 7,
+     "gameCode": 40,
+     "elRound": 4,
+     "score": 1.15,
+     "people": {
+      "name": "STRAZEL, MATTHEW",
+      "club": "MCO",
+      "clubName": "AS Monaco",
+      "position": "Guard",
+      "photo": "https://media-cdn.cortextech.io/62264af8-6ced-4c06-9917-b872092fe532.png",
+      "season": "E2025"
+     }
+    },
+    "runnerUp": {
+     "boxName": "BRIZUELA, DARIO",
+     "score": 0.525
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Valančiunas 13.5+ (12)",
+    "name": "Valančiunas",
+    "line": 13.5,
+    "dir": "više",
+    "pts": 12,
+    "outcome": "promašaj",
+    "match": {
+     "code": "000898",
+     "boxName": "VALANCIUNAS, JONAS",
+     "team": "ZAL",
+     "min": "19:03",
+     "pts": 12,
+     "gameCode": 39,
+     "elRound": 4,
+     "score": 1.15,
+     "people": {
+      "name": "VALANCIUNAS, JONAS",
+      "club": "ZAL",
+      "clubName": "Zalgiris Kaunas",
+      "position": "Center",
+      "photo": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCjnOS3/45d32050-e6bf-4010-87fb-238db1c6b9ca.png",
+      "season": "E2026"
+     }
+    },
+    "runnerUp": {
+     "boxName": "GRIGONIS, MARIUS",
+     "score": 0.495
+    }
+   }
+  ]
+ }
+]
