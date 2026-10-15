@@ -35,3 +35,11 @@ Stvari naučene tokom razvoja koje nisu očigledne iz koda. Dopunjavati kako pro
 - Gašenje pozadinskog bash procesa **ne** gasi `mysqld`/`node` — gasiti sa `mysqladmin --protocol=tcp -h127.0.0.1 -P3307 -uroot shutdown` i `Stop-Process`. Ctrl+C u terminalu radi ispravno (trap).
 - Git Bash `curl -d` sa dijakritikom šalje pogrešno kodiran tekst (konzolna kodna strana) — za proveru UTF-8 koristiti Node `fetch`.
 - npm workspaces: posle promene glavne verzije React-a obrisati `node_modules` i `package-lock.json`, inače ostaje stara kopija u korenu (dva React-a → pucaju hook-ovi).
+
+## Deploy (Oracle VM)
+
+- VM je **arm64** (Ampere A1, Oracle Linux 9, korisnik `opc`) — image se gradi na samom VM-u, ne u CI-ju.
+- npm workspaces podižu (hoist) zavisnosti u korenski `node_modules`; `server/node_modules` možda ne postoji, pa ga Dockerfile pravi sa `mkdir -p` pre `COPY`.
+- Odmah posle kreiranja VM-a `dnf` je neko vreme zaključan (automatsko ažuriranje) — instalacija paketa pada sa "can't create transaction lock".
+- Oracle Linux ima `firewalld` (ne iptables kao Ubuntu image) i Caddy se instalira iz COPR-a `@caddy/caddy`.
+- Procena troška u Oracle čarobnjaku prikazuje cenu boot volumena bez Always Free popusta — stvarni trošak je 0.

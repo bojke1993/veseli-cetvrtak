@@ -9,7 +9,7 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 
 echo "==> Kopiram izvorni kod na $VC_HOST:$REMOTE_DIR"
 tar -C "$ROOT" -czf - \
-  --exclude=node_modules --exclude=dist --exclude=.git --exclude=server/public \
+  --exclude=node_modules --exclude=dist --exclude=.git --exclude=server/public --exclude=.localdb \
   --exclude='*.log' --exclude=.env \
   . | ssh "$VC_HOST" "sudo mkdir -p '$REMOTE_DIR' && sudo chown \$(id -u):\$(id -g) '$REMOTE_DIR' && rm -rf '$REMOTE_DIR'/* && tar -C '$REMOTE_DIR' -xzf -"
 
@@ -28,10 +28,20 @@ sudo docker run -d --name vc \
   --env-file /opt/vc/vc.env \
   veseli-cetvrtak:latest
 echo "Čekam health check..."
+healthy=0
 for i in $(seq 1 60); do
-  if curl -fsS http://127.0.0.1:8080/api/health >/dev/null 2>&1; then echo "OK"; exit 0; fi
+  if curl -fsS http://127.0.0.1:8080/api/health >/dev/null 2>&1; then healthy=1; echo "OK"; break; fi
   sleep 5
 done
-echo "Aplikacija se nije podigla; logovi:"; sudo docker logs --tail 100 vc; exit 1
+if [ "$healthy" != 1 ]; then
+  echo "Aplikacija se nije podigla; logovi:"; sudo docker logs --tail 100 vc; exit 1
+fi
+if command -v caddy >/dev/null 2>&1; then
+  echo "Ažuriram Caddy (HTTPS)..."
+  sudo install -m 644 deploy/Caddyfile /etc/caddy/Caddyfile
+  sudo systemctl enable --now caddy
+  sudo systemctl reload caddy
+fi
+sudo docker image prune -f >/dev/null
 REMOTE
 echo "==> Gotovo."

@@ -3,6 +3,8 @@
 **Izvor:** `Veseli cetvrtak.xlsx` (Google Sheets), listovi `EL 2526` (38 kola, 04.12.2025. – 07.04.2026.) i `EL 2627` (7 kola, 24.09. – 09.10.2026.).
 **Uvezeno:** 15.10.2026. — 45 kola, 180 tipova (lokalna baza). Fajl u formatu šablona aplikacije: [`istorija-za-uvoz.xlsx`](istorija-za-uvoz.xlsx) (igrači su označeni Evroliga ID-jem, npr. `Sylvain Francisco [013001]`).
 
+> **Produkcija (15.10.2026.):** uvezena je **samo sezona 2026/27** (7 kola, 24.09. – 09.10.2026.), skriptom `load-history.ts` sa `matched.json` filtriranim na list `EL 2627`, pokrenutom u privremenom `node:22` kontejneru na mreži kontejnera `vc` (`docker run --network container:vc --env-file /opt/vc/vc.env ...`). Sezona 2025/26 nije uvezena.
+>
 > **Na produkciji (VM):** igrači iz 2025/26 kojih više nema u Evroligi ne postoje u novoj bazi, pa ih ekran za uvoz ne bi automatski prepoznao. Istoriju zato uvesti istom skriptom (`server/scripts/load-history.ts`), koja ih prvo doda kao neaktivne — to je deo koraka deploy-a.
 
 ## Kako je tabela protumačena

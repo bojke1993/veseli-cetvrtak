@@ -2,58 +2,59 @@
 
 Aplikacija se isporučuje kao **jedan Docker image** (Node API + React + MySQL). Ovo uputstvo podiže je na besplatnu, stalno uključenu virtuelnu mašinu sa trajnim diskom (odluka OQ-01/OQ-02).
 
+Trenutni server: `opc@92.5.71.193` (Oracle Linux 9, arm64), domen **https://veseli-cetvrtak.duckdns.org**.
+
 ## 1. Kreiranje VM-a (jednom)
 
-1. Registracija na <https://www.oracle.com/cloud/free/> (traži karticu radi provere identiteta; Always Free resursi se ne naplaćuju). Izaberite *home region* blizu (npr. Frankfurt) — ne može se kasnije menjati.
+1. Registracija na <https://www.oracle.com/cloud/free/> (Free Tier nalog — **ne** prelaziti na Pay As You Go). Home region: Frankfurt.
 2. **Compute → Instances → Create instance**
-   - Image: **Ubuntu 24.04**
-   - Shape: **Ampere (VM.Standard.A1.Flex)**, 1 OCPU, 6 GB RAM (u okviru Always Free). Alternativa: VM.Standard.E2.1.Micro (1 GB RAM) radi, ali je tesna za MySQL.
-   - SSH: nalepite svoj javni ključ (`~/.ssh/id_ed25519.pub`; ako ga nemate: `ssh-keygen -t ed25519`).
-   - Boot volume: podrazumevanih 50 GB je dovoljno.
-3. **Networking → Virtual Cloud Network → Security List** dodajte *Ingress* pravila za TCP **80** i **443** sa `0.0.0.0/0`.
-4. Zapišite javnu IP adresu instance.
+   - Shape: **Ampere VM.Standard.A1.Flex**, 2 OCPU / 12 GB (Always Free). Ako javi *Out of capacity*, probati drugi availability domain.
+   - Image: **Oracle Linux 9** (aarch64). SSH korisnik je `opc`.
+   - SSH: *Upload public key file* → `~/.ssh/id_ed25519.pub`.
+   - Boot volume: podrazumevano. Procena troška u čarobnjaku (~1,85 €/mes. za disk) ne uračunava Always Free — stvarni trošak je 0.
+3. Ako instanca nema javnu IP: *Networking → VNIC → IP administration → Edit → Ephemeral public IP*.
+4. **VCN → Security List → Add Ingress Rules**: TCP **80** i **443** sa `0.0.0.0/0` (Stateless isključeno).
+5. **Billing → Budgets**: budžet 1 EUR mesečno, alert na *Actual spend* ≥ 1 %.
+6. **Domen (besplatno):** na <https://www.duckdns.org> ime koje pokazuje na IP VM-a; isto ime mora biti u `deploy/Caddyfile`.
 
 ## 2. Priprema VM-a (jednom)
 
 ```bash
-ssh ubuntu@<IP>
+ssh opc@<IP>
 
-# Docker
-curl -fsSL https://get.docker.com | sudo sh
+# Firewall
+sudo firewall-cmd --permanent --add-service=http --add-service=https && sudo firewall-cmd --reload
 
-# Ubuntu firewall na Oracle image-u blokira 80/443 — otvorite ih
-sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 80 -j ACCEPT
-sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 443 -j ACCEPT
-sudo netfilter-persistent save
+# Docker (u prvim minutima posle kreiranja VM-a dnf može biti zaključan zbog automatskog ažuriranja)
+sudo rpm --import https://download.docker.com/linux/rhel/gpg
+sudo dnf config-manager --add-repo https://download.docker.com/linux/rhel/docker-ce.repo
+sudo dnf -y install --allowerasing docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo systemctl enable --now docker && sudo usermod -aG docker opc
 
-# Caddy (HTTPS reverse proxy sa automatskim sertifikatom)
-sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https curl
-curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
-curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | sudo tee /etc/apt/sources.list.d/caddy-stable.list
-sudo apt update && sudo apt install -y caddy
+# Caddy (HTTPS sa automatskim Let's Encrypt sertifikatom; Caddyfile kopira deploy.sh)
+sudo dnf -y install "dnf-command(copr)" && sudo dnf -y copr enable @caddy/caddy && sudo dnf -y install caddy
 
-# Direktorijumi i tajne
-sudo mkdir -p /opt/vc/backups
-sudo cp /dev/null /opt/vc/vc.env && sudo chmod 600 /opt/vc/vc.env
-sudoedit /opt/vc/vc.env   # sadržaj po uzoru na deploy/vc.env.example
+# Direktorijumi i tajne (lozinka baze postoji samo na VM-u)
+sudo mkdir -p /opt/vc/backups /opt/vc/src && sudo chown -R opc:opc /opt/vc
+(umask 077; printf 'DB_PASSWORD=%s\nINITIAL_PASSWORD=\n' "$(openssl rand -hex 24)" > /opt/vc/vc.env)
 ```
 
-**Domen (besplatno):** napravite ime na <https://www.duckdns.org> (npr. `veseli-cetvrtak.duckdns.org`) koje pokazuje na IP VM-a, upišite ga u `deploy/Caddyfile`, pa:
+Sadržaj `vc.env` je opisan u `deploy/vc.env.example`.
+
+## 3. Deploy
+
+**Automatski (CI/CD):** svaki push na `main` pokreće `.github/workflows/deploy.yml` — typecheck i testovi, pa `deploy/deploy.sh` preko SSH-a. Ručno pokretanje: GitHub → Actions → Deploy → *Run workflow*.
+
+- Secret `VC_SSH_KEY` (GitHub → Settings → Secrets and variables → Actions) = privatni ključ `~/.ssh/vc_deploy`; njegov javni deo je u `~opc/.ssh/authorized_keys` na VM-u.
+- Adresa i host ključ VM-a su u `env` delu workflow-a; ako se VM promeni, ažurirati ih (`ssh-keyscan -t ed25519 <IP>`).
+
+**Ručno**, sa svog računara iz korena repozitorijuma (Git Bash):
 
 ```bash
-sudo cp Caddyfile /etc/caddy/Caddyfile   # posle prvog deploy-a je u /opt/vc/src/deploy/
-sudo systemctl reload caddy
+VC_HOST=opc@<IP> bash deploy/deploy.sh
 ```
 
-## 3. Deploy (svaki put)
-
-Sa svog računara, iz korena repozitorijuma (Git Bash):
-
-```bash
-VC_HOST=ubuntu@<IP> ./deploy/deploy.sh
-```
-
-Skripta kopira izvorni kod, gradi image na VM-u (ARM ili x86, šta god VM jeste), restartuje kontejner `vc` i čeka health check.
+Skripta kopira izvorni kod, gradi image na VM-u (ARM ili x86, šta god VM jeste), restartuje kontejner `vc`, čeka health check i osvežava Caddy.
 
 - Podaci MySQL-a su u Docker volumenu `vc-mysql` — **ne brišu se** pri redeploy-u.
 - Pri prvom pokretanju, ako `INITIAL_PASSWORD` nije postavljen, početne lozinke su u logu: `sudo docker logs vc | grep "Početna lozinka"`. Svaki član mora da je promeni pri prvoj prijavi. Korisnička imena: `ivanisevic`, `tozislav`, `lakicevic`, `simara`.

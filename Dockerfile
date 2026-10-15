@@ -11,7 +11,8 @@ COPY server server
 COPY web web
 RUN npm run build -w web && npm run build -w server
 # Production dependencies of the server only
-RUN rm -rf node_modules && npm ci --omit=dev -w server
+# (npm hoists workspace deps to the root; server/node_modules may not exist, but COPY below needs it)
+RUN rm -rf node_modules && npm ci --omit=dev -w server && mkdir -p server/node_modules
 
 FROM node:22-bookworm-slim AS node
 
