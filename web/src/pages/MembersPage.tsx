@@ -43,11 +43,7 @@ export default function MembersPage() {
     <div className="page">
       <h1>Članovi</h1>
       <figure className="team-hero">
-        <img src={TEAM_PHOTO.src} alt="Ivanišević, Tozislav, Lakićević i Simara" />
-        <figcaption>
-          <strong>{TEAM_PHOTO.title}</strong>
-          <span>{TEAM_PHOTO.caption}</span>
-        </figcaption>
+        <img src={TEAM_PHOTO.src} alt="Ivanišević, Tozislav, Lakićević i Simara" width={741} height={989} />
       </figure>
       <StatsFilter />
       <QueryView q={stats}>

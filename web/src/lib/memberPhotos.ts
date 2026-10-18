@@ -38,11 +38,7 @@ const PHOTOS: Record<string, MemberPhoto> = {
   },
 };
 
-export const TEAM_PHOTO = {
-  src: '/foto/ekipa.jpg',
-  title: 'Veseli četvrtak',
-  caption: 'Četiri tipa. Jedan tiket. Nula kajanja — bar do poslednje četvrtine.',
-};
+export const TEAM_PHOTO = { src: '/foto/ekipa.jpg' };
 
 export function memberPhoto(m: Pick<MemberDto, 'name' | 'avatarUrl'> | undefined): MemberPhoto | null {
   if (!m) return null;

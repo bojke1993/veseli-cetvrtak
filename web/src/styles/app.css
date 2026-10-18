@@ -1634,43 +1634,21 @@ input[aria-invalid='true'] {
 }
 
 /* Member photos (web/public/foto) */
+/* Whole photo, never cropped; portrait, so capped in height on large screens. */
 .team-hero {
-  position: relative;
   margin: 0;
-  border-radius: var(--radius);
-  overflow: hidden;
-  border: 1px solid var(--border);
-  background: var(--surface);
+  display: flex;
+  justify-content: center;
 }
 .team-hero img {
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  object-position: 50% 35%;
-}
-@media (min-width: 700px) {
-  .team-hero img {
-    aspect-ratio: 16 / 7;
-  }
-}
-.team-hero figcaption {
-  position: absolute;
-  inset: auto 0 0 0;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  padding: 32px 16px 14px;
-  color: #fff;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
-}
-.team-hero figcaption strong {
-  font-size: 1.35rem;
-  letter-spacing: 0.01em;
-}
-.team-hero figcaption span {
-  font-size: 0.95rem;
-  opacity: 0.92;
+  max-width: 480px;
+  height: auto;
+  max-height: 75vh;
+  object-fit: contain;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
 }
 .member-link {
   display: inline-flex;
