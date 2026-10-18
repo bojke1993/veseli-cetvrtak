@@ -2,7 +2,8 @@ import { useState, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import type { MemberStatsDto } from '@api';
 import { useMembersStats } from '../api/queries';
-import { MemberName, memberLabel, useMemberMap } from '../components/MemberName';
+import { MemberAvatar, MemberName, memberLabel, useMemberMap } from '../components/MemberName';
+import { TEAM_PHOTO } from '../lib/memberPhotos';
 import { StatsFilter, useStatsQuery } from '../components/StatsFilter';
 import { QueryView } from '../components/ui';
 import { formatMoney, formatPercent, streakShort, streakText } from '../lib/format';
@@ -41,6 +42,13 @@ export default function MembersPage() {
   return (
     <div className="page">
       <h1>Članovi</h1>
+      <figure className="team-hero">
+        <img src={TEAM_PHOTO.src} alt="Ivanišević, Tozislav, Lakićević i Simara" />
+        <figcaption>
+          <strong>{TEAM_PHOTO.title}</strong>
+          <span>{TEAM_PHOTO.caption}</span>
+        </figcaption>
+      </figure>
       <StatsFilter />
       <QueryView q={stats}>
         {({ members }) => {
@@ -77,7 +85,8 @@ export default function MembersPage() {
                   {rows.map((m) => (
                     <tr key={m.memberId}>
                       <th scope="row">
-                        <Link to={`/clanovi/${m.memberId}`}>
+                        <Link to={`/clanovi/${m.memberId}`} className="member-link">
+                          <MemberAvatar member={map.get(m.memberId)} size={32} />
                           <MemberName id={m.memberId} />
                         </Link>
                       </th>

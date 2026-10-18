@@ -1,6 +1,8 @@
 import { useMemo } from 'react';
 import type { MemberDto } from '@api';
 import { useMembers } from '../api/queries';
+import { memberPhoto } from '../lib/memberPhotos';
+import { Avatar } from './PlayerInfo';
 
 export function useMemberMap(): Map<number, MemberDto> {
   const q = useMembers();
@@ -56,6 +58,17 @@ export function MemberName({
       {showStatus && <StatusIcons cooldown={cooldown} fire={m?.status.hasFire} />}
     </span>
   );
+}
+
+/** Round member photo (falls back to initials). */
+export function MemberAvatar({ member, size = 40 }: { member: MemberDto | undefined; size?: number }) {
+  const photo = memberPhoto(member);
+  if (photo) {
+    return (
+      <img className="avatar" src={photo.src} alt="" width={size} height={size} loading="lazy" style={{ objectPosition: photo.focus }} />
+    );
+  }
+  return <Avatar name={member?.displayName ?? '?'} url={null} size={size} />;
 }
 
 /** "Tozislav", "Ekipa" or "—" for a blame / member-or-team value. */

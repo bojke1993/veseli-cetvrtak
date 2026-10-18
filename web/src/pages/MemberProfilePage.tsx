@@ -1,10 +1,34 @@
 import { Link, useParams } from 'react-router-dom';
 import { useMemberStats } from '../api/queries';
 import { ResultIcon } from '../components/LiveStatusBadge';
-import { MemberName } from '../components/MemberName';
+import { MemberName, useMemberMap } from '../components/MemberName';
+import { memberMood, memberPhoto } from '../lib/memberPhotos';
 import { StatsFilter, useStatsQuery } from '../components/StatsFilter';
 import { Card, QueryView } from '../components/ui';
 import { formatDate, formatMoney, formatPercent, lineLabel, streakText } from '../lib/format';
+
+function MemberHero({ id }: { id: number }) {
+  const member = useMemberMap().get(id);
+  const photo = memberPhoto(member);
+  const mood = member ? memberMood(member.status) : null;
+  return (
+    <section className={photo ? 'member-hero' : undefined}>
+      {photo && <img className="member-hero-photo" src={photo.src} alt={`${member?.displayName ?? ''}`} />}
+      <div className="member-hero-text">
+        <h1>
+          <MemberName id={id} />
+        </h1>
+        {photo?.nickname && <p className="member-hero-nick">„{photo.nickname}“</p>}
+        {photo?.caption && <p className="muted">{photo.caption}</p>}
+        {mood && (
+          <p className="member-hero-mood">
+            <span aria-hidden="true">{mood.emoji}</span> {mood.text}
+          </p>
+        )}
+      </div>
+    </section>
+  );
+}
 
 /** EKR-09 — member profile */
 export default function MemberProfilePage() {
@@ -17,9 +41,7 @@ export default function MemberProfilePage() {
       <p>
         <Link to="/clanovi">‹ Članovi</Link>
       </p>
-      <h1>
-        <MemberName id={memberId} />
-      </h1>
+      <MemberHero id={memberId} />
       <StatsFilter />
       <QueryView q={stats}>
         {({ stats: s, picks }) => (
