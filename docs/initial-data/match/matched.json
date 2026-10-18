@@ -6253,5 +6253,101 @@
     }
    }
   ]
+ },
+ {
+  "sheet": "EL 2627",
+  "row": null,
+  "source": "tiket 1592024841672520 (unet 18.10.2026.)",
+  "day": "2026-10-13",
+  "kolo": "5. (T1)",
+  "season": "E2026",
+  "payer": "Ivanišević",
+  "stake": 500,
+  "potential": 5676.73,
+  "win": 0,
+  "status": "Gubitan",
+  "games": 7,
+  "picks": [
+   {
+    "member": "Ivanišević",
+    "raw": "J. Hoard 10.5+ (4)",
+    "name": "J. Hoard",
+    "line": 10.5,
+    "dir": "više",
+    "pts": 4,
+    "outcome": "promašaj",
+    "match": {
+     "code": "006835",
+     "boxName": "HOARD, JAYLEN",
+     "team": "TEL",
+     "min": "23:36",
+     "pts": 4,
+     "gameCode": 44,
+     "elRound": 5,
+     "score": 1,
+     "people": null
+    }
+   },
+   {
+    "member": "Tozislav",
+    "raw": "A. Pajola 4.5+ (4)",
+    "name": "A. Pajola",
+    "line": 4.5,
+    "dir": "više",
+    "pts": 4,
+    "outcome": "promašaj",
+    "match": {
+     "code": "006739",
+     "boxName": "PAJOLA, ALESSANDRO",
+     "team": "PAR",
+     "min": "13:48",
+     "pts": 4,
+     "gameCode": 47,
+     "elRound": 5,
+     "score": 1,
+     "people": null
+    }
+   },
+   {
+    "member": "Lakićević",
+    "raw": "J. Bolomboy 6.5+ (5)",
+    "name": "J. Bolomboy",
+    "line": 6.5,
+    "dir": "više",
+    "pts": 5,
+    "outcome": "promašaj",
+    "match": {
+     "code": "009035",
+     "boxName": "BOLOMBOY, JOEL",
+     "team": "ASV",
+     "min": "18:52",
+     "pts": 5,
+     "gameCode": 41,
+     "elRound": 5,
+     "score": 1,
+     "people": null
+    }
+   },
+   {
+    "member": "Simara",
+    "raw": "Ko. Simmons 7.5+ (7)",
+    "name": "Ko. Simmons",
+    "line": 7.5,
+    "dir": "više",
+    "pts": 7,
+    "outcome": "promašaj",
+    "match": {
+     "code": "014152",
+     "boxName": "SIMMONS, KOBI",
+     "team": "BAS",
+     "min": "25:37",
+     "pts": 7,
+     "gameCode": 42,
+     "elRound": 5,
+     "score": 1,
+     "people": null
+    }
+   }
+  ]
  }
 ]

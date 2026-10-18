@@ -57,7 +57,7 @@ VC_HOST=opc@<IP> bash deploy/deploy.sh
 Skripta kopira izvorni kod, gradi image na VM-u (ARM ili x86, šta god VM jeste), restartuje kontejner `vc`, čeka health check i osvežava Caddy.
 
 - Podaci MySQL-a su u Docker volumenu `vc-mysql` — **ne brišu se** pri redeploy-u.
-- Pri prvom pokretanju, ako `INITIAL_PASSWORD` nije postavljen, početne lozinke su u logu: `sudo docker logs vc | grep "Početna lozinka"`. Svaki član mora da je promeni pri prvoj prijavi. Korisnička imena: `ivanisevic`, `tozislav`, `lakicevic`, `simara`.
+- Pri prvom pokretanju, ako `INITIAL_PASSWORD` nije postavljen, početne lozinke su u logu: `sudo docker logs vc | grep "Početna lozinka"`. Svaki član mora da je promeni pri prvoj prijavi. Korisnička imena: `ivanisevic`, `tozislav`, `lakicevic`, `simara`. **Pročitati ih odmah** — svaki deploy pravi novi kontejner i stari log nestaje. Ako su izgubljene: admin resetuje lozinku člana u aplikaciji, a ako se ni admin ne može prijaviti, nova privremena lozinka se upisuje direktno u tabelu `members` (bcrypt hash, `must_change_password=1`).
 
 ## 4. Rezervne kopije
 

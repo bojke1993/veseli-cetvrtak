@@ -5,6 +5,8 @@
 
 > **Produkcija (15.10.2026.):** uvezena je **samo sezona 2026/27** (7 kola, 24.09. – 09.10.2026.), skriptom `load-history.ts` sa `matched.json` filtriranim na list `EL 2627`, pokrenutom u privremenom `node:22` kontejneru na mreži kontejnera `vc` (`docker run --network container:vc --env-file /opt/vc/vc.env ...`). Sezona 2025/26 nije uvezena.
 >
+> **18.10.2026.** dodato kolo **13.10.2026.** (5. kolo Evrolige) sa papirnog tiketa (nije u tabeli): Ivanišević J. Hoard više 10,5 (4), Tozislav A. Pajola više 4,5 (4), Lakićević J. Bolomboy više 6,5 (5), Simara Ko. Simmons više 7,5 (7) → 0/4; uplatio Ivanišević 500, kvota 11,35. Upisano u `matched.json` i ponovo uvezen ceo skup 2026/27 (8 kola); backup pre toga: `/opt/vc/backups/pre-uvoz-20261013.sql.gz`.
+>
 > **Na produkciji (VM):** igrači iz 2025/26 kojih više nema u Evroligi ne postoje u novoj bazi, pa ih ekran za uvoz ne bi automatski prepoznao. Istoriju zato uvesti istom skriptom (`server/scripts/load-history.ts`), koja ih prvo doda kao neaktivne — to je deo koraka deploy-a.
 
 ## Kako je tabela protumačena
