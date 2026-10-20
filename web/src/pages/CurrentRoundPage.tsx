@@ -5,14 +5,14 @@ import { LiveView } from '../components/LiveView';
 import { RoundStatusBadge } from '../components/LiveStatusBadge';
 import { NewRoundFlow } from '../components/round/NewRoundFlow';
 import { RoundEditor } from '../components/round/RoundEditor';
-import { Card, LoginButton, QueryView } from '../components/ui';
+import { Card, QueryView } from '../components/ui';
 import { formatDate, formatMoney, formatOdds } from '../lib/format';
 import { RoundDetailView } from './RoundDetailPage';
 
 /** /kolo — open round editor, live view or the last resolved round (+ new round flow for admin). */
 export function CurrentRoundPage() {
   const q = useCurrentRound();
-  const { isAdmin, isGuest } = useAuth();
+  const { isAdmin } = useAuth();
   const [params, setParams] = useSearchParams();
   const wantsNew = params.get('novo') === '1';
 
@@ -27,7 +27,6 @@ export function CurrentRoundPage() {
               <div className="page-head">
                 <h1>Kolo #{r.number}</h1>
                 <RoundStatusBadge status={r.status} />
-                {isGuest && <LoginButton className="btn btn-small btn-primary" />}
               </div>
               <p className="muted small">
                 {formatDate(r.gameDay)} · uplata {formatMoney(r.stake)} · kvota {formatOdds(r.totalOdds)}
@@ -62,7 +61,6 @@ export function CurrentRoundPage() {
             {!isAdmin && !r && (
               <Card title="Nema aktivnog kola">
                 <p className="muted">Kolo još nije otvoreno.</p>
-                {isGuest && <LoginButton />}
               </Card>
             )}
             {r && <RoundDetailView round={r} />}

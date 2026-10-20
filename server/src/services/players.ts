@@ -88,7 +88,14 @@ export async function searchPlayers(
     if (ap !== bp) return ap - bp;
     return a.fullName.localeCompare(b.fullName);
   });
-  return items.slice(0, SEARCH_LIMIT).map(({ rank: _rank, ...rest }) => rest);
+  // A query naming a club (e.g. "partizan") lists its whole roster, not just the first page.
+  // Needs 3+ letters so that e.g. "ma" (Madrid, Maccabi) does not dump hundreds of players.
+  const clubQuery = tokens.join('').length >= 3 && [...clubs.values()].some((c) => {
+    const text = normalizeName(`${c.name} ${c.shortName} ${c.code}`);
+    return tokens.every((t) => text.includes(t));
+  });
+  const result = clubQuery ? items : items.slice(0, SEARCH_LIMIT);
+  return result.map(({ rank: _rank, ...rest }) => rest);
 }
 
 /** REQ-04.5: manual player ("ručno dodat"). */

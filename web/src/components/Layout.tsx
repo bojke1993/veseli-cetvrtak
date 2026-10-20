@@ -3,6 +3,7 @@ import { Link, NavLink, Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAdminTasks, useLogout } from '../api/queries';
 import { useAuth } from '../auth/AuthContext';
 import { useConnection } from '../hooks/LiveContext';
+import { ThemeToggle } from './ThemeToggle';
 import { LoginButton } from './ui';
 
 const PRIMARY = [
@@ -68,6 +69,7 @@ export function Layout() {
         </Link>
         <div className="topbar-right">
           <ConnectionBadge />
+          <ThemeToggle />
           {me ? (
             <Link to="/podesavanja" className="topbar-user" aria-label={`Prijavljen: ${me.displayName}`}>
               {me.displayName}
@@ -118,7 +120,11 @@ export function Layout() {
               </NavLink>
             </li>
           ))}
-          <li>{me ? <LogoutButton className="nav-link nav-button" /> : <LoginButton className="nav-link" />}</li>
+          {me && (
+            <li>
+              <LogoutButton className="nav-link nav-button" />
+            </li>
+          )}
         </ul>
       </nav>
 

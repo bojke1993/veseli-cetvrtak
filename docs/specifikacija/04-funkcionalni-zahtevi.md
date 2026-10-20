@@ -107,7 +107,7 @@ Prioriteti: **M** (mora), **T** (treba), **M-B** (može, ako bude vremena).
 **Preduslovi:** Kolo je *Otvoreno*; baza igrača sinhronizovana (FR-03).
 **Tok:**
 1. Korisnik u polje kuca bar 2 karaktera imena ili prezimena.
-2. Sistem prikazuje do 10 predloga: slika (ili inicijali), ime i prezime, tim, pozicija, utakmica na dan kola (protivnik, vreme).
+2. Sistem prikazuje do 10 predloga (pretraga po klubu prikazuje ceo sastav kluba): slika (ili inicijali), ime i prezime, tim, pozicija, utakmica na dan kola (protivnik, vreme).
 3. Korisnik bira igrača; sistem automatski popunjava utakmicu (FR-07).
 **KP:**
 - KP1: Pretraga je neosetljiva na velika/mala slova i dijakritike ("sasa" pronalazi "Saša", "vezenkov" pronalazi "Vezenkov"), radi po delu imena ili prezimena i po delu naziva tima.

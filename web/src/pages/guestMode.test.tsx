@@ -4,6 +4,7 @@ import type { CurrentRoundResponse, Me } from '@api';
 import { HomePage } from './HomePage';
 import { CurrentRoundPage } from './CurrentRoundPage';
 import { RoundDetailPage } from './RoundDetailPage';
+import { Layout } from '../components/Layout';
 import { ADMIN_ME, MEMBERS, mockFetch, renderWithProviders } from '../test/utils';
 import { roundDetail } from '../test/fixtures';
 
@@ -41,11 +42,24 @@ function api(me: Me | null, current: CurrentRoundResponse) {
 afterEach(() => vi.unstubAllGlobals());
 
 describe('guest mode (REQ-02) hides mutating controls', () => {
-  it('home: guest sees "Prijavi se" and no "Novo kolo"', async () => {
+  it('layout: guest gets exactly one "Prijavi se" (top bar), member none', async () => {
+    api(null, { round: null, canOpenNew: true, reasonCannotOpen: null });
+    const guest = renderWithProviders(<Layout />);
+    expect(await screen.findByRole('link', { name: 'Prijavi se' })).toBeInTheDocument();
+    expect(screen.getAllByRole('link', { name: 'Prijavi se' })).toHaveLength(1);
+    guest.unmount();
+
+    api(ADMIN_ME, { round: null, canOpenNew: true, reasonCannotOpen: null });
+    renderWithProviders(<Layout />);
+    expect(await screen.findByRole('button', { name: 'Odjavi se' })).toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: 'Prijavi se' })).not.toBeInTheDocument();
+  });
+
+  it('home: guest sees no in-page "Prijavi se" and no "Novo kolo"', async () => {
     api(null, { round: null, canOpenNew: true, reasonCannotOpen: null });
     renderWithProviders(<HomePage />);
     expect(await screen.findByText('Nema aktivnog kola')).toBeInTheDocument();
-    expect(screen.getAllByRole('link', { name: 'Prijavi se' }).length).toBeGreaterThan(0);
+    expect(screen.queryByRole('link', { name: 'Prijavi se' })).not.toBeInTheDocument();
     expect(screen.queryByText(/Novo kolo/)).not.toBeInTheDocument();
   });
 
@@ -68,7 +82,6 @@ describe('guest mode (REQ-02) hides mutating controls', () => {
     renderWithProviders(<CurrentRoundPage />, { route: '/kolo' });
     expect(await screen.findByRole('heading', { name: 'Kolo #7' })).toBeInTheDocument();
     expect(screen.getByText('Saša Marković')).toBeInTheDocument();
-    expect(screen.getAllByRole('link', { name: 'Prijavi se' }).length).toBeGreaterThan(0);
     expect(screen.queryByRole('button', { name: /Zaključi glasanje/ })).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /Obriši kolo/ })).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /Dodaj predlog/ })).not.toBeInTheDocument();

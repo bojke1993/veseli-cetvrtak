@@ -1,4 +1,4 @@
-/* Veseli četvrtak — mobile-first, light/dark via prefers-color-scheme. */
+/* Veseli četvrtak — mobile-first, light/dark via prefers-color-scheme or the manual theme toggle. */
 :root {
   color-scheme: light dark;
   --bg: #f4f6fa;
@@ -42,8 +42,9 @@
   --font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans', Arial, sans-serif;
 }
 
+/* Dark palette: by system preference unless the user picked a theme (ThemeToggle → html[data-theme]). */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme='light']) {
     --bg: #0b1220;
     --surface: #131c2e;
     --surface-2: #1b263b;
@@ -74,6 +75,41 @@
     --chart-line: #7aa7ff;
     --chart-grid: #64748b;
   }
+}
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #0b1220;
+  --surface: #131c2e;
+  --surface-2: #1b263b;
+  --border: #2b3a55;
+  --text: #e8edf6;
+  --text-2: #cbd5e1;
+  --muted: #9aa8bd;
+  --primary: #6b9bff;
+  --primary-text: #0b1220;
+  --primary-soft: #1e3360;
+  --danger: #f87171;
+  --good-bg: #14361f;
+  --good-fg: #a7f3c0;
+  --great-bg: #22c55e;
+  --great-fg: #052e14;
+  --bad-bg: #3b1515;
+  --bad-fg: #fecaca;
+  --awful-bg: #ef4444;
+  --awful-fg: #1c0505;
+  --neutral-bg: #273449;
+  --neutral-fg: #e2e8f0;
+  --muted-bg: #1e293b;
+  --muted-fg: #a7b3c6;
+  --warn-bg: #3a2c0a;
+  --warn-fg: #fde68a;
+  --pos: #4ade80;
+  --neg: #f87171;
+  --chart-line: #7aa7ff;
+  --chart-grid: #64748b;
+}
+:root[data-theme='light'] {
+  color-scheme: light;
 }
 
 *,
@@ -167,7 +203,7 @@ h3 {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  padding: 8px 12px;
+  padding: 8px 16px;
   padding-top: calc(8px + env(safe-area-inset-top, 0px));
   background: var(--surface);
   border-bottom: 1px solid var(--border);
@@ -352,11 +388,22 @@ h3 {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 14px;
+  padding: 16px;
   min-width: 0;
 }
 .card + .card {
   margin-top: 0;
+}
+/* Spacing between stacked blocks inside a card (lists, buttons, notes). */
+.card > :not(.card-header, .card-title, .sr-only) + :is(.btn, .btn-row, .simple-list, .table-wrap, .alert, form, p, ul, dl) {
+  margin-top: 12px;
+}
+.card > p:first-child,
+.card > .card-title + p {
+  margin-top: 0;
+}
+.card > p:last-child {
+  margin-bottom: 0;
 }
 .card-header {
   display: flex;
@@ -716,6 +763,7 @@ input[aria-invalid='true'] {
 }
 .flag {
   font-size: 0.8rem;
+  white-space: nowrap;
   padding: 1px 8px;
   border-radius: 999px;
   background: var(--muted-bg);
@@ -814,7 +862,7 @@ input[aria-invalid='true'] {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  padding: 10px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -1237,6 +1285,16 @@ input[aria-invalid='true'] {
   padding: 0;
   margin: 0;
   font-size: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 200px;
+}
+.pick-mini-inline .result-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 4px;
+  vertical-align: middle;
 }
 .desktop-only {
   display: none;
@@ -1300,7 +1358,7 @@ input[aria-invalid='true'] {
 }
 .table th,
 .table td {
-  padding: 8px 10px;
+  padding: 10px;
   border-bottom: 1px solid var(--border);
   text-align: left;
   vertical-align: top;
@@ -1346,8 +1404,8 @@ input[aria-invalid='true'] {
 }
 .bar-row {
   display: grid;
-  grid-template-columns: 96px 1fr auto;
-  gap: 8px;
+  grid-template-columns: minmax(96px, max-content) 1fr auto;
+  gap: 12px;
   align-items: center;
 }
 .bar-label {
@@ -1372,6 +1430,8 @@ input[aria-invalid='true'] {
 .bar-value {
   font-size: 0.85rem;
   white-space: nowrap;
+  min-width: 72px;
+  text-align: right;
 }
 .chart {
   margin: 0;
@@ -1436,6 +1496,7 @@ input[aria-invalid='true'] {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  margin-top: 16px;
 }
 .blame-list {
   list-style: none;
@@ -1658,12 +1719,12 @@ input[aria-invalid='true'] {
 .member-hero {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 14px;
+  gap: 16px;
   align-items: center;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 14px;
+  padding: 16px;
 }
 @media (min-width: 600px) {
   .member-hero {
@@ -1694,9 +1755,9 @@ input[aria-invalid='true'] {
 }
 .member-hero-mood {
   display: inline-block;
-  margin-top: 10px !important;
-  padding: 6px 10px;
-  border-radius: 999px;
+  margin-top: 12px !important;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
   background: var(--primary-soft);
   font-weight: 600;
 }

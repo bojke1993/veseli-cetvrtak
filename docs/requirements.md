@@ -141,7 +141,7 @@ Kriterijumi prihvatanja:
 **Kao** administrator, **želim** da igrača pronađem kucanjem imena (autocomplete), **kako ne bih** skrolovao kroz celu listu.
 **Izvor:** FR-06, BR-06
 
-1. KADA korisnik ukuca najmanje 2 karaktera, ONDA sistem ĆE za ≤ 300 ms prikazati do 10 predloga sa slikom (ili inicijalima), imenom, klubom, pozicijom i utakmicom na dan kola.
+1. KADA korisnik ukuca najmanje 2 karaktera, ONDA sistem ĆE za ≤ 300 ms prikazati do 10 predloga (ako upit od bar 3 slova odgovara klubu — sve igrače tog kluba) sa slikom (ili inicijalima), imenom, klubom, pozicijom i utakmicom na dan kola.
 2. Sistem ĆE pretragu vršiti bez obzira na velika/mala slova i dijakritike, po delu imena, prezimena ili naziva kluba ("sasa" pronalazi "Saša").
 3. DOK je kolo otvoreno, sistem ĆE kao izborne prikazivati samo igrače čiji klub igra na dan kola i čija utakmica nije počela; ostale prikazuje zatamnjeno sa napomenom i ne dozvoljava njihov izbor.
 4. AKO je igrač već izabran u istom kolu, ONDA sistem ĆE onemogućiti njegov ponovni izbor.

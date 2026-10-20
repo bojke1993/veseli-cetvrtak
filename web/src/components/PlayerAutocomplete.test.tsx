@@ -81,12 +81,12 @@ describe('PlayerAutocomplete', () => {
     expect(onSelect.mock.calls[0]![0].id).toBe(100);
   });
 
-  it('shows at most 10 suggestions', async () => {
+  it('shows every suggestion the server returns (whole club roster)', async () => {
     const user = userEvent.setup();
     const many = Array.from({ length: 14 }, (_, i) => ({ ...ITEMS[0]!, id: 200 + i, fullName: `Igrač ${i}` }));
     mockFetch({ '/auth/me': { me: null }, '/players/search': { items: many } });
     renderWithProviders(<PlayerAutocomplete day="2026-10-15" onSelect={vi.fn()} />);
     await user.type(screen.getByRole('combobox'), 'ig');
-    await waitFor(() => expect(screen.getAllByRole('option')).toHaveLength(10));
+    await waitFor(() => expect(screen.getAllByRole('option')).toHaveLength(14));
   });
 });

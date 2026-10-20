@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
 import { LogoutButton, useMoreItems } from '../components/Layout';
-import { LoginButton } from '../components/ui';
 
 /** "Još" menu (phone). */
 export function MorePage() {
@@ -25,16 +24,12 @@ export function MorePage() {
           </li>
         ))}
       </ul>
-      <div className="menu-footer">
-        {me ? (
-          <>
-            <p className="muted">Prijavljen: {me.displayName}</p>
-            <LogoutButton className="btn btn-block" />
-          </>
-        ) : (
-          <LoginButton className="btn btn-primary btn-block" />
-        )}
-      </div>
+      {me && (
+        <div className="menu-footer">
+          <p className="muted">Prijavljen: {me.displayName}</p>
+          <LogoutButton className="btn btn-block" />
+        </div>
+      )}
     </div>
   );
 }

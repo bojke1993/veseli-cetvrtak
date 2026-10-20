@@ -5,7 +5,7 @@ import { useAuth } from '../auth/AuthContext';
 import { LiveView } from '../components/LiveView';
 import { BlameName, MemberName, useMemberList } from '../components/MemberName';
 import { RoundCard, toSummary } from '../components/RoundCard';
-import { Card, LoginButton, QueryView } from '../components/ui';
+import { Card, QueryView } from '../components/ui';
 import { useNow } from '../hooks/useNow';
 import { formatCountdown, formatDate, formatMoney, formatPercent, formatTime, streakShort, streakText } from '../lib/format';
 
@@ -157,12 +157,10 @@ function MiniStats() {
 /** EKR-02 */
 export function HomePage() {
   const current = useCurrentRound();
-  const { isGuest } = useAuth();
   return (
     <div className="page">
       <div className="page-head">
         <h1>Početna</h1>
-        {isGuest && <LoginButton className="btn btn-small btn-primary" />}
       </div>
       <QueryView q={current}>{(data) => <ActiveRound data={data} />}</QueryView>
       <MiniStats />

@@ -9,7 +9,7 @@ import { PlayerInfo } from '../components/PlayerInfo';
 import { AdminActionsMenu } from '../components/round/AdminActions';
 import { RoundEditor } from '../components/round/RoundEditor';
 import { RoundFlags } from '../components/RoundCard';
-import { LoginButton, QueryView } from '../components/ui';
+import { QueryView } from '../components/ui';
 import {
   formatDate,
   formatDateTime,
@@ -113,7 +113,7 @@ const ACTION_PARAM: Record<string, 'unlock' | 'correct' | 'resolve' | 'actualWin
 };
 
 export function RoundDetailView({ round }: { round: RoundDetailDto }) {
-  const { isAdmin, isMember, isGuest } = useAuth();
+  const { isAdmin, isMember } = useAuth();
   const [params] = useSearchParams();
   const initialAction = ACTION_PARAM[params.get('akcija') ?? ''] ?? null;
   const slotParam = Number(params.get('slot'));
@@ -128,7 +128,6 @@ export function RoundDetailView({ round }: { round: RoundDetailDto }) {
         {isAdmin && round.status !== 'open' && (
           <AdminActionsMenu round={round} initialAction={initialAction} initialSlot={Number.isFinite(slotParam) && slotParam > 0 ? slotParam : undefined} />
         )}
-        {isGuest && <LoginButton className="btn btn-small btn-primary" />}
       </div>
 
       <section className="card">

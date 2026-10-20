@@ -43,3 +43,9 @@ Stvari naučene tokom razvoja koje nisu očigledne iz koda. Dopunjavati kako pro
 - Odmah posle kreiranja VM-a `dnf` je neko vreme zaključan (automatsko ažuriranje) — instalacija paketa pada sa "can't create transaction lock".
 - Oracle Linux ima `firewalld` (ne iptables kao Ubuntu image) i Caddy se instalira iz COPR-a `@caddy/caddy`.
 - Procena troška u Oracle čarobnjaku prikazuje cenu boot volumena bez Always Free popusta — stvarni trošak je 0.
+
+## Frontend
+
+- `@fastify/static` je registrovan sa `wildcard: false` — lista fajlova se pravi pri startu servera. Posle `npm run build -w web` na živom serveru novi (heširani) asset-i padaju na SPA fallback i vraćaju `index.html` → prazna stranica. Posle build-a restartovati server.
+- Tema: `html[data-theme="light"|"dark"]` (ThemeToggle, `localStorage` ključ `vc-theme`); bez atributa važi `prefers-color-scheme`. Tamna paleta je u `app.css` dvaput (media upit + `[data-theme='dark']`) — menjati oba bloka. Tema se primenjuje pre iscrtavanja iz `web/public/theme.js` (CSP zabranjuje inline skripte).
+- Snimci ekrana bez Chrome ekstenzije: headless Chrome sa `--remote-debugging-port` + CDP preko Node `WebSocket`-a (`Emulation.setDeviceMetricsOverride`, `Page.captureScreenshot`); `--screenshot` sa `--virtual-time-budget` visi zbog SSE veze.

@@ -19,7 +19,7 @@ import {
 import { MemberName, useMemberList } from '../MemberName';
 import { PickOwner } from '../LiveView';
 import { gameLabel } from '../PlayerInfo';
-import { LoginButton, Modal, MutationError, SaveIndicator } from '../ui';
+import { Modal, MutationError, SaveIndicator } from '../ui';
 import { PersonalPickCard, TeamPickCard } from './PickCards';
 import { DecimalInput } from './PickFields';
 import { SaveProvider, useSave } from './SaveContext';
@@ -332,7 +332,7 @@ function StartCountdown({ firstGameAt, isAdmin }: { firstGameAt: string | null; 
 }
 
 function EditorBody({ round }: { round: RoundDetailDto }) {
-  const { isAdmin, isGuest } = useAuth();
+  const { isAdmin } = useAuth();
   const save = useSave();
   const [locking, setLocking] = useState(false);
   const [deleting, setDeleting] = useState(false);
@@ -344,7 +344,6 @@ function EditorBody({ round }: { round: RoundDetailDto }) {
       <div className="page-head">
         <h1>Kolo #{round.number}</h1>
         {isAdmin && <SaveIndicator state={save.state} error={save.error} />}
-        {isGuest && <LoginButton className="btn btn-small btn-primary" />}
       </div>
       <section className="card">
         <dl className="kv-list">

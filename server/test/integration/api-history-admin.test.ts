@@ -167,6 +167,13 @@ describe('API: admin tasks, sync and recalc', () => {
     expect((await api(ctx, null, 'GET', '/players/search?q=guduric')).body.items[0].id).toBe(p.body.player.id);
     expect((await api(ctx, ADMIN, 'POST', '/players', { firstName: 'X', lastName: 'Y', clubCode: 'NOPE' })).status).toBe(422);
 
+    // Club search lists the whole roster, a name search stays capped at 10.
+    for (let i = 1; i <= 12; i++) {
+      expect((await api(ctx, ADMIN, 'POST', '/players', { firstName: 'Igrač', lastName: `Barsa${i}`, clubCode: 'BAR' })).status).toBe(200);
+    }
+    expect((await api(ctx, null, 'GET', '/players/search?q=barcelona')).body.items).toHaveLength(12);
+    expect((await api(ctx, null, 'GET', '/players/search?q=barsa')).body.items).toHaveLength(10);
+
     const g = await api(ctx, ADMIN, 'POST', '/games', { homeClubCode: 'MAD', awayClubCode: 'PAR', scheduledAt: '2026-10-21T18:45:00Z' });
     expect(g.status).toBe(200);
     expect(g.body.game).toMatchObject({ gameDay: '2026-10-21', seasonCode: 'E2026', isManual: true, status: 'scheduled' });

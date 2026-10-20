@@ -8,7 +8,7 @@ import { Avatar, gameLabel } from './PlayerInfo';
 export const SEARCH_DEBOUNCE_MS = 150;
 
 /**
- * Player autocomplete (REQ-07): min 2 characters, ~150 ms debounce, up to 10 results,
+ * Player autocomplete (REQ-07): min 2 characters, ~150 ms debounce, up to 10 results (whole roster for a club query),
  * non-selectable items greyed with a note and not clickable; full keyboard support.
  * On focus the input scrolls to the top of the viewport so the on-screen keyboard
  * does not hide the suggestions.
@@ -42,7 +42,7 @@ export function PlayerAutocomplete({
   const debounced = useDebounce(text, SEARCH_DEBOUNCE_MS);
   const term = debounced.trim();
   const q = usePlayerSearch(term, day, roundId);
-  const items = term.length >= 2 ? (q.data?.items ?? []).slice(0, 10) : [];
+  const items = term.length >= 2 ? (q.data?.items ?? []) : [];
   const canPick = (it: PlayerSearchItem) => allowUnselectable || it.selectable;
 
   useEffect(() => {
