@@ -36,7 +36,8 @@ export type AuditAction =
   | 'password_reset'
   | 'round_delete'
   | 'full_recalc'
-  | 'history_import';
+  | 'history_import'
+  | 'late_accept';
 
 export interface MembersTable {
   id: number; // 1..4, fixed

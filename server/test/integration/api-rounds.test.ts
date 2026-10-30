@@ -297,4 +297,37 @@ describe('API: cooldown slots, proposals and votes', () => {
     expect(accPers.body.round.picks[3]).toMatchObject({ memberId: 4, line: 8.5, direction: 'under' });
     expect((await api(ctx, ADMIN, 'POST', `/proposals/${personal[1].id}/accept`)).status).toBe(409);
   });
+
+});
+
+describe('API: proposal given before tip-off, accepted after', () => {
+  let ctx: ApiCtx;
+  let fx: Awaited<ReturnType<typeof seedFixtures>>;
+  beforeAll(async () => {
+    ctx = await createApiCtx();
+    fx = await seedFixtures(ctx.deps);
+  });
+  afterAll(async () => {
+    await ctx.close();
+  });
+
+  it('accepts it (audited) while a direct pick after tip-off is still refused', async () => {
+    const roundId = (await api(ctx, ADMIN, 'POST', '/rounds', { gameDay: '2026-10-15' })).body.round.id;
+    const prop = await api(ctx, 'lakicevic', 'POST', `/rounds/${roundId}/proposals`, { kind: 'personal', playerId: fx.players.sloukas, line: 10.5, direction: 'under' });
+    expect(prop.status).toBe(200);
+    const proposalId = prop.body.round.proposals[0].id;
+
+    ctx.deps.setNow(new Date('2026-10-15T19:00:00Z')); // Sloukas' game started at 18:30Z
+    expect((await api(ctx, ADMIN, 'PUT', `/rounds/${roundId}/picks/3`, { playerId: fx.players.sloukas, line: 10.5, direction: 'under' })).status).toBe(422);
+    const late = await api(ctx, 'simara', 'POST', `/rounds/${roundId}/proposals`, { kind: 'personal', playerId: fx.players.jones, line: 9.5, direction: 'under' });
+    expect(late.status).toBe(422);
+
+    const acc = await api(ctx, ADMIN, 'POST', `/proposals/${proposalId}/accept`);
+    expect(acc.status).toBe(200);
+    expect(acc.body.round.picks[2]).toMatchObject({ memberId: 3, line: 10.5, direction: 'under' });
+    expect(acc.body.round.picks[2].player.id).toBe(fx.players.sloukas);
+    const audit = await ctx.deps.db.selectFrom('audit_log').selectAll().where('action', '=', 'late_accept').execute();
+    expect(audit).toHaveLength(1);
+    expect(audit[0]).toMatchObject({ actor_member_id: 1, round_id: roundId, entity: 'pick' });
+  });
 });

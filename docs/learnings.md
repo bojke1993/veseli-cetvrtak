@@ -29,6 +29,8 @@ Stvari naučene tokom razvoja koje nisu očigledne iz koda. Dopunjavati kako pro
 - POST bez tela sa `Content-Type: application/json` Fastify odbija (`FST_ERR_CTP_EMPTY_JSON_BODY`); klijent uvek šalje `{}`.
 - Izvedeno stanje (nizovi, ❄, 🔥, blejm) se nikad ne čuva — `computeDerived()` nad celom istorijom; posle direktnih izmena baze (skripte) restartovati aplikaciju ili pozvati `POST /api/admin/recalc`, jer je keš u memoriji.
 
+- `proposals.created_at` se upisuje iz `deps.now()` (ne DB default), jer se po njemu proverava da li je predlog dat pre početka utakmice (kasno prihvatanje, `late_accept`).
+
 ## Lokalno okruženje (Windows)
 
 - Nema Docker-a ni MySQL-a; `scripts/local.sh` koristi MySQL binarne fajlove u `.localdb/mysql` (preuzeo ih je `mysql-memory-server` za testove).
