@@ -29,7 +29,7 @@ export async function registerProposalRoutes(app: FastifyInstance, deps: Deps): 
     '/proposals/:id/accept',
     { preHandler: requireAdmin, schema: { params: idParams } },
     async (request): Promise<RoundResponse> => {
-      const roundId = await acceptProposal(deps, request.params.id);
+      const roundId = await acceptProposal(deps, request.params.id, request.member!.id);
       return { round: await buildRoundDetail(deps, roundId, request.member) };
     },
   );

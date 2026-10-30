@@ -615,6 +615,12 @@ export async function validateSelection(
   sel: Selection,
   now: Date,
   excludeSlot: number | null,
+  /**
+   * When set (admin accepting a proposal), the game must not have started at this moment
+   * instead of now: a proposal given in time stays acceptable after tip-off, so a round
+   * whose ticket was really played does not get stuck unlockable.
+   */
+  submittedAt?: Date,
 ): Promise<{ player: Player; game: Game }> {
   if (!isValidLine(sel.line)) throw unprocessable(LINE_MESSAGE);
   if (sel.direction !== 'over' && sel.direction !== 'under') throw unprocessable('Izaberite smer: više ili manje.');
@@ -631,7 +637,9 @@ export async function validateSelection(
     .executeTakeFirst();
   if (!game) throw unprocessable(`Klub igrača ne igra ${shortDay(round.game_day)}`);
   if (game.status === 'postponed' || game.status === 'cancelled') throw unprocessable('Utakmica igrača je odložena ili otkazana.');
-  if (!gameNotStarted(game, now)) throw unprocessable('Utakmica igrača je već počela.');
+  if (submittedAt) {
+    if (game.scheduled_at.getTime() <= submittedAt.getTime()) throw unprocessable('Predlog je dat posle početka utakmice.');
+  } else if (!gameNotStarted(game, now)) throw unprocessable('Utakmica igrača je već počela.');
   let dup = db
     .selectFrom('picks')
     .select('slot')
@@ -649,16 +657,24 @@ async function getPickOr404(db: DB, roundId: number, slot: number): Promise<Pick
 }
 
 /** Writes a pick in an open round (no publish). */
-export async function writePick(db: DB, round: Round, slot: number, input: SetPickRequest, now: Date): Promise<void> {
+export async function writePick(
+  db: DB,
+  round: Round,
+  slot: number,
+  input: SetPickRequest,
+  now: Date,
+  submittedAt?: Date,
+): Promise<{ gameStarted: boolean }> {
   const pick = await getPickOr404(db, round.id, slot);
   const odds = input.odds ?? null;
   validateOdds(odds, 'Kvota tipa');
-  const { game } = await validateSelection(db, round, input, now, slot);
+  const { game } = await validateSelection(db, round, input, now, slot, submittedAt);
   await db
     .updateTable('picks')
     .set({ player_id: input.playerId, game_id: game.id, line: input.line, direction: input.direction, odds })
     .where('id', '=', pick.id)
     .execute();
+  return { gameStarted: !gameNotStarted(game, now) };
 }
 
 export async function setPick(deps: Deps, roundId: number, slot: number, input: SetPickRequest): Promise<void> {

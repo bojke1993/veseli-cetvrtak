@@ -4,6 +4,7 @@ import type { Proposal, Round } from '../db/schema.js';
 import type { Deps } from '../deps.js';
 import type { SessionMember } from '../http/auth.js';
 import { conflict, forbidden, notFound, unprocessable } from '../http/errors.js';
+import { writeAudit } from './audit.js';
 import { getRoundOr404, validateSelection, writePick } from './rounds.js';
 
 function requireOpenRound(round: Round): void {
@@ -74,6 +75,8 @@ export async function createProposal(
         direction: input.direction,
         comment,
         status: 'pending',
+        // Explicit (not the DB default) so acceptance after tip-off compares against the app clock.
+        created_at: deps.now(),
       })
       .execute();
   });
@@ -108,22 +111,42 @@ export async function vote(deps: Deps, member: SessionMember, proposalId: number
   return round.id;
 }
 
-/** Admin accepts a proposal → it becomes the slot's pick; other proposals for the slot are superseded. */
-export async function acceptProposal(deps: Deps, proposalId: number): Promise<number> {
+/**
+ * Admin accepts a proposal → it becomes the slot's pick; other proposals for the slot are superseded.
+ * A proposal given before its game started can be accepted after tip-off (the ticket was played
+ * with it); such an acceptance is written to the audit log.
+ */
+export async function acceptProposal(deps: Deps, proposalId: number, actorMemberId: number | null = null): Promise<number> {
   const p = await getProposalOr404(deps.db, proposalId);
   const round = await getRoundOr404(deps.db, p.round_id);
   requireOpenRound(round);
   if (p.status !== 'pending') throw conflict('Predlog nije na čekanju.');
   const slot = await slotFor(deps.db, round.id, p);
   if (!slot) throw conflict('Mesto za ovaj predlog više ne postoji u kolu.');
-  await writePick(
+  const now = deps.now();
+  const { gameStarted } = await writePick(
     deps.db,
     round,
     slot.slot,
     { playerId: p.player_id, line: Number(p.line), direction: p.direction, odds: slot.odds === null ? null : Number(slot.odds) },
-    deps.now(),
+    now,
+    p.created_at,
   );
   await deps.db.transaction().execute(async (trx) => {
+    if (gameStarted) {
+      await writeAudit(trx, {
+        at: now,
+        actorMemberId,
+        action: 'late_accept',
+        roundId: round.id,
+        entity: 'pick',
+        entityId: slot.id,
+        field: 'proposal',
+        oldValue: slot.player_id,
+        newValue: { proposalId: p.id, playerId: p.player_id, line: Number(p.line), direction: p.direction },
+        reason: 'Predlog dat pre početka utakmice, prihvaćen posle početka.',
+      });
+    }
     await trx.updateTable('proposals').set({ status: 'accepted' }).where('id', '=', p.id).execute();
     let others = trx
       .updateTable('proposals')

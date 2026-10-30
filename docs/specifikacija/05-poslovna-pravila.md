@@ -20,7 +20,7 @@
 
 **BR-07 — Kolo = jedno veče (P-08).** Kolo u aplikaciji obuhvata utakmice Evrolige **jednog dana** (večeri), koji admin bira pri otvaranju kola ("dan kola"; bilo koji dan u nedelji). Svi tipovi kola moraju biti sa utakmica zakazanih tog dana (po vremenu Europe/Belgrade). Tipovi mogu biti na različitim utakmicama tog dana. Uz kolo se automatski beleži i kolo Evrolige, samo informativno.
 
-**BR-08 — Utakmica u budućnosti.** Tip se može uneti ili izmeniti samo za utakmicu koja još nije počela.
+**BR-08 — Utakmica u budućnosti.** Tip se može uneti ili izmeniti samo za utakmicu koja još nije počela. Izuzetak: predlog dat pre početka utakmice admin može prihvatiti i posle početka (tiket je odigran sa njim); takvo prihvatanje se upisuje u audit log.
 
 ## 5.2 Unos tipa i tiketa
 
