@@ -118,13 +118,13 @@ Prioriteti: **M** (mora), **T** (treba), **M-B** (može, ako bude vremena).
 - KP6: Neaktivni igrači (FR-03 KP1) se ne prikazuju.
 
 ## FR-07 — Unos granice, smera i utakmice
-**Opis:** Za izabranog igrača unosi se granica poena, smer (više/manje) i, opciono, pojedinačna kvota.
+**Opis:** Za izabranog igrača unosi se granica poena, smer (više/manje) i pojedinačna kvota (obavezna, P-22).
 **Akter:** Admin · **Prioritet:** M
 **Preduslovi:** Izabran igrač (FR-06).
 **Tok:**
 1. Sistem automatski popunjava utakmicu tima igrača na dan kola (BR-07); utakmica se ne bira ručno.
 2. Admin unosi granicu (numerička tastatura) i bira smer dugmićima "Više" / "Manje".
-3. Opciono unosi pojedinačnu kvotu.
+3. Unosi pojedinačnu kvotu; tip se čuva tek kada je kvota uneta.
 **KP:**
 - KP1: Dozvoljena je samo granica oblika x,5 veća od 0 (BR-09).
 - KP2: Unos cele granice (npr. 15) se odbija porukom "Dozvoljene su samo granice x,5 (npr. 14,5 ili 15,5)".
@@ -137,7 +137,7 @@ Prioriteti: **M** (mora), **T** (treba), **M-B** (može, ako bude vremena).
 **Preduslovi:** U kolu postoji bar jedan član na hlađenju (BR-21).
 **Tok:**
 1. Na mestu člana na hlađenju prikazuje se kartica "Tip ekipe (umesto: <ime> ❄)".
-2. Članovi koji nisu na hlađenju mogu da dodaju predlog (igrač, granica, smer, komentar) i da glasaju za postojeći predlog (👍).
+2. Članovi koji nisu na hlađenju mogu da dodaju predlog (igrač, granica, smer, kvota, komentar) i da glasaju za postojeći predlog (👍).
 3. Admin bira jedan predlog (ili unosi sopstveni) i on postaje tip ekipe.
 **KP:**
 - KP1: Član na hlađenju ne može dodati predlog niti glasati (BR-27).
@@ -150,7 +150,7 @@ Prioriteti: **M** (mora), **T** (treba), **M-B** (može, ako bude vremena).
 **Akter:** Član · **Prioritet:** T
 **Preduslovi:** Kolo je *Otvoreno*; član nije na hlađenju.
 **Tok:**
-1. Član na ekranu otvorenog kola (EKR-04) bira "Predloži svoj tip", bira igrača (FR-06), granicu i smer.
+1. Član na ekranu otvorenog kola (EKR-04) bira "Predloži svoj tip", bira igrača (FR-06), granicu, smer i obavezno unosi kvotu.
 2. Predlog se prikazuje adminu kao "Predlog — čeka potvrdu".
 3. Admin prihvata predlog (postaje tip) ili ga menja.
 **KP:**
@@ -163,20 +163,19 @@ Prioriteti: **M** (mora), **T** (treba), **M-B** (može, ako bude vremena).
 **Akter:** Admin · **Prioritet:** M
 **Preduslovi:** Kolo je *Otvoreno*.
 **Tok:**
-1. Admin unosi iznos uplate (RSD) i ukupnu kvotu tiketa.
+1. Admin unosi iznos uplate (RSD).
 2. Bira uplatioca iz liste četiri člana.
-3. Sistem automatski računa i prikazuje potencijalni dobitak (BR-11).
-4. Ako su unete sve četiri pojedinačne kvote, sistem prikazuje njihov proizvod pored ukupne kvote.
+3. Sistem automatski računa i prikazuje ukupnu kvotu (proizvod četiri pojedinačne) i potencijalni dobitak (BR-11).
 **KP:**
 - KP1: Potencijalni dobitak = uplata × ukupna kvota, zaokruženo na 2 decimale; ažurira se pri svakoj izmeni.
-- KP2: Upozorenje ako se proizvod pojedinačnih kvota razlikuje od ukupne kvote > 2%.
+- KP2: ~~povučeno~~ (ukupna kvota se računa iz pojedinačnih, P-22).
 - KP3: Uplata ≤ 0 i kvota < 1,01 nisu dozvoljeni.
 - KP4: Polje "Uplatilac" podrazumevano predlaže člana koji je najdavnije uplatio (pravedna rotacija), ali admin može izabrati bilo koga.
 
 ## FR-11 — Zaključavanje glasanja
 **Opis:** Klikom na "Zaključi glasanje" kolo se zaključava i izbori se više ne mogu menjati kroz standardni unos.
 **Akter:** Admin; Sistem (automatski) · **Prioritet:** M
-**Preduslovi:** Unet su sva 4 tipa (igrač, utakmica, granica, smer), uplata, ukupna kvota i uplatilac.
+**Preduslovi:** Unet su sva 4 tipa (igrač, utakmica, granica, smer, kvota), uplata i uplatilac.
 **Tok:**
 1. Admin klikne "Zaključi glasanje"; sistem prikazuje rezime tiketa i traži potvrdu.
 2. Po potvrdi, status kola postaje *Zaključen*; svi tipovi i finansijski podaci postaju samo za čitanje.

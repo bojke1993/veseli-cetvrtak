@@ -166,6 +166,8 @@ export interface ProposalDto {
   game: GameDto | null;
   line: number;
   direction: Direction;
+  /** null only on proposals given before odds became mandatory. */
+  odds: number | null;
   comment: string | null;
   status: 'pending' | 'accepted' | 'rejected' | 'superseded';
   votes: number[];
@@ -251,7 +253,6 @@ export interface UpdateRoundRequest {
   /** Required to confirm removal of picks not on the new day. */
   confirmDropPicks?: boolean;
   stake?: number | null;
-  totalOdds?: number | null;
   payerMemberId?: number | null;
 }
 export interface SetPickRequest { playerId: number; line: number; direction: Direction; odds?: number | null }
@@ -296,6 +297,7 @@ export interface CreateProposalRequest {
   playerId: number;
   line: number;
   direction: Direction;
+  odds: number;
   comment?: string;
 }
 

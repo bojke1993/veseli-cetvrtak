@@ -381,7 +381,7 @@ describe('recheck', () => {
 
 describe('autoLock', () => {
   it('locks a complete open round when its first game starts', async () => {
-    const f = await setup({ status: 'open' });
+    const f = await setup({ status: 'open', odds: [2, 2, 1.5, 1.6] });
     const d = f.deps;
     d.setNow('2026-10-15T17:59:00Z');
     expect(await runAutoLock(d)).toEqual([]);
@@ -394,9 +394,17 @@ describe('autoLock', () => {
   });
 
   it('does nothing for an incomplete round', async () => {
-    const f = await setup({ status: 'open' });
+    const f = await setup({ status: 'open', odds: [2, 2, 1.5, 1.6] });
     const d = f.deps;
     await d.db.updateTable('rounds').set({ stake: null }).where('id', '=', f.roundId).execute();
+    d.setNow('2026-10-15T18:05:00Z');
+    expect(await runAutoLock(d)).toEqual([]);
+    expect((await round(d, f.roundId)).status).toBe('open');
+  });
+
+  it('does nothing while a pick has no odds', async () => {
+    const f = await setup({ status: 'open', odds: [2, 2, 1.5, null] });
+    const d = f.deps;
     d.setNow('2026-10-15T18:05:00Z');
     expect(await runAutoLock(d)).toEqual([]);
     expect((await round(d, f.roundId)).status).toBe('open');
@@ -591,6 +599,41 @@ describe('code review regressions', () => {
     const ps = await picks(d, f.roundId);
     expect(ps.slice(0, 3).map((p) => p.result)).toEqual(['hit', 'hit', 'hit']);
     expect(await runResolvePending(d)).toBe(0);
+  });
+
+  it('resolvePending reads the box score for picks added after the game ended, instead of assuming DNP', async () => {
+    const f = await setup();
+    const d = f.deps;
+    const now = new Date('2026-10-18T20:00:00Z');
+    d.setNow(now);
+    await d.db
+      .updateTable('games')
+      .set({ status: 'final', home_score: 80, away_score: 70, started_at: now, final_at: now })
+      .where('id', '=', f.game1)
+      .execute();
+    // Player One scored and Player Two played; Player Three is not in the box score at all.
+    d.provider.boxscores.set(41, { live: false, lines: [line('000001', 12, 900), line('000002', 4, 1346, 'MIL')] });
+    expect(await runResolvePending(d)).toBe(1);
+    const ps = await picks(d, f.roundId);
+    expect(ps[0]).toMatchObject({ result: 'hit', final_points: 12, void_reason: null, resolution: 'auto' });
+    expect(ps[1]).toMatchObject({ result: 'hit', final_points: 4, void_reason: null, resolution: 'auto' });
+    expect(ps[2]).toMatchObject({ result: 'void', final_points: null, void_reason: 'dnp' });
+    expect(d.provider.calls.filter((c) => c.startsWith('getBoxscore'))).toHaveLength(1);
+  });
+
+  it('resolvePending leaves picks unresolved when the box score cannot be read', async () => {
+    const f = await setup();
+    const d = f.deps;
+    const now = new Date('2026-10-18T20:00:00Z');
+    d.setNow(now);
+    await d.db
+      .updateTable('games')
+      .set({ status: 'final', home_score: 80, away_score: 70, started_at: now, final_at: now })
+      .where('id', '=', f.game1)
+      .execute();
+    d.provider.failWith = new Error('429');
+    expect(await runResolvePending(d)).toBe(0);
+    expect((await picks(d, f.roundId))[0]!.result).toBeNull();
   });
 
   it('counts the boxscore call against the budget when a game starts early', async () => {

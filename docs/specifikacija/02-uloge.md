@@ -6,7 +6,7 @@
 
 | Uloga | Ko | Opis |
 |-------|----|------|
-| **Administrator** | jedan član tima (podrazumevano Ivanišević; može se preneti) | Otvara kola, unosi izbore, uplatu, kvotu, zaključava glasanje, vrši ispravke i ručna razrešenja. Ima i sva prava člana. |
+| **Administrator** | jedan član tima (podrazumevano Ivanišević; može se preneti) | Otvara kola, unosi izbore i uplatu, menja kvote tipova, zaključava glasanje, vrši ispravke i ručna razrešenja. Ima i sva prava člana. |
 | **Član** | ostala tri člana (svaki ima svoj nalog) | Pregled svega; predlaganje sopstvenog izbora za otvoreno kolo; učešće u izboru "tipa ekipe". |
 | **Sistem** | automatski procesi | Sinhronizacija igrača i rasporeda, live osvežavanje poena, automatsko razrešenje tipova i tiketa, rekalkulacija statistike. |
 | **Gost** | bilo ko sa linkom | Samo pregled bez prijave (BR-35, P-18): dashboard, live praćenje, statistika, istorija. Bez audit loga i bez ikakvih izmena. |
@@ -22,7 +22,8 @@ Ukupan broj korisničkih naloga je tačno 4 (jedan po članu). Novi nalozi se ne
 | Glas/predlog za "tip ekipe" (kada je neko na hlađenju) | ✔ | ✔ (osim člana na hlađenju) | ✘ |
 | Otvaranje novog kola | ✔ | ✘ | ✘ |
 | Unos/izmena izbora za bilo kog člana | ✔ | ✘ | ✘ |
-| Unos uplate, kvote, uplatioca | ✔ | ✘ | ✘ |
+| Unos uplate i uplatioca; izmena pojedinačne kvote | ✔ | ✘ | ✘ |
+| Unos kvote uz sopstveni predlog ili predlog tipa ekipe (obavezno) | ✔ | ✔ (osim člana na hlađenju) | ✘ |
 | Zaključavanje glasanja | ✔ | ✘ | ✘ |
 | Otključavanje kola / ispravka posle zaključavanja | ✔ (uz razlog) | ✘ | ✘ |
 | Ručno razrešenje tipa (DNP, ručni unos poena) | ✔ (uz razlog) | ✘ | ✘ |

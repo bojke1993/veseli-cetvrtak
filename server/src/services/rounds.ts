@@ -29,7 +29,7 @@ import type { DerivedRoundInput, DerivedState } from '../domain/derived-types.js
 import { round2, toNum } from '../domain/money.js';
 import { isValidLine, liveStatus, resolvePick } from '../domain/pick.js';
 import { seasonForDate, seasonName, seasonStartDate } from '../domain/season.js';
-import { potentialWin, ticketOutcome } from '../domain/ticket.js';
+import { potentialWin, ticketOutcome, totalOddsFromPicks } from '../domain/ticket.js';
 import type { SessionMember } from '../http/auth.js';
 import { conflict, notFound, unprocessable } from '../http/errors.js';
 import { writeAudit } from './audit.js';
@@ -115,7 +115,7 @@ async function loadRoundData(db: DB, roundIds: number[], withGames: boolean): Pr
 }
 
 function pickComplete(p: Pick): boolean {
-  return p.player_id !== null && p.game_id !== null && p.line !== null && p.direction !== null;
+  return p.player_id !== null && p.game_id !== null && p.line !== null && p.direction !== null && p.odds !== null;
 }
 
 function slotLabel(p: Pick, names: Map<number, string>): string {
@@ -131,10 +131,10 @@ export function missingForLock(round: Round, picks: Pick[], names: Map<number, s
     else if (p.game_id === null) missing.push(`${slotLabel(p, names)} — utakmica`);
     if (p.player_id !== null && p.line === null) missing.push(`${slotLabel(p, names)} — granica`);
     if (p.player_id !== null && p.direction === null) missing.push(`${slotLabel(p, names)} — smer`);
+    if (p.player_id !== null && p.odds === null) missing.push(`${slotLabel(p, names)} — kvota`);
   }
   if (picks.length < 4) missing.push('Kolo nema 4 tipa');
   if (round.stake === null) missing.push('Uplata');
-  if (round.total_odds === null) missing.push('Ukupna kvota');
   if (round.payer_member_id === null) missing.push('Uplatilac');
   return missing;
 }
@@ -305,6 +305,7 @@ export async function buildRoundDetail(deps: Deps, roundId: number, viewer: Sess
         game: g ? gameDto(g, clubs) : null,
         line: Number(pr.line),
         direction: pr.direction,
+        odds: num(pr.odds),
         comment: pr.comment,
         status: pr.status,
         votes: votes.filter((v) => v.proposal_id === pr.id).map((v) => v.member_id).sort((a, b) => a - b),
@@ -524,9 +525,17 @@ function validateStake(v: number | null): void {
   if (!(v > 0) || v > MAX_STAKE || !isMoney(v)) throw unprocessable('Uplata mora biti pozitivan iznos sa najviše 2 decimale.');
 }
 
-function validateOdds(v: number | null, label: string): void {
+export function validateOdds(v: number | null, label: string): void {
   if (v === null) return;
   if (!(v >= 1.01) || v > MAX_ODDS || !isMoney(v)) throw unprocessable(`${label} mora biti broj od najmanje 1,01 (najviše 2 decimale).`);
+}
+
+/** BR-11: the round's total odds once `slot` has the given odds. */
+async function totalOddsWith(db: DB, roundId: number, slot: number, odds: number | null): Promise<number | null> {
+  const rows = await db.selectFrom('picks').select(['slot', 'odds']).where('round_id', '=', roundId).execute();
+  const total = totalOddsFromPicks(rows.map((r) => (r.slot === slot ? odds : toNum(r.odds))));
+  if (total !== null && total > MAX_ODDS) throw unprocessable(`Ukupna kvota ne može biti veća od ${MAX_ODDS}.`);
+  return total;
 }
 
 async function validatePayer(db: DB, v: number | null): Promise<void> {
@@ -546,10 +555,6 @@ export async function updateRound(deps: Deps, roundId: number, input: UpdateRoun
   if (input.stake !== undefined) {
     validateStake(input.stake);
     set.stake = input.stake;
-  }
-  if (input.totalOdds !== undefined) {
-    validateOdds(input.totalOdds, 'Ukupna kvota');
-    set.total_odds = input.totalOdds;
   }
   if (input.payerMemberId !== undefined) {
     await validatePayer(deps.db, input.payerMemberId);
@@ -581,6 +586,7 @@ export async function updateRound(deps: Deps, roundId: number, input: UpdateRoun
         { dropPicks: dropped },
       );
     }
+    if (dropped.length > 0) set.total_odds = null;
     const season = seasonForDate(input.gameDay);
     set.game_day = input.gameDay;
     set.season_code = season;
@@ -668,13 +674,22 @@ export async function writePick(
   const pick = await getPickOr404(db, round.id, slot);
   const odds = input.odds ?? null;
   validateOdds(odds, 'Kvota tipa');
-  const { game } = await validateSelection(db, round, input, now, slot, submittedAt);
-  await db
-    .updateTable('picks')
-    .set({ player_id: input.playerId, game_id: game.id, line: input.line, direction: input.direction, odds })
-    .where('id', '=', pick.id)
-    .execute();
-  return { gameStarted: !gameNotStarted(game, now) };
+  // Odds stay editable after tip-off: without them an open round could never be locked (BR-11).
+  const oddsOnly =
+    !submittedAt && pick.player_id === input.playerId && toNum(pick.line) === input.line && pick.direction === input.direction;
+  const game = oddsOnly ? null : (await validateSelection(db, round, input, now, slot, submittedAt)).game;
+  // submittedAt: accepting a proposal given before odds became mandatory; the lock still requires them.
+  if (odds === null && !submittedAt) throw unprocessable('Kvota tipa je obavezna.');
+  const totalOdds = await totalOddsWith(db, round.id, slot, odds);
+  await db.transaction().execute(async (trx) => {
+    await trx
+      .updateTable('picks')
+      .set(game ? { player_id: input.playerId, game_id: game.id, line: input.line, direction: input.direction, odds } : { odds })
+      .where('id', '=', pick.id)
+      .execute();
+    await trx.updateTable('rounds').set({ total_odds: totalOdds }).where('id', '=', round.id).execute();
+  });
+  return { gameStarted: game ? !gameNotStarted(game, now) : false };
 }
 
 export async function setPick(deps: Deps, roundId: number, slot: number, input: SetPickRequest): Promise<void> {
@@ -693,11 +708,14 @@ export async function clearPick(deps: Deps, roundId: number, slot: number): Prom
   const round = await getRoundOr404(deps.db, roundId);
   requireOpen(round);
   const pick = await getPickOr404(deps.db, round.id, slot);
-  await deps.db
-    .updateTable('picks')
-    .set({ player_id: null, game_id: null, line: null, direction: null, odds: null })
-    .where('id', '=', pick.id)
-    .execute();
+  await deps.db.transaction().execute(async (trx) => {
+    await trx
+      .updateTable('picks')
+      .set({ player_id: null, game_id: null, line: null, direction: null, odds: null })
+      .where('id', '=', pick.id)
+      .execute();
+    await trx.updateTable('rounds').set({ total_odds: null }).where('id', '=', round.id).execute();
+  });
   deps.bus.roundChanged(round.id);
 }
 
@@ -882,10 +900,22 @@ async function planCorrection(deps: Deps, round: Round, req: CorrectionRequest):
       }
       default: {
         const odds = req.value === null || req.value === '' ? null : Number(req.value);
+        if (odds === null && round.source === 'app') throw unprocessable('Kvota tipa je obavezna.');
         validateOdds(odds, 'Kvota tipa');
         oldValue = num(pick.odds);
         newValue = odds;
         pickUpdate = { odds };
+      }
+    }
+
+    // BR-11: correcting a pick's odds recalculates the total of an app round.
+    let roundUpdate: RoundUpdate | null = null;
+    let newPotentialWin: number | null | undefined;
+    if (req.field === 'odds' && round.source === 'app') {
+      const total = await totalOddsWith(db, round.id, pick.slot, newValue as number);
+      if (total !== null) {
+        roundUpdate = { total_odds: total };
+        newPotentialWin = potential({ stake: round.stake, total_odds: String(total) });
       }
     }
 
@@ -932,9 +962,10 @@ async function planCorrection(deps: Deps, round: Round, req: CorrectionRequest):
       newValue,
       pick,
       pickUpdate,
-      roundUpdate: null,
+      roundUpdate,
       newResult,
       extra,
+      newPotentialWin,
     };
   }
 

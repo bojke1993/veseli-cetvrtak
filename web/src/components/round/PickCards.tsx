@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type FormEvent } from 'react';
 import type { Direction, GameDto, PickDto, PickKind, PlayerDto, ProposalDto, RoundDetailDto } from '@api';
 import { useAcceptProposal, useCreateProposal, useDeletePick, useSetPick, useVote } from '../../api/queries';
 import { useAuth } from '../../auth/AuthContext';
-import { formatDateTime, formatOdds, lineLabel, parseDecimal, parseLine, toInputText } from '../../lib/format';
+import { formatDateTime, formatOdds, lineLabel, parseLine, parseOdds, toInputText } from '../../lib/format';
 import { MemberName } from '../MemberName';
 import { PlayerAutocomplete } from '../PlayerAutocomplete';
 import { gameStarted, PlayerInfo } from '../PlayerInfo';
@@ -81,17 +81,20 @@ function PickForm({ round, pick, prefill, onPrefillUsed }: { round: RoundDetailD
       return;
     }
     setLineError(null);
-    let odds: number | null = null;
-    if (d.oddsText.trim()) {
-      odds = parseDecimal(d.oddsText);
-      if (odds === null || odds < 1) {
-        setOddsError('Kvota mora biti broj veći ili jednak 1,00');
-        return;
-      }
+    // The tip is saved only together with its odds; the hint under the field says so.
+    if (!d.oddsText.trim()) {
+      setOddsError(null);
+      return;
     }
+    const parsed = parseOdds(d.oddsText);
+    if ('error' in parsed) {
+      setOddsError(parsed.error);
+      return;
+    }
+    const odds = parsed.value;
     setOddsError(null);
     if (!d.direction) return;
-    if (pick.player?.id === d.player.id && pick.line === line.value && pick.direction === d.direction && (pick.odds ?? null) === odds) {
+    if (pick.player?.id === d.player.id && pick.line === line.value && pick.direction === d.direction && pick.odds === odds) {
       dirty.current = false;
       return;
     }
@@ -117,11 +120,36 @@ function PickForm({ round, pick, prefill, onPrefillUsed }: { round: RoundDetailD
     }
   };
 
+  const oddsField = (
+    <DecimalInput
+      label="Kvota"
+      required
+      value={draft.oddsText}
+      placeholder="1,85"
+      error={oddsError}
+      hint={draft.oddsText.trim() ? null : 'Obavezna — tip se čuva tek sa kvotom'}
+      onChange={(v) => {
+        dirty.current = true;
+        setDraft({ ...draft, oddsText: v });
+      }}
+      onBlur={() => commit(draft)}
+    />
+  );
+
   if (started) {
     return (
       <div>
         {pick.player ? <PlayerInfo player={pick.player} game={pick.game} /> : <p className="muted">Tip nije unet.</p>}
-        <p className="small alert alert-warn">Utakmica je počela — tip se ne može menjati. Poništenje: „Razreši ručno” u detalju kola.</p>
+        {pick.player && (
+          <>
+            <p className="pick-line">
+              <strong>{lineLabel(pick.direction, pick.line)}</strong>
+            </p>
+            {oddsField}
+          </>
+        )}
+        <p className="small alert alert-warn">Utakmica je počela — igrač, granica i smer se ne mogu menjati. Poništenje: „Razreši ručno” u detalju kola.</p>
+        <MutationError error={setPick.error} />
       </div>
     );
   }
@@ -144,17 +172,7 @@ function PickForm({ round, pick, prefill, onPrefillUsed }: { round: RoundDetailD
           onBlur={() => commit(draft)}
         />
         <DirectionToggle value={draft.direction} onChange={(dir) => commit({ ...draft, direction: dir })} />
-        <DecimalInput
-          label="Kvota (opciono)"
-          value={draft.oddsText}
-          placeholder="1,85"
-          error={oddsError}
-          onChange={(v) => {
-            dirty.current = true;
-            setDraft({ ...draft, oddsText: v });
-          }}
-          onBlur={() => commit(draft)}
-        />
+        {oddsField}
       </div>
       <MutationError error={setPick.error ?? delPick.error} />
     </div>
@@ -166,21 +184,25 @@ function ProposalForm({
   round,
   kind,
   cooldownForMemberId,
+  initial,
   onDone,
   submitLabel,
 }: {
   round: RoundDetailDto;
   kind: PickKind;
   cooldownForMemberId?: number;
+  /** Pending proposal being changed: its values are the starting point. */
+  initial?: ProposalDto;
   onDone: () => void;
   submitLabel: string;
 }) {
   const create = useCreateProposal(round.id);
-  const [player, setPlayer] = useState<PlayerDto | null>(null);
-  const [game, setGame] = useState<GameDto | null>(null);
-  const [lineText, setLineText] = useState('');
-  const [direction, setDirection] = useState<Direction | null>(null);
-  const [comment, setComment] = useState('');
+  const [player, setPlayer] = useState<PlayerDto | null>(initial?.player ?? null);
+  const [game, setGame] = useState<GameDto | null>(initial?.game ?? null);
+  const [lineText, setLineText] = useState(toInputText(initial?.line));
+  const [direction, setDirection] = useState<Direction | null>(initial?.direction ?? null);
+  const [oddsText, setOddsText] = useState(toInputText(initial?.odds, 2));
+  const [comment, setComment] = useState(initial?.comment ?? '');
   const [error, setError] = useState<string | null>(null);
 
   const submit = (e: FormEvent) => {
@@ -190,6 +212,9 @@ function ProposalForm({
     const line = parseLine(lineText);
     if ('error' in line) return setError(line.error);
     if (!direction) return setError('Izaberite „Više” ili „Manje”.');
+    if (!oddsText.trim()) return setError('Unesite kvotu, npr. 1,85.');
+    const odds = parseOdds(oddsText);
+    if ('error' in odds) return setError(odds.error);
     create.mutate(
       {
         kind,
@@ -197,6 +222,7 @@ function ProposalForm({
         playerId: player.id,
         line: line.value,
         direction,
+        odds: odds.value,
         comment: comment.trim() || undefined,
       },
       { onSuccess: onDone },
@@ -227,6 +253,7 @@ function ProposalForm({
       <div className="pick-form-row">
         <LineInput value={lineText} onChange={setLineText} />
         <DirectionToggle value={direction} onChange={setDirection} />
+        <DecimalInput label="Kvota" required placeholder="1,85" value={oddsText} onChange={setOddsText} />
       </div>
       <div className="field">
         <label htmlFor={`comment-${kind}-${cooldownForMemberId ?? 'p'}`}>Komentar (opciono)</label>
@@ -269,6 +296,7 @@ function ProposalSummary({ p }: { p: ProposalDto }) {
       <PlayerInfo player={p.player} game={p.game} />
       <p className="pick-line">
         <strong>{lineLabel(p.direction, p.line)}</strong>
+        {p.odds != null && <span className="muted"> · kvota {formatOdds(p.odds)}</span>}
         <span className="muted small">
           {' '}
           · predložio <MemberName id={p.proposedBy} showStatus={false} /> · {formatDateTime(p.createdAt)}
@@ -311,7 +339,7 @@ export function PersonalPickCard({ round, pick }: { round: RoundDetailDto; pick:
               <button type="button" className="btn btn-primary btn-small" disabled={accept.isPending} onClick={() => void save.track(accept.mutateAsync(p.id)).catch(() => undefined)}>
                 Prihvati
               </button>
-              <button type="button" className="btn btn-small" onClick={() => setPrefill(draftFromProposal(p, pick.odds != null ? toInputText(pick.odds, 2) : ''))}>
+              <button type="button" className="btn btn-small" onClick={() => setPrefill(draftFromProposal(p, toInputText(p.odds ?? pick.odds, 2)))}>
                 Izmeni
               </button>
             </div>
@@ -328,7 +356,7 @@ export function PersonalPickCard({ round, pick }: { round: RoundDetailDto; pick:
 
       {canPropose &&
         (proposing ? (
-          <ProposalForm round={round} kind="personal" onDone={() => setProposing(false)} submitLabel="Pošalji predlog" />
+          <ProposalForm round={round} kind="personal" initial={pending[0]} onDone={() => setProposing(false)} submitLabel="Pošalji predlog" />
         ) : (
           <button type="button" className="btn" onClick={() => setProposing(true)}>
             {pending.length ? 'Izmeni svoj predlog' : 'Predloži svoj tip'}

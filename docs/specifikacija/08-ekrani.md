@@ -54,10 +54,10 @@ Sadržaj zavisi od stanja aktuelnog kola:
 ### EKR-04 — Unos / otvoreno kolo
 - Zaglavlje: Kolo #N (automatski), datum otvaranja (automatski), **dan kola** (izbor iz liste dana sa utakmicama, uz spisak utakmica tog dana), kolo Evrolige (automatski, informativno).
 - **4 kartice tipova** (redosled članova fiksan):
-  - lična kartica: ime člana + ❄/🔥; polje za pretragu igrača (autocomplete, FR-06) → nakon izbora prikazuje igrača, klub, utakmicu (sa mogućnošću promene), polje granica, prekidač Više/Manje, opciono kvota;
+  - lična kartica: ime člana + ❄/🔥; polje za pretragu igrača (autocomplete, FR-06) → nakon izbora prikazuje igrača, klub, utakmicu (sa mogućnošću promene), polje granica, prekidač Više/Manje, kvota (obavezna);
   - ako postoji predlog člana (FR-09): oznaka "Predlog — čeka potvrdu" sa dugmadima Prihvati / Izmeni;
   - kartica tipa ekipe (FR-08): lista predloga sa glasovima 👍, dugme "Dodaj predlog" (članovi koji nisu na hlađenju), admin bira "Izaberi ovaj predlog".
-- **Tiket sekcija:** uplata, ukupna kvota, uplatilac (padajuća lista 4 člana, predlog po rotaciji), automatski potencijalni dobitak, proizvod pojedinačnih kvota i upozorenje o razlici.
+- **Tiket sekcija:** uplata, uplatilac (padajuća lista 4 člana, predlog po rotaciji), automatska ukupna kvota sa prikazom računice (ili brojem unetih kvota, npr. 3/4) i automatski potencijalni dobitak.
 - Dugme **"Zaključi glasanje"** (samo admin) — onemogućeno uz listu onoga što nedostaje.
 - Upozorenje sa odbrojavanjem kad je do početka prve utakmice < 60 min.
 - Član (ne-admin) vidi sve kartice samo za čitanje, osim svog predloga i predloga tipa ekipe.

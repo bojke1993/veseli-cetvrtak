@@ -174,6 +174,7 @@ export interface ProposalsTable {
   player_id: number;
   line: Decimal;
   direction: Direction;
+  odds: NullableDecimal; // null only on proposals given before P-22
   comment: string | null;
   status: ProposalStatus;
   created_at: CreatedAt;

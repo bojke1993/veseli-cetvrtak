@@ -10,7 +10,7 @@
 | **Tip ekipe** | 4. tip koji ostala trojica zajednički biraju umesto člana na hlađenju. Ne pripisuje se nijednom članu (P-05). |
 | **Granica** | Broj poena na koji se igra (npr. 14,5). Uvek oblika x,5 — cela granica nije dozvoljena (P-03). |
 | **Smer** | "Više" (poeni > granica) ili "Manje" (poeni < granica). |
-| **Kvota** | Koeficijent kladionice. **Ukupna kvota** tiketa je ona koju je kladionica dala za ceo tiket; **pojedinačna kvota** je kvota jednog tipa (opciono). |
+| **Kvota** | Koeficijent kladionice. **Pojedinačna kvota** je kvota jednog tipa (obavezna); **ukupna kvota** tiketa je proizvod četiri pojedinačne kvote i računa se automatski (P-22). |
 | **Uplata** | Iznos uložen na tiket u kolu (RSD). |
 | **Uplatilac** | Član koji je fizički uplatio tiket u tom kolu. |
 | **Potencijalni dobitak** | Uplata × ukupna kvota (P-04). Izračunava se automatski pri unosu. |

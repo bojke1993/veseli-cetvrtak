@@ -78,12 +78,24 @@ describe('API: round lifecycle', () => {
     expect(inactive.status).toBe(422);
     expect((await api(ctx, 'tozislav', 'PUT', `/rounds/${roundId}/picks/2`, { playerId: fx.players.jones, line: 9.5, direction: 'under' })).status).toBe(403);
 
-    expect((await api(ctx, ADMIN, 'PUT', `/rounds/${roundId}/picks/2`, { playerId: fx.players.jones, line: 9.5, direction: 'under' })).status).toBe(200);
-    expect((await api(ctx, ADMIN, 'PUT', `/rounds/${roundId}/picks/3`, { playerId: fx.players.nedovic, line: 7.5, direction: 'over' })).status).toBe(200);
-    expect((await api(ctx, ADMIN, 'PUT', `/rounds/${roundId}/picks/4`, { playerId: fx.players.fournier, line: 10.5, direction: 'over' })).status).toBe(200);
-    // Clear and set again.
-    expect((await api(ctx, ADMIN, 'DELETE', `/rounds/${roundId}/picks/4`)).body.round.picks[3].player).toBeNull();
-    expect((await api(ctx, ADMIN, 'PUT', `/rounds/${roundId}/picks/4`, { playerId: fx.players.sloukas, line: 10.5, direction: 'over' })).status).toBe(200);
+    // Whoever enters a pick must enter its odds.
+    const noOdds = await api(ctx, ADMIN, 'PUT', `/rounds/${roundId}/picks/2`, { playerId: fx.players.jones, line: 9.5, direction: 'under' });
+    expect(noOdds.status).toBe(422);
+    expect(noOdds.body.error.message).toBe('Kvota tipa je obavezna.');
+    expect((await api(ctx, ADMIN, 'PUT', `/rounds/${roundId}/picks/2`, { playerId: fx.players.jones, line: 9.5, direction: 'under', odds: 1 })).status).toBe(422);
+
+    const two = await api(ctx, ADMIN, 'PUT', `/rounds/${roundId}/picks/2`, { playerId: fx.players.jones, line: 9.5, direction: 'under', odds: 2 });
+    expect(two.status).toBe(200);
+    expect(two.body.round.totalOdds).toBeNull();
+    expect((await api(ctx, ADMIN, 'PUT', `/rounds/${roundId}/picks/3`, { playerId: fx.players.nedovic, line: 7.5, direction: 'over', odds: 2 })).status).toBe(200);
+    const four = await api(ctx, ADMIN, 'PUT', `/rounds/${roundId}/picks/4`, { playerId: fx.players.fournier, line: 10.5, direction: 'over', odds: 1.6 });
+    expect(four.body.round.totalOdds).toBe(11.84);
+    // Clearing a pick clears the total; setting it again restores it.
+    const cleared = await api(ctx, ADMIN, 'DELETE', `/rounds/${roundId}/picks/4`);
+    expect(cleared.body.round.picks[3].player).toBeNull();
+    expect(cleared.body.round.totalOdds).toBeNull();
+    const again = await api(ctx, ADMIN, 'PUT', `/rounds/${roundId}/picks/4`, { playerId: fx.players.sloukas, line: 10.5, direction: 'over', odds: 1.6 });
+    expect(again.body.round.totalOdds).toBe(11.84);
 
     const used = await api(ctx, null, 'GET', `/players/search?q=vezenkov&roundId=${roundId}`);
     expect(used.body.items[0]).toMatchObject({ selectable: false, note: 'Već izabran u ovom kolu' });
@@ -92,16 +104,16 @@ describe('API: round lifecycle', () => {
   it('validates stake, odds and payer; refuses to lock while incomplete', async () => {
     const lock = await api(ctx, ADMIN, 'POST', `/rounds/${roundId}/lock`);
     expect(lock.status).toBe(422);
-    // REQ-10.4: the payer is pre-filled by rotation, so only stake and odds are missing.
-    expect(lock.body.error.details.missing).toEqual(['Uplata', 'Ukupna kvota']);
+    // REQ-10.4: the payer is pre-filled by rotation, so only the stake is missing.
+    expect(lock.body.error.details.missing).toEqual(['Uplata']);
 
     expect((await api(ctx, ADMIN, 'PATCH', `/rounds/${roundId}`, { stake: 0 })).status).toBe(422);
     expect((await api(ctx, ADMIN, 'PATCH', `/rounds/${roundId}`, { stake: 100.555 })).status).toBe(422);
-    expect((await api(ctx, ADMIN, 'PATCH', `/rounds/${roundId}`, { totalOdds: 1 })).status).toBe(422);
     expect((await api(ctx, ADMIN, 'PATCH', `/rounds/${roundId}`, { payerMemberId: 9 })).status).toBe(422);
-    const ok = await api(ctx, ADMIN, 'PATCH', `/rounds/${roundId}`, { stake: 500, totalOdds: 12.4, payerMemberId: 3 });
+
+    const ok = await api(ctx, ADMIN, 'PATCH', `/rounds/${roundId}`, { stake: 500, totalOdds: 99, payerMemberId: 3 });
     expect(ok.status).toBe(200);
-    expect(ok.body.round).toMatchObject({ stake: 500, totalOdds: 12.4, payerMemberId: 3, potentialWin: 6200, missingForLock: [] });
+    expect(ok.body.round).toMatchObject({ stake: 500, totalOdds: 11.84, payerMemberId: 3, potentialWin: 5920, missingForLock: [] });
   });
 
   it('PATCH gameDay drops picks not on the new day only after confirmation', async () => {
@@ -166,6 +178,8 @@ describe('API: round lifecycle', () => {
     expect(dry.body.round.status).toBe('lost');
     expect(dry.body.round.picks[2].line).toBe(7.5);
 
+    // A voided pick without odds (older rounds) leaves the actual win provisional.
+    await ctx.deps.db.updateTable('picks').set({ odds: null }).where('round_id', '=', roundId).where('slot', '=', 4).execute();
     const applied = await api(ctx, ADMIN, 'POST', `/rounds/${roundId}/corrections`, { slot: 3, field: 'line', value: 2.5, reason: 'Greška u unosu, tiket kaže 2,5' });
     expect(applied.body.applied).toBe(true);
     expect(applied.body.round).toMatchObject({ status: 'won', hasCorrections: true, blame: null, actualWinProvisional: true });
@@ -175,7 +189,7 @@ describe('API: round lifecycle', () => {
 
     // Stake correction shows the potential-win consequence.
     const stake = await api(ctx, ADMIN, 'POST', `/rounds/${roundId}/corrections`, { field: 'stake', value: 400, reason: 'tiket', dryRun: true });
-    expect(stake.body.consequences).toContain('Potencijalni dobitak: 6.200,00 RSD → 4.960,00 RSD');
+    expect(stake.body.consequences).toContain('Potencijalni dobitak: 5.920,00 RSD → 4.736,00 RSD');
 
     // Actual win override (REQ-15.8).
     const tasks = await api(ctx, ADMIN, 'GET', '/admin/tasks');
@@ -253,18 +267,18 @@ describe('API: cooldown slots, proposals and votes', () => {
   });
 
   it('enforces proposal and vote rules, admin accepts', async () => {
-    const own = await api(ctx, 'tozislav', 'POST', `/rounds/${roundId}/proposals`, { kind: 'personal', playerId: fx.players.jones, line: 9.5, direction: 'over' });
+    const own = await api(ctx, 'tozislav', 'POST', `/rounds/${roundId}/proposals`, { kind: 'personal', playerId: fx.players.jones, line: 9.5, direction: 'over', odds: 1.9 });
     expect(own.status).toBe(403);
-    const team = await api(ctx, 'tozislav', 'POST', `/rounds/${roundId}/proposals`, { kind: 'team', cooldownForMemberId: 2, playerId: fx.players.jones, line: 9.5, direction: 'over' });
+    const team = await api(ctx, 'tozislav', 'POST', `/rounds/${roundId}/proposals`, { kind: 'team', cooldownForMemberId: 2, playerId: fx.players.jones, line: 9.5, direction: 'over', odds: 1.9 });
     expect(team.status).toBe(403);
-    const wrongSlot = await api(ctx, 'simara', 'POST', `/rounds/${roundId}/proposals`, { kind: 'team', cooldownForMemberId: 3, playerId: fx.players.jones, line: 9.5, direction: 'over' });
+    const wrongSlot = await api(ctx, 'simara', 'POST', `/rounds/${roundId}/proposals`, { kind: 'team', cooldownForMemberId: 3, playerId: fx.players.jones, line: 9.5, direction: 'over', odds: 1.9 });
     expect(wrongSlot.status).toBe(422);
-    const badLine = await api(ctx, 'simara', 'POST', `/rounds/${roundId}/proposals`, { kind: 'team', cooldownForMemberId: 2, playerId: fx.players.jones, line: 9, direction: 'over' });
+    const badLine = await api(ctx, 'simara', 'POST', `/rounds/${roundId}/proposals`, { kind: 'team', cooldownForMemberId: 2, playerId: fx.players.jones, line: 9, direction: 'over', odds: 1.9 });
     expect(badLine.status).toBe(422);
 
-    const p1 = await api(ctx, 'simara', 'POST', `/rounds/${roundId}/proposals`, { kind: 'team', cooldownForMemberId: 2, playerId: fx.players.jones, line: 9.5, direction: 'over', comment: 'Siguran' });
+    const p1 = await api(ctx, 'simara', 'POST', `/rounds/${roundId}/proposals`, { kind: 'team', cooldownForMemberId: 2, playerId: fx.players.jones, line: 9.5, direction: 'over', odds: 1.9, comment: 'Siguran' });
     expect(p1.status).toBe(200);
-    const p2 = await api(ctx, 'lakicevic', 'POST', `/rounds/${roundId}/proposals`, { kind: 'team', cooldownForMemberId: 2, playerId: fx.players.sloukas, line: 11.5, direction: 'over' });
+    const p2 = await api(ctx, 'lakicevic', 'POST', `/rounds/${roundId}/proposals`, { kind: 'team', cooldownForMemberId: 2, playerId: fx.players.sloukas, line: 11.5, direction: 'over', odds: 1.9 });
     const teamProps = p2.body.round.proposals;
     expect(teamProps).toHaveLength(2);
     const [a, b] = teamProps;
@@ -279,8 +293,8 @@ describe('API: cooldown slots, proposals and votes', () => {
     expect(unv.body.round.proposals[0].votes).toEqual([3]);
 
     // Personal proposal by Simara; a second one replaces the first.
-    await api(ctx, 'simara', 'POST', `/rounds/${roundId}/proposals`, { kind: 'personal', playerId: fx.players.nedovic, line: 7.5, direction: 'under' });
-    const pers = await api(ctx, 'simara', 'POST', `/rounds/${roundId}/proposals`, { kind: 'personal', playerId: fx.players.nedovic, line: 8.5, direction: 'under' });
+    await api(ctx, 'simara', 'POST', `/rounds/${roundId}/proposals`, { kind: 'personal', playerId: fx.players.nedovic, line: 7.5, direction: 'under', odds: 1.9 });
+    const pers = await api(ctx, 'simara', 'POST', `/rounds/${roundId}/proposals`, { kind: 'personal', playerId: fx.players.nedovic, line: 8.5, direction: 'under', odds: 1.9 });
     const personal = pers.body.round.proposals.filter((p: any) => p.kind === 'personal');
     expect(personal.map((p: any) => p.status)).toEqual(['superseded', 'pending']);
 
@@ -313,13 +327,13 @@ describe('API: proposal given before tip-off, accepted after', () => {
 
   it('accepts it (audited) while a direct pick after tip-off is still refused', async () => {
     const roundId = (await api(ctx, ADMIN, 'POST', '/rounds', { gameDay: '2026-10-15' })).body.round.id;
-    const prop = await api(ctx, 'lakicevic', 'POST', `/rounds/${roundId}/proposals`, { kind: 'personal', playerId: fx.players.sloukas, line: 10.5, direction: 'under' });
+    const prop = await api(ctx, 'lakicevic', 'POST', `/rounds/${roundId}/proposals`, { kind: 'personal', playerId: fx.players.sloukas, line: 10.5, direction: 'under', odds: 1.9 });
     expect(prop.status).toBe(200);
     const proposalId = prop.body.round.proposals[0].id;
 
     ctx.deps.setNow(new Date('2026-10-15T19:00:00Z')); // Sloukas' game started at 18:30Z
     expect((await api(ctx, ADMIN, 'PUT', `/rounds/${roundId}/picks/3`, { playerId: fx.players.sloukas, line: 10.5, direction: 'under' })).status).toBe(422);
-    const late = await api(ctx, 'simara', 'POST', `/rounds/${roundId}/proposals`, { kind: 'personal', playerId: fx.players.jones, line: 9.5, direction: 'under' });
+    const late = await api(ctx, 'simara', 'POST', `/rounds/${roundId}/proposals`, { kind: 'personal', playerId: fx.players.jones, line: 9.5, direction: 'under', odds: 1.9 });
     expect(late.status).toBe(422);
 
     const acc = await api(ctx, ADMIN, 'POST', `/proposals/${proposalId}/accept`);
@@ -329,5 +343,76 @@ describe('API: proposal given before tip-off, accepted after', () => {
     const audit = await ctx.deps.db.selectFrom('audit_log').selectAll().where('action', '=', 'late_accept').execute();
     expect(audit).toHaveLength(1);
     expect(audit[0]).toMatchObject({ actor_member_id: 1, round_id: roundId, entity: 'pick' });
+  });
+});
+
+describe('API: mandatory pick odds and derived total odds (P-22)', () => {
+  let ctx: ApiCtx;
+  let fx: Awaited<ReturnType<typeof seedFixtures>>;
+  let roundId: number;
+  beforeAll(async () => {
+    ctx = await createApiCtx();
+    fx = await seedFixtures(ctx.deps);
+    roundId = (await api(ctx, ADMIN, 'POST', '/rounds', { gameDay: '2026-10-15' })).body.round.id;
+  });
+  afterAll(async () => {
+    await ctx.close();
+  });
+
+  it('a proposal needs valid odds, which carry over to the pick and can be changed by the admin', async () => {
+    const proposal = { kind: 'personal', playerId: fx.players.jones, line: 9.5, direction: 'over' };
+    expect((await api(ctx, 'tozislav', 'POST', `/rounds/${roundId}/proposals`, proposal)).status).toBe(400);
+    expect((await api(ctx, 'tozislav', 'POST', `/rounds/${roundId}/proposals`, { ...proposal, odds: 1 })).status).toBe(422);
+    const created = await api(ctx, 'tozislav', 'POST', `/rounds/${roundId}/proposals`, { ...proposal, odds: 1.9 });
+    expect(created.status).toBe(200);
+    expect(created.body.round.proposals[0].odds).toBe(1.9);
+
+    const acc = await api(ctx, ADMIN, 'POST', `/proposals/${created.body.round.proposals[0].id}/accept`);
+    expect(acc.body.round.picks[1].odds).toBe(1.9);
+
+    const changed = await api(ctx, ADMIN, 'PUT', `/rounds/${roundId}/picks/2`, { ...proposal, kind: undefined, odds: 1.95 });
+    expect(changed.body.round.picks[1].odds).toBe(1.95);
+  });
+
+  it('after tip-off only the odds of a pick can still be set in an open round', async () => {
+    const jones = { playerId: fx.players.jones, line: 9.5, direction: 'over' };
+    ctx.deps.setNow('2026-10-15T21:00:00Z');
+    expect((await api(ctx, ADMIN, 'PUT', `/rounds/${roundId}/picks/2`, { ...jones, line: 10.5, odds: 2 })).status).toBe(422);
+    const res = await api(ctx, ADMIN, 'PUT', `/rounds/${roundId}/picks/2`, { ...jones, odds: 2 });
+    expect(res.status).toBe(200);
+    expect(res.body.round.picks[1]).toMatchObject({ line: 9.5, odds: 2 });
+  });
+
+  it('rejects odds whose product would exceed the limit', async () => {
+    const db = ctx.deps.db;
+    ctx.deps.setNow('2026-10-15T10:00:00Z');
+    const fill = [fx.players.vezenkov, fx.players.nedovic];
+    await api(ctx, ADMIN, 'PUT', `/rounds/${roundId}/picks/1`, { playerId: fill[0], line: 14.5, direction: 'over', odds: 20 });
+    await api(ctx, ADMIN, 'PUT', `/rounds/${roundId}/picks/3`, { playerId: fill[1], line: 7.5, direction: 'over', odds: 20 });
+    const res = await api(ctx, ADMIN, 'PUT', `/rounds/${roundId}/picks/4`, { playerId: fx.players.sloukas, line: 10.5, direction: 'over', odds: 20 });
+    expect(res.status).toBe(422);
+    const slot4 = await db.selectFrom('picks').select('player_id').where('round_id', '=', roundId).where('slot', '=', 4).executeTakeFirstOrThrow();
+    expect(slot4.player_id).toBeNull();
+  });
+
+  it('correcting a pick odds after locking recalculates the total; odds cannot be removed', async () => {
+    await api(ctx, ADMIN, 'PUT', `/rounds/${roundId}/picks/1`, { playerId: fx.players.vezenkov, line: 14.5, direction: 'over', odds: 2 });
+    await api(ctx, ADMIN, 'PUT', `/rounds/${roundId}/picks/3`, { playerId: fx.players.nedovic, line: 7.5, direction: 'over', odds: 2 });
+    await api(ctx, ADMIN, 'PUT', `/rounds/${roundId}/picks/4`, { playerId: fx.players.sloukas, line: 10.5, direction: 'over', odds: 1.5 });
+    await api(ctx, ADMIN, 'PATCH', `/rounds/${roundId}`, { stake: 100 });
+    const locked = await api(ctx, ADMIN, 'POST', `/rounds/${roundId}/lock`);
+    expect(locked.body.round).toMatchObject({ status: 'locked', totalOdds: 12, potentialWin: 1200 });
+
+    const url = `/rounds/${roundId}/corrections`;
+    expect((await api(ctx, ADMIN, 'POST', url, { slot: 4, field: 'odds', value: null, reason: 'tiket' })).status).toBe(422);
+    const dry = await api(ctx, ADMIN, 'POST', url, { slot: 4, field: 'odds', value: 2, reason: 'tiket', dryRun: true });
+    expect(dry.body.consequences).toContain('Potencijalni dobitak: 1.200,00 RSD → 1.600,00 RSD');
+    expect(dry.body.round.totalOdds).toBe(12);
+    const applied = await api(ctx, ADMIN, 'POST', url, { slot: 4, field: 'odds', value: 2, reason: 'tiket' });
+    expect(applied.body.round).toMatchObject({ totalOdds: 16, potentialWin: 1600 });
+
+    // The ticket's own total (rounding, bonus) stays correctable.
+    const total = await api(ctx, ADMIN, 'POST', url, { field: 'totalOdds', value: 16.2, reason: 'bonus na tiketu' });
+    expect(total.body.round.totalOdds).toBe(16.2);
   });
 });

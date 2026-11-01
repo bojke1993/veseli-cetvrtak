@@ -155,17 +155,17 @@ Kriterijumi prihvatanja:
 2. Sistem ĆE prihvatati samo granicu oblika x,5 veću od 0 (npr. 14,5), sa zarezom ili tačkom kao decimalnim separatorom.
 3. AKO administrator unese celu granicu (npr. 15), ONDA sistem ĆE odbiti unos porukom "Dozvoljene su samo granice x,5".
 4. Sistem ĆE zahtevati izbor tačno jednog smera: "Više" ili "Manje".
-5. GDE administrator unese pojedinačnu kvotu tipa, sistem ĆE je sačuvati uz tip (opciono polje).
-6. AKO je utakmica tipa počela, ONDA sistem ĆE onemogućiti unos ili izmenu tog tipa.
+5. Sistem ĆE zahtevati pojedinačnu kvotu svakog tipa (≥ 1,01, najviše 2 decimale); AKO kvota nije uneta, ONDA sistem NEĆE sačuvati tip.
+6. AKO je utakmica tipa počela, ONDA sistem ĆE onemogućiti izmenu igrača, granice i smera tog tipa; kvota se i dalje može uneti ili promeniti dok je kolo otvoreno.
 7. KADA administrator izmeni bilo koje polje otvorenog kola, ONDA sistem ĆE ga automatski sačuvati i prikazati oznaku "Sačuvano".
 
 ### REQ-09 — Predlog sopstvenog tipa
 **Kao** član, **želim** da sam predložim svoj tip, **kako bi** admin samo potvrdio umesto da prepisuje.
 **Izvor:** FR-09
 
-1. DOK je kolo otvoreno i član nije na hlađenju, sistem ĆE dozvoliti članu da unese ili izmeni predlog svog ličnog tipa (igrač, granica, smer).
+1. DOK je kolo otvoreno i član nije na hlađenju, sistem ĆE dozvoliti članu da unese ili izmeni predlog svog ličnog tipa (igrač, granica, smer, obavezna kvota).
 2. KADA član sačuva predlog, ONDA sistem ĆE ga prikazati administratoru sa oznakom "Predlog — čeka potvrdu".
-3. KADA administrator prihvati predlog, ONDA sistem ĆE od njega kreirati lični tip tog člana; dalje izmene može vršiti samo administrator.
+3. KADA administrator prihvati predlog, ONDA sistem ĆE od njega kreirati lični tip tog člana, zajedno sa kvotom; dalje izmene može vršiti samo administrator.
 4. AKO član pokuša da izmeni tip drugog člana, ONDA sistem ĆE odbiti zahtev.
 5. Sistem ĆE dozvoliti administratoru da unese tip i bez predloga člana.
 
@@ -173,9 +173,9 @@ Kriterijumi prihvatanja:
 **Kao** administrator, **želim** da zabeležim iznos uplate, kvotu i ko je uplatio, **kako bi** finansijska statistika bila tačna.
 **Izvor:** FR-10, BR-10, BR-11, BR-31
 
-1. Sistem ĆE zahtevati iznos uplate (> 0, RSD, najviše 2 decimale), ukupnu kvotu tiketa (≥ 1,01) i uplatioca (jedan od četiri člana, uključujući i člana na hlađenju).
+1. Sistem ĆE zahtevati iznos uplate (> 0, RSD, najviše 2 decimale) i uplatioca (jedan od četiri člana, uključujući i člana na hlađenju).
 2. KADA se promeni uplata ili ukupna kvota, ONDA sistem ĆE odmah izračunati potencijalni dobitak = uplata × ukupna kvota, zaokruženo na 2 decimale.
-3. GDE su unete sve četiri pojedinačne kvote, sistem ĆE prikazati njihov proizvod; AKO se on razlikuje od ukupne kvote više od 2%, ONDA sistem ĆE prikazati upozorenje.
+3. KADA su unete sve četiri pojedinačne kvote, ONDA sistem ĆE automatski izračunati ukupnu kvotu kao njihov proizvod, zaokružen na 2 decimale; dok neka nedostaje, ukupna kvota nije određena.
 4. Sistem ĆE kao podrazumevanog uplatioca predložiti člana koji je najdavnije uplatio, uz mogućnost izbora bilo kog člana.
 5. Sistem ĆE sve iznose prikazivati u formatu `1.250,00 RSD`.
 
@@ -183,7 +183,7 @@ Kriterijumi prihvatanja:
 **Kao** administrator, **želim** da klikom na "Zaključi glasanje" zamrznem tiket, **kako se** izbori ne bi menjali posle uplate.
 **Izvor:** FR-11, BR-28, P-19
 
-1. DOK nedostaje bilo koji od podataka (4 tipa, uplata, ukupna kvota, uplatilac), sistem ĆE onemogućiti "Zaključi glasanje" i prikazati šta nedostaje.
+1. DOK nedostaje bilo koji od podataka (4 tipa sa kvotama, uplata, uplatilac), sistem ĆE onemogućiti "Zaključi glasanje" i prikazati šta nedostaje.
 2. KADA administrator potvrdi zaključavanje u prozoru sa rezimeom tiketa, ONDA sistem ĆE postaviti status kola na *Zaključen*, zabeležiti vreme i ko je zaključao, i učiniti sve tipove i finansijske podatke samo za čitanje.
 3. KADA počne prva utakmica kola koje je kompletno, a nije zaključeno, ONDA sistem ĆE automatski zaključati kolo i kao aktera zabeležiti "sistem".
 4. AKO u trenutku početka prve utakmice kolo nije kompletno, ONDA sistem ĆE administratoru prikazati upozorenje, onemogućiti unos tipova čija je utakmica počela i dozvoliti samo da se takav tip označi kao poništen.

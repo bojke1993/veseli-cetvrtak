@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { RoundEditor } from './RoundEditor';
 import { ADMIN_ME, MEMBERS, mockFetch, renderWithProviders } from '../../test/utils';
 import { roundDetail } from '../../test/fixtures';
+import { ODDS_ERROR } from '../../lib/format';
 
 afterEach(() => vi.unstubAllGlobals());
 
@@ -45,12 +46,36 @@ describe('RoundEditor autosave', () => {
     await user.clear(line);
     await user.type(line, '16,5');
     await user.tab();
+    // Nothing is saved until the mandatory odds are entered.
+    expect(mutations(fetchMock)).toHaveLength(0);
+    await user.type(within(card).getByLabelText('Kvota'), '1,85');
+    await user.tab();
     await waitFor(() => expect(mutations(fetchMock)).toHaveLength(1));
     const [url, init] = mutations(fetchMock)[0]!;
     expect(String(url)).toBe('/api/rounds/7/picks/1');
     expect(init!.method).toBe('PUT');
     expect((init!.headers as Record<string, string>)['X-Requested-With']).toBe('vc');
-    expect(JSON.parse(String(init!.body))).toEqual({ playerId: 100, line: 16.5, direction: 'over', odds: null });
+    expect(JSON.parse(String(init!.body))).toEqual({ playerId: 100, line: 16.5, direction: 'over', odds: 1.85 });
     expect(await screen.findByText('✔ Sačuvano')).toBeInTheDocument();
+  });
+
+  it('marks pick odds as required and shows total odds as derived, not editable', async () => {
+    setup();
+    const [odds] = await screen.findAllByLabelText('Kvota');
+    expect(odds).toHaveAttribute('aria-required', 'true');
+    expect(screen.getAllByText('Obavezna — tip se čuva tek sa kvotom').length).toBeGreaterThan(0);
+    expect(screen.queryByLabelText('Ukupna kvota')).not.toBeInTheDocument();
+    expect(screen.getByText('Računa se automatski — unete kvote: 0/4')).toBeInTheDocument();
+  });
+
+  it('rejects odds below 1,01 without saving', async () => {
+    const user = userEvent.setup();
+    const { fetchMock } = setup();
+    await screen.findAllByLabelText('Kvota');
+    const card = screen.getByRole('article', { name: 'Tip 1' });
+    await user.type(within(card).getByLabelText('Kvota'), '1');
+    await user.tab();
+    expect(within(card).getByText(ODDS_ERROR)).toBeInTheDocument();
+    expect(mutations(fetchMock)).toHaveLength(0);
   });
 });

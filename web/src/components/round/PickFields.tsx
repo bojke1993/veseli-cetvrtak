@@ -52,6 +52,8 @@ export function DecimalInput({
   disabled,
   placeholder,
   suffix,
+  required,
+  hint,
 }: {
   label: string;
   value: string;
@@ -61,6 +63,8 @@ export function DecimalInput({
   disabled?: boolean;
   placeholder?: string;
   suffix?: string;
+  required?: boolean;
+  hint?: string | null;
 }) {
   const id = useId();
   return (
@@ -75,16 +79,19 @@ export function DecimalInput({
           value={value}
           placeholder={placeholder}
           disabled={disabled}
+          aria-required={required || undefined}
           aria-invalid={!!error}
           onChange={(e) => onChange(e.target.value)}
           onBlur={onBlur}
         />
         {suffix && <span aria-hidden="true">{suffix}</span>}
       </div>
-      {error && (
+      {error ? (
         <small className="form-error" role="alert">
           {error}
         </small>
+      ) : (
+        hint && <small className="hint">{hint}</small>
       )}
     </div>
   );

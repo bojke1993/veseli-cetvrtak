@@ -29,9 +29,11 @@
 **BR-10 — Uplata i uplatilac.** Uplata je pozitivan iznos u RSD sa najviše 2 decimale (BR-31). Uplatilac je tačno jedan od četiri člana (može biti i član na hlađenju).
 
 **BR-11 — Potencijalni dobitak (P-04).** `potencijalni dobitak = uplata × ukupna kvota`.
-- Admin unosi **ukupnu kvotu** tiketa kako je navedena na tiketu kladionice (obavezno).
-- **Pojedinačne kvote** tipova su opcione. Ako su unete sve četiri, sistem prikazuje njihov proizvod i upozorava ako se od ukupne kvote razlikuje više od 2% (kladionice ponekad zaokružuju ili primenjuju bonus).
-- Za obračun važi ukupna kvota.
+- **Pojedinačna kvota** je obavezna za svaki tip (≥ 1,01; najviše 2 decimale): tip se ne može sačuvati bez nje, ko god da ga unosi. Član je unosi uz predlog; prihvatanjem predloga prelazi na tip; admin može da je promeni (P-22).
+- **Ukupna kvota** se računa automatski kao proizvod četiri pojedinačne kvote, zaokružen na 2 decimale, i ne unosi se ručno u otvorenom kolu. Dok neka kvota nedostaje, ukupna kvota nije određena i kolo se ne može zaključati.
+- Pojedinačna kvota se može uneti ili promeniti i posle početka utakmice dok je kolo otvoreno (igrač, granica i smer tada ostaju zaključani).
+- Posle zaključavanja: ispravka pojedinačne kvote ponovo računa ukupnu; ciljana ispravka ukupne kvote ostaje moguća uz razlog (npr. kladionica je zaokružila ili dala bonus).
+- Za obračun važi ukupna kvota. Uvezena kola zadržavaju kvote iz fajla.
 
 ## 5.3 Razrešenje tipa
 
@@ -40,7 +42,7 @@
 - smer **Manje**: pogodak ako `poeni < granica`, promašaj ako `poeni > granica`;
 - jednakost nije moguća jer je granica uvek x,5 (BR-09).
 
-**BR-13 — Igrač nije zaigrao (P-01).** Ako igrač nije ulazio u igru (DNP, povreda, nije na spisku — 0 odigranih sekundi), tip je **poništen** (kvota 1,00). Ako je igrač ušao makar na kratko, tip se razrešava normalno (i sa 0 poena).
+**BR-13 — Igrač nije zaigrao (P-01).** Ako igrač nije ulazio u igru (DNP, povreda, nije na spisku — 0 odigranih sekundi), tip je **poništen** (kvota 1,00). Ako je igrač ušao makar na kratko, tip se razrešava normalno (i sa 0 poena). DNP se zaključuje isključivo iz konačnog boxscore-a: ako poeni igrača nisu preuzeti (npr. tip je prihvaćen posle kraja utakmice), sistem prvo preuzima boxscore.
 
 **BR-14 — Otkazana / odložena utakmica (P-02).** Ako utakmica tipa ne počne na dan kola (odložena za drugi dan ili otkazana), tip se **odmah poništava** i kolo se razrešava bez čekanja. Utakmica koja je počela na dan kola, a završila se posle ponoći, razrešava se normalno. Prekinuta utakmica koja nije završena istog dana poništava se.
 

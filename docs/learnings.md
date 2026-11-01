@@ -21,6 +21,13 @@ Stvari naučene tokom razvoja koje nisu očigledne iz koda. Dopunjavati kako pro
 - `gameStatus` je uvek `"Confirmed"` — odlaganje/otkazivanje se ne vidi u feed-u.
 - Imena iz feed-a su "PREZIME, IME" velikim slovima; pri title-case čuvati inicijale (`TJ`) i sufikse (`III`).
 
+## Ponuda kladionica (provera 01.11.2026; odluka: ne radi se, OP-12)
+
+- Mozzart i Meridian nemaju javno dokumentovan API. Meridianov `online.meridianbet.com/betshop/api` vraća 401 bez tokena.
+- SoccerBet i MaxBet (ista platforma) odgovaraju bez ključa: `GET /restapi/offer/sr/categories/sport/B/l?annex=0&desktopVersion=2.36.3.9&locale=sr` i `/sport/B/league/{id}/mob`; odgovor je gzip. API je nedokumentovan, a uslovi korišćenja nisu provereni.
+- SoccerBet ima ligu Evroliga (10 utakmica), ali poeni igrača nisu nađeni: 4 dana pre utakmica nema lige „Evroliga Igrači”, a `/mob` za „NBA Igrači” (kategorija kaže 38) vraća prazno. MaxBet tog dana nije imao Evroligu u kategorijama.
+- OddsPapi (250 zahteva mesečno besplatno) za Evroligu navodi samo timska tržišta, bez poena igrača i bez Mozzart/Meridian/MaxBet/SoccerBet.
+
 ## Backend
 
 - `players.search_name` sadrži i naziv kluba (radi pretrage po klubu) — za poređenje **samo imena** koristiti `normalizeName(full_name)`, ne `search_name`.
@@ -29,6 +36,7 @@ Stvari naučene tokom razvoja koje nisu očigledne iz koda. Dopunjavati kako pro
 - POST bez tela sa `Content-Type: application/json` Fastify odbija (`FST_ERR_CTP_EMPTY_JSON_BODY`); klijent uvek šalje `{}`.
 - Izvedeno stanje (nizovi, ❄, 🔥, blejm) se nikad ne čuva — `computeDerived()` nad celom istorijom; posle direktnih izmena baze (skripte) restartovati aplikaciju ili pozvati `POST /api/admin/recalc`, jer je keš u memoriji.
 
+- `player_game_stats` se puni samo za tipove koji postoje dok se utakmica prati. Tip prihvaćen posle kraja utakmice nema red, a izostanak reda se računa kao DNP; zato `runResolvePending` prvo dopunjava poene iz boxscore-a. U kolu #10 (27.10.2026.) Larkin (4 poena, 22:26) je pogrešno dobio DNP, a sve upućuje na ovaj uzrok (audit log nije proveren); ispravlja se ručnim razrešenjem.
 - `proposals.created_at` se upisuje iz `deps.now()` (ne DB default), jer se po njemu proverava da li je predlog dat pre početka utakmice (kasno prihvatanje, `late_accept`).
 
 ## Lokalno okruženje (Windows)

@@ -273,6 +273,15 @@ export function parseLine(input: string): { value: number } | { error: string } 
   return { value: n };
 }
 
+export const ODDS_ERROR = 'Kvota mora biti broj od najmanje 1,01 (najviše 2 decimale).';
+
+/** Validates odds text; returns the number or an error message. */
+export function parseOdds(input: string): { value: number } | { error: string } {
+  const n = parseDecimal(input);
+  if (n === null || n < 1.01 || roundToCents(n) !== n) return { error: ODDS_ERROR };
+  return { value: n };
+}
+
 /** Number to the text shown in an input field: 14.5 → "14,5". */
 export function toInputText(n: number | null | undefined, decimals?: number): string {
   if (!isNum(n)) return '';

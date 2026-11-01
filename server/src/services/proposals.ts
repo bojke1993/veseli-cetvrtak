@@ -2,10 +2,11 @@ import type { CreateProposalRequest } from '../api-types.js';
 import type { DB } from '../db/kysely.js';
 import type { Proposal, Round } from '../db/schema.js';
 import type { Deps } from '../deps.js';
+import { toNum } from '../domain/money.js';
 import type { SessionMember } from '../http/auth.js';
 import { conflict, forbidden, notFound, unprocessable } from '../http/errors.js';
 import { writeAudit } from './audit.js';
-import { getRoundOr404, validateSelection, writePick } from './rounds.js';
+import { getRoundOr404, validateOdds, validateSelection, writePick } from './rounds.js';
 
 function requireOpenRound(round: Round): void {
   if (round.status !== 'open') throw conflict('Predlozi i glasanje su mogući samo dok je kolo otvoreno.');
@@ -49,6 +50,7 @@ export async function createProposal(
   const slot = await slotFor(deps.db, round.id, { kind: input.kind, proposed_by: member.id, cooldown_for_member_id: cooldownFor });
   if (!slot) throw unprocessable('U ovom kolu ne postoji odgovarajuće mesto za predlog.');
   await validateSelection(deps.db, round, input, deps.now(), slot.slot);
+  validateOdds(input.odds, 'Kvota tipa');
 
   const comment = input.comment?.trim() ? input.comment.trim().slice(0, 500) : null;
   await deps.db.transaction().execute(async (trx) => {
@@ -73,6 +75,7 @@ export async function createProposal(
         player_id: input.playerId,
         line: input.line,
         direction: input.direction,
+        odds: input.odds,
         comment,
         status: 'pending',
         // Explicit (not the DB default) so acceptance after tip-off compares against the app clock.
@@ -128,7 +131,7 @@ export async function acceptProposal(deps: Deps, proposalId: number, actorMember
     deps.db,
     round,
     slot.slot,
-    { playerId: p.player_id, line: Number(p.line), direction: p.direction, odds: slot.odds === null ? null : Number(slot.odds) },
+    { playerId: p.player_id, line: Number(p.line), direction: p.direction, odds: toNum(p.odds) ?? toNum(slot.odds) },
     now,
     p.created_at,
   );

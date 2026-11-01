@@ -24,9 +24,19 @@ import { PersonalPickCard, TeamPickCard } from './PickCards';
 import { DecimalInput } from './PickFields';
 import { SaveProvider, useSave } from './SaveContext';
 
-export function individualOddsProduct(round: Pick<RoundDetailDto, 'picks'>): number | null {
-  if (round.picks.length !== 4 || round.picks.some((p) => p.odds == null)) return null;
-  return round.picks.reduce((acc, p) => acc * (p.odds ?? 1), 1);
+/** BR-11: total odds are always derived; shows the calculation, or how many odds are still missing. */
+function TicketOdds({ round }: { round: RoundDetailDto }) {
+  const picks = [...round.picks].sort((a, b) => a.slot - b.slot);
+  const known = picks.filter((p) => p.odds != null).length;
+  return (
+    <div className="field ticket-odds">
+      <span className="field-label">Ukupna kvota</span>
+      <strong className="ticket-odds-total">{formatOdds(round.totalOdds)}</strong>
+      <small className="hint">
+        {known === 4 ? picks.map((p) => formatOdds(p.odds)).join(' × ') : `Računa se automatski — unete kvote: ${known}/4`}
+      </small>
+    </div>
+  );
 }
 
 function TicketSection({ round }: { round: RoundDetailDto }) {
@@ -35,25 +45,17 @@ function TicketSection({ round }: { round: RoundDetailDto }) {
   const update = useUpdateRound(round.id);
   const save = useSave();
   const [stakeText, setStakeText] = useState(toInputText(round.stake, 2));
-  const [oddsText, setOddsText] = useState(toInputText(round.totalOdds, 2));
   const [stakeErr, setStakeErr] = useState<string | null>(null);
-  const [oddsErr, setOddsErr] = useState<string | null>(null);
   const [focused, setFocused] = useState(false);
 
   useEffect(() => {
-    if (!focused) {
-      setStakeText(toInputText(round.stake, 2));
-      setOddsText(toInputText(round.totalOdds, 2));
-    }
-  }, [round.stake, round.totalOdds, focused]);
+    if (!focused) setStakeText(toInputText(round.stake, 2));
+  }, [round.stake, focused]);
 
   const patch = (body: UpdateRoundRequest) => void save.track(update.mutateAsync(body)).catch(() => undefined);
 
   const stake = parseDecimal(stakeText);
-  const odds = parseDecimal(oddsText);
-  const potential = stake !== null && odds !== null ? roundToCents(stake * odds) : round.potentialWin;
-  const product = individualOddsProduct(round);
-  const diff = product !== null && odds ? Math.abs(product - odds) / odds : 0;
+  const potential = stake !== null && round.totalOdds !== null ? roundToCents(stake * round.totalOdds) : round.potentialWin;
 
   const commitStake = () => {
     setFocused(false);
@@ -69,33 +71,16 @@ function TicketSection({ round }: { round: RoundDetailDto }) {
     setStakeErr(null);
     if (stake !== round.stake) patch({ stake });
   };
-  const commitOdds = () => {
-    setFocused(false);
-    if (!oddsText.trim()) {
-      setOddsErr(null);
-      if (round.totalOdds !== null) patch({ totalOdds: null });
-      return;
-    }
-    if (odds === null || odds < 1.01) {
-      setOddsErr('Ukupna kvota mora biti najmanje 1,01.');
-      return;
-    }
-    setOddsErr(null);
-    if (odds !== round.totalOdds) patch({ totalOdds: odds });
-  };
 
   if (!isAdmin) {
     return (
       <section className="card ticket-section">
         <h3 className="card-title">Tiket</h3>
+        <TicketOdds round={round} />
         <dl className="kv-list">
           <div>
             <dt>Uplata</dt>
             <dd>{formatMoney(round.stake)}</dd>
-          </div>
-          <div>
-            <dt>Ukupna kvota</dt>
-            <dd>{formatOdds(round.totalOdds)}</dd>
           </div>
           <div>
             <dt>Uplatilac</dt>
@@ -115,7 +100,7 @@ function TicketSection({ round }: { round: RoundDetailDto }) {
       <h3 className="card-title">Tiket</h3>
       <div className="ticket-grid">
         <DecimalInput label="Uplata" suffix="RSD" placeholder="500" value={stakeText} onChange={setStakeText} onBlur={commitStake} error={stakeErr} />
-        <DecimalInput label="Ukupna kvota" placeholder="12,50" value={oddsText} onChange={setOddsText} onBlur={commitOdds} error={oddsErr} />
+        <TicketOdds round={round} />
         <div className="field">
           <label htmlFor="payer">Uplatilac</label>
           <select
@@ -135,16 +120,6 @@ function TicketSection({ round }: { round: RoundDetailDto }) {
       <p className="potential">
         Potencijalni dobitak: <strong>{formatMoney(potential)}</strong>
       </p>
-      {product !== null && (
-        <p className="small">
-          Proizvod pojedinačnih kvota: <strong>{formatOdds(product)}</strong>
-          {diff > 0.02 && (
-            <span className="badge tone-bad" role="alert">
-              <span aria-hidden="true">⚠</span> Razlika od ukupne kvote je veća od 2%
-            </span>
-          )}
-        </p>
-      )}
       <MutationError error={update.error} />
     </section>
   );

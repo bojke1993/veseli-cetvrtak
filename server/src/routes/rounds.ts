@@ -102,7 +102,6 @@ export async function registerRoundRoutes(app: FastifyInstance, deps: Deps): Pro
             gameDay: day,
             confirmDropPicks: { type: 'boolean' },
             stake: money,
-            totalOdds: money,
             payerMemberId: { type: ['integer', 'null'], minimum: 1, maximum: 255 },
           },
         },
@@ -263,7 +262,7 @@ export async function registerRoundRoutes(app: FastifyInstance, deps: Deps): Pro
         params: idParams,
         body: {
           type: 'object',
-          required: ['kind', 'playerId', 'line', 'direction'],
+          required: ['kind', 'playerId', 'line', 'direction', 'odds'],
           additionalProperties: false,
           properties: {
             kind: { type: 'string', enum: ['personal', 'team'] },
@@ -271,6 +270,7 @@ export async function registerRoundRoutes(app: FastifyInstance, deps: Deps): Pro
             playerId: { type: 'integer', minimum: 1 },
             line: { type: 'number' },
             direction,
+            odds: { type: 'number' },
             comment: { type: 'string', maxLength: 500 },
           },
         },

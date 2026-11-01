@@ -54,6 +54,12 @@ export function potentialWin(stake: number, totalOdds: number): number {
   return round2(stake * totalOdds);
 }
 
+/** BR-11: product of the four pick odds; null until all of them are known. */
+export function totalOddsFromPicks(odds: Array<number | null>): number | null {
+  if (odds.length !== 4 || odds.some((o) => o === null)) return null;
+  return round2(odds.reduce<number>((acc, o) => acc * (o as number), 1));
+}
+
 /** BR-18: actual win; `provisional` when voided picks lack individual odds (admin must confirm). */
 export function computeActualWin(i: {
   status: TicketStatus;

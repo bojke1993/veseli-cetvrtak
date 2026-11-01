@@ -99,11 +99,11 @@ describe('API: admin tasks, sync and recalc', () => {
     expect(t[0]).toMatchObject({ kind: 'lock_soon', roundId: id, link: '/kolo' });
     expect(t[0].message).toContain('30 min');
 
-    await api(ctx, ADMIN, 'PUT', `/rounds/${id}/picks/1`, { playerId: fx.players.vezenkov, line: 14.5, direction: 'over' });
-    await api(ctx, ADMIN, 'PUT', `/rounds/${id}/picks/2`, { playerId: fx.players.jones, line: 9.5, direction: 'over' });
-    await api(ctx, ADMIN, 'PUT', `/rounds/${id}/picks/3`, { playerId: fx.players.nedovic, line: 7.5, direction: 'over' });
-    await api(ctx, ADMIN, 'PUT', `/rounds/${id}/picks/4`, { playerId: fx.players.sloukas, line: 10.5, direction: 'over' });
-    await api(ctx, ADMIN, 'PATCH', `/rounds/${id}`, { stake: 300, totalOdds: 5.5, payerMemberId: 2 });
+    await api(ctx, ADMIN, 'PUT', `/rounds/${id}/picks/1`, { playerId: fx.players.vezenkov, line: 14.5, direction: 'over', odds: 1.5 });
+    await api(ctx, ADMIN, 'PUT', `/rounds/${id}/picks/2`, { playerId: fx.players.jones, line: 9.5, direction: 'over', odds: 1.5 });
+    await api(ctx, ADMIN, 'PUT', `/rounds/${id}/picks/3`, { playerId: fx.players.nedovic, line: 7.5, direction: 'over', odds: 1.5 });
+    await api(ctx, ADMIN, 'PUT', `/rounds/${id}/picks/4`, { playerId: fx.players.sloukas, line: 10.5, direction: 'over', odds: 1.5 });
+    await api(ctx, ADMIN, 'PATCH', `/rounds/${id}`, { stake: 300, payerMemberId: 2 });
     expect((await api(ctx, ADMIN, 'POST', `/rounds/${id}/lock`)).status).toBe(200);
     expect(await kinds()).toEqual(['cooldown_inconsistent']);
 

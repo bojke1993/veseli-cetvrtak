@@ -120,12 +120,12 @@ async function isRoundComplete(deps: Deps, roundId: number): Promise<boolean> {
   if (!round || round.stake === null || round.total_odds === null || round.payer_member_id === null) return false;
   const picks = await deps.db
     .selectFrom('picks')
-    .select(['player_id', 'line', 'direction', 'game_id'])
+    .select(['player_id', 'line', 'direction', 'game_id', 'odds'])
     .where('round_id', '=', roundId)
     .execute();
   return (
     picks.length === 4 &&
-    picks.every((p) => p.player_id !== null && p.line !== null && p.direction !== null && p.game_id !== null)
+    picks.every((p) => p.player_id !== null && p.line !== null && p.direction !== null && p.game_id !== null && p.odds !== null)
   );
 }
 
@@ -402,28 +402,60 @@ export async function buildRoundLive(deps: Deps, roundId: number): Promise<Array
 // ---------- resolvePending (REQ-14.1 retry) ----------
 
 /**
- * Final games whose picks are still unresolved (e.g. resolveGame failed or the process
- * restarted right after the game was marked final) are resolved again on every tick.
+ * A pick added after its game ended (late accept) was never polled. A missing stats row
+ * means DNP only after the final box score was read (BR-13), so read it first.
+ * Returns false when the request budget is used up or the game is in backoff.
+ */
+async function fetchStatsOfUnpolledPicks(deps: Deps, game: { id: number; season_code: string; game_code: number }): Promise<boolean> {
+  const unpolled = await deps.db
+    .selectFrom('picks')
+    .leftJoin('player_game_stats as s', (j) =>
+      j.onRef('s.game_id', '=', 'picks.game_id').onRef('s.player_id', '=', 'picks.player_id'),
+    )
+    .select('picks.id')
+    .where('picks.game_id', '=', game.id)
+    .where('picks.result', 'is', null)
+    .where('picks.player_id', 'is not', null)
+    .where('s.player_id', 'is', null)
+    .executeTakeFirst();
+  if (!unpolled) return true;
+  if (inBackoff(deps, game.id) || !reserveRequests(deps, 1)) return false;
+  try {
+    const box = await deps.provider.getBoxscore(game.season_code, game.game_code);
+    await upsertPickedStats(deps, game.id, box.lines, true);
+    recordSuccess(deps, game.id);
+    return true;
+  } catch (e) {
+    recordFailure(deps, game.id);
+    throw e;
+  }
+}
+
+/**
+ * Final games whose picks are still unresolved (e.g. resolveGame failed, the process
+ * restarted right after the game was marked final, or a pick was accepted after the
+ * game ended) are resolved again on every tick.
  */
 export async function runResolvePending(deps: Deps): Promise<number> {
   const rows = await deps.db
     .selectFrom('picks')
     .innerJoin('rounds', 'rounds.id', 'picks.round_id')
     .innerJoin('games', 'games.id', 'picks.game_id')
-    .select('games.id')
+    .select(['games.id', 'games.season_code', 'games.game_code'])
     .where('picks.result', 'is', null)
     .where('rounds.status', 'in', ['locked', 'in_progress', 'lost'])
     .where('games.status', '=', 'final')
     .where('games.is_manual', '=', 0)
-    .groupBy('games.id')
+    .groupBy(['games.id', 'games.season_code', 'games.game_code'])
     .execute();
   let resolved = 0;
-  for (const { id } of rows) {
+  for (const game of rows) {
     try {
-      await resolveGame(deps, id);
+      if (!(await fetchStatsOfUnpolledPicks(deps, game))) continue;
+      await resolveGame(deps, game.id);
       resolved++;
     } catch (e) {
-      logJob('resolvePending', 'error', { gameId: id, error: String(e) });
+      logJob('resolvePending', 'error', { gameId: game.id, error: String(e) });
     }
   }
   return resolved;

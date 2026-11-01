@@ -1,5 +1,16 @@
 import { describe, expect, it } from 'vitest';
-import { computeActualWin, potentialWin, ticketOutcome } from '../../src/domain/ticket.js';
+import { computeActualWin, potentialWin, ticketOutcome, totalOddsFromPicks } from '../../src/domain/ticket.js';
+
+describe('totalOddsFromPicks', () => {
+  it('is the product of four odds, rounded to 2 decimals', () => {
+    expect(totalOddsFromPicks([1.85, 1.9, 2, 1.75])).toBe(12.3);
+    expect(totalOddsFromPicks([1.83, 1.91, 1.87, 1.79])).toBe(11.7);
+  });
+  it('is unknown while any odds are missing', () => {
+    expect(totalOddsFromPicks([1.85, null, 2, 1.75])).toBeNull();
+    expect(totalOddsFromPicks([1.85, 2])).toBeNull();
+  });
+});
 
 describe('ticketOutcome', () => {
   it('4/4 won', () => {

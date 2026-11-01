@@ -9,7 +9,7 @@ Pitanja iz prvobitne specifikacije razrešena su intervjuom sa naručiocem. Stat
 | **P-01** | Šta ako izabrani igrač ne zaigra (povreda, DNP)? | Tip se **poništava** (kvota 1,00): ne računa se ni kao pogodak ni kao promašaj i ne utiče na nizove. Tiket se računa nad preostalim tipovima. Ako je igrač ušao makar na sekund, tip važi normalno. | ✅ Potvrđeno | BR-13 |
 | **P-02** | Šta ako je utakmica otkazana ili odložena? | Ako utakmica ne počne na dan kola, tip se **odmah poništava** i kolo se razrešava bez čekanja. | ✅ Potvrđeno | BR-14 |
 | **P-03** | Šta ako su poeni tačno jednaki celoj granici? | **Cela granica je zabranjena** — dozvoljene su samo granice x,5, pa slučaj ne može da nastane. | ✏️ Promenjeno (predlog je bio poništavanje) | BR-09, BR-12 |
-| **P-04** | Kako se računa potencijalni dobitak? | **Uplata × ukupna kvota tiketa** (kako piše na tiketu). Pojedinačne kvote su opcione — služe za proveru i za obračun kada je neki tip poništen: `uplata × ukupna kvota / kvota poništenog tipa`. Bez pojedinačnih kvota admin ručno unosi stvarni dobitak. | ✅ Potvrđeno | BR-11, BR-18 |
+| **P-04** | Kako se računa potencijalni dobitak? | **Uplata × ukupna kvota tiketa.** Kada je neki tip poništen: `uplata × ukupna kvota / kvota poništenog tipa`. Bez pojedinačnih kvota (samo uvezena kola) admin ručno unosi stvarni dobitak. Unos kvota: vidi P-22. | ✅ Potvrđeno, dopunjeno sa P-22 | BR-11, BR-18 |
 | **P-05** | Kome se pripisuje 4. tip koji ekipa bira umesto člana na hlađenju? | Pripisuje se **"Ekipi"**, ne nijednom članu. Ne ulazi u lične statistike, nizove, vatrice ni hlađenja nikoga. Ulazi u ishod tiketa, ukupnu statistiku i zasebnu statistiku "Ekipa". | ✅ Potvrđeno | BR-26 |
 | **P-06** | Da li se niz promašaja resetuje nakon odsluženog hlađenja? | **Da, na 0.** Za novo hlađenje potrebno je ponovo 5 uzastopnih promašaja. | ✅ Potvrđeno | BR-22 |
 | **P-07** | Kako se broje dobijene vatrice? | **Jedna po nizu**: vatrica se dobija kada niz pogodaka dostigne 3; nastavak niza ne donosi novu. Poništen tip ne gasi vatricu. | ✅ Potvrđeno | BR-23, BR-24 |
@@ -27,12 +27,13 @@ Pitanja iz prvobitne specifikacije razrešena su intervjuom sa naručiocem. Stat
 | **P-19** | Automatsko zaključavanje kada admin zaboravi? | **Da** — ako je kolo kompletno, sistem ga zaključava u trenutku početka prve utakmice. | ✅ Potvrđeno | BR-28 |
 | **P-20** | Obaveštenja (Telegram, push, Viber)? | **Bez obaveštenja** u prvoj verziji. Upozorenja adminu prikazuju se samo u aplikaciji (EKR-13). | ✅ Odlučeno | FR-23 (povučeno) |
 | **P-21** | Budžet za hosting i API? | **Besplatno**: besplatni hosting i besplatni Euroleague API; ručni unos kao rezerva. Plaćeni API samo uz novu odluku tima. | ✅ Odlučeno | NFR-23, poglavlje 7 |
+| **P-22** | Ko unosi kvote i kako se dobija ukupna kvota? (odluka 01.11.2026, menja P-04) | Ko god unosi tip **mora** da unese i kvotu (član uz predlog, admin pri direktnom unosu); admin može da je promeni. Praćenja ponude kladionica nema. **Ukupna kvota = proizvod četiri pojedinačne kvote**, računa se automatski. Razlika u odnosu na tiket kladionice ispravlja se ciljanom ispravkom posle zaključavanja. | ✅ Odlučeno | BR-11, BR-18 |
 
 ## 10.2 Ostale pretpostavke
 - Tipovi se igraju isključivo na **poene** igrača (ne skokove, asistencije, PRA…).
 - Tiket uvek ima tačno 4 tipa (nema sistema ni dodatnih parova).
 - Aplikacija pokriva samo **Evroligu** (ne Evrokup, ABA ligu, NBA).
-- Kvote unosi admin ručno sa tiketa; nema integracije sa kladionicama.
+- Kvote se unose ručno (P-22); nema integracije sa kladionicama.
 - Novo kolo se otvara tek kad je prethodno razrešeno (BR-05) — dva kola ne mogu biti aktivna istovremeno.
 - Sezona Evrolige određuje se po danu kola: sezona `E{godina}` traje od početka regularnog dela (oktobar) do kraja Fajnal-fora (maj/jun).
 
@@ -51,3 +52,4 @@ Pitanja iz prvobitne specifikacije razrešena su intervjuom sa naručiocem. Stat
 | ~~OP-09~~ | ~~Potvrda pretpostavki~~ | | Rešeno intervjuom 14.10.2026. |
 | **OP-10** | Kako u uvezenim kolima prepoznati igrače čije ime u Sheets-u ne odgovara bazi Evrolige (nadimci, skraćenice, igrači iz ranijih sezona)? | FR-25 | Predlog: ekran za ručno uparivanje nepoznatih imena pri uvozu. |
 | **OP-11** | Da li uvezena kola iz ranijih sezona ulaze u statistiku "po sezoni" — tj. da li Sheets sadrži datume kola? | FR-25, BR-33 | Zavisi od fajla (OP-03). |
+| ~~OP-12~~ | ~~Izbor tipa iz ponude domaće kladionice~~ | | Rešeno 01.11.2026: ne radi se; kvote se unose ručno (P-22). Nalazi su u `docs/learnings.md`. |
