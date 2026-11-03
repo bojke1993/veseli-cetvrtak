@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useMemberStats } from '../api/queries';
 import { ResultIcon } from '../components/LiveStatusBadge';
@@ -10,7 +11,9 @@ import { formatDate, formatMoney, formatPercent, lineLabel, streakText } from '.
 function MemberHero({ id }: { id: number }) {
   const member = useMemberMap().get(id);
   const photo = memberPhoto(member);
-  const mood = member ? memberMood(member.status) : null;
+  // New message per profile visit; live refreshes must not swap the text.
+  const roll = useMemo(() => Math.random(), [id]);
+  const mood = member ? memberMood(member.status, roll) : null;
   return (
     <section className={photo ? 'member-hero' : undefined}>
       {photo && <img className="member-hero-photo" src={photo.src} alt={`${member?.displayName ?? ''}`} />}

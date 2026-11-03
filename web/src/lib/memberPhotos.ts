@@ -47,11 +47,27 @@ export function memberPhoto(m: Pick<MemberDto, 'name' | 'avatarUrl'> | undefined
   return known;
 }
 
-/** One-line "mood" derived from the member's current status (BR: 3 hits = fire, 5 misses = cooldown). */
-export function memberMood(status: MemberDto['status']): { emoji: string; text: string } {
+export const COOLDOWN_MESSAGES = [
+  'Na hlađenju — Anđus mu je mentor, kladionica sponzor oporavka.',
+  'Suspendovan iz prognoziranja — još jedan tip i prelazi na vremensku prognozu.',
+  'Na prinudnom odmoru — trenutno pogađa samo koliko će puta promašiti.',
+];
+
+export const FIRE_MESSAGES = [
+  'U delirijumu — 3 pogotka zaredom. Ne prekidajte ritual, ne postavljajte pitanja.',
+  'U transu — tri puta pogodio. Anđus traži da mu otkrije sistem.',
+  'Nedodirljiv — trenutno mu se i kvote sklanjaju s puta.',
+];
+
+/**
+ * One-line "mood" derived from the member's current status (BR: 3 hits = fire, 5 misses = cooldown).
+ * `roll` in [0, 1) picks the cooldown/fire message; callers keep it stable so the text does not change on re-render.
+ */
+export function memberMood(status: MemberDto['status'], roll: number): { emoji: string; text: string } {
   const { streak, hasFire, onCooldown } = status;
-  if (onCooldown) return { emoji: '❄', text: 'Na hlađenju — ovo kolo umesto njega bira ekipa.' };
-  if (hasFire) return { emoji: '🔥', text: `U vatri: ${streakText(streak)}. Ne dirajte ga.` };
+  const pick = (messages: string[]) => messages[Math.floor(roll * messages.length)]!;
+  if (onCooldown) return { emoji: '❄', text: pick(COOLDOWN_MESSAGES) };
+  if (hasFire) return { emoji: '🔥', text: pick(FIRE_MESSAGES) };
   if (streak > 0) return { emoji: '😎', text: `${streakText(streak)} — još ${3 - streak} do vatrice.` };
   if (streak <= -3) return { emoji: '🥶', text: `${streakText(streak)} — još ${5 + streak} do hlađenja.` };
   if (streak < 0) return { emoji: '😬', text: `${streakText(streak)}. Sledeći ide sigurno.` };
