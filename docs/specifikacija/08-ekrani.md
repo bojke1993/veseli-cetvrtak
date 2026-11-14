@@ -8,7 +8,7 @@ Opis sadržaja i ponašanja, bez vizuelnog dizajna. Primarni uređaj je **telefo
 - Admin vidi bedž sa brojem otvorenih zadataka (EKR-13) na stavci "Još". Nema obaveštenja van aplikacije (P-20).
 - **Gost** (neprijavljen, BR-35) vidi Početnu, Kolo, Istoriju i Statistiku u režimu samo za pregled; umesto akcija prikazuje se dugme "Prijavi se". Audit log i Podešavanja nisu dostupni.
 - Statistički ekrani imaju izbor sezone (podrazumevano aktuelna, opcija "Sve sezone").
-- Ikonice statusa svuda uz ime člana: ❄ (na hlađenju u aktuelnom/narednom kolu), 🔥 (aktivna vatrica), sa tekstualnim opisom za čitače ekrana.
+- Ikonice statusa svuda uz ime člana: ❄ (na hlađenju u aktuelnom/narednom kolu), 🔥 (aktivna vatrica; od 6 pogodaka zaredom prikazuje se 🔥🔥 — samo prikaz, i dalje je jedna vatrica), sa tekstualnim opisom za čitače ekrana.
 
 ## 8.2 Spisak ekrana
 

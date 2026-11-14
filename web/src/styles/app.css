@@ -778,7 +778,10 @@ input[aria-invalid='true'] {
   color: var(--bad-fg);
 }
 .status-icon {
+  /* inline-block stops a parent link's underline from running under the emoji */
+  display: inline-block;
   margin-left: 3px;
+  text-decoration: none;
 }
 .member-chip {
   display: inline-flex;

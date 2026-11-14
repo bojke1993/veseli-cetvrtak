@@ -19,7 +19,11 @@ export function memberLabel(map: Map<number, MemberDto>, id: number | null | und
   return map.get(id)?.displayName ?? `Član ${id}`;
 }
 
-export function StatusIcons({ cooldown, fire }: { cooldown?: boolean; fire?: boolean }) {
+/** Hit streak at which the 🔥 is shown twice (display only — still one vatrica by BR-23). */
+export const DOUBLE_FIRE_STREAK = 6;
+
+export function StatusIcons({ cooldown, fire, streak = 0 }: { cooldown?: boolean; fire?: boolean; streak?: number }) {
+  const double = streak >= DOUBLE_FIRE_STREAK;
   return (
     <>
       {cooldown && (
@@ -28,8 +32,13 @@ export function StatusIcons({ cooldown, fire }: { cooldown?: boolean; fire?: boo
         </span>
       )}
       {fire && (
-        <span className="status-icon" role="img" aria-label="vatrica" title="Vatrica">
-          🔥
+        <span
+          className="status-icon"
+          role="img"
+          aria-label={double ? `dupla vatrica, ${streak} pogodaka zaredom` : 'vatrica'}
+          title={double ? `Dupla vatrica — ${streak} pogodaka zaredom` : 'Vatrica'}
+        >
+          {double ? '🔥🔥' : '🔥'}
         </span>
       )}
     </>
@@ -55,7 +64,7 @@ export function MemberName({
   return (
     <span className={chip ? 'member-chip' : 'member-name'}>
       {name}
-      {showStatus && <StatusIcons cooldown={cooldown} fire={m?.status.hasFire} />}
+      {showStatus && <StatusIcons cooldown={cooldown} fire={m?.status.hasFire} streak={m?.status.streak} />}
     </span>
   );
 }
