@@ -93,6 +93,44 @@ export const TWO_MISSES_MESSAGES = [
   'Dva puta pored. Ekipa mu i dalje veruje, otprilike kao prognozi za vikend.',
 ];
 
+/** Exactly 1 miss after a hit (or a fresh start). */
+export const ONE_MISS_MESSAGES = [
+  'Jedan promašaj. Kaže da je to bila „investicija u buduće pogotke“.',
+  'Promašio jednom — igrač mu je namerno igrao loše, lično, iz inata.',
+  'Jedan pored. Ništa strašno, i Spanulis je nekad promašio. Doduše, ne ovako.',
+  'Mala greška u sistemu. Sistem je, inače, „osećaj u stomaku“.',
+  'Jedan promašaj. Već je napisao u grupu „nema veze, idemo dalje“ — tri puta.',
+  'Promašio za pola poena. Pola poena! Ovo ide pred Ustavni sud.',
+  'Jedna mrlja na biografiji. Ostatak biografije takođe nije sjajan, ali dobro.',
+];
+
+/** Exactly 1 hit after a miss (or a fresh start). */
+export const ONE_HIT_MESSAGES = [
+  'Pogodio jedan i već drži predavanje o čitanju utakmice.',
+  'Jedan pogodak. Kladionica još ne brine, ali je zapisala ime.',
+  'Pogodak! Proslavio ga kao da je uzeo Final Four.',
+  'Jedan od jedan. Kaže da je „sve analizirao“. Analizirao je ime igrača.',
+  'Pogodio. Nek se zna — ovo je početak nečeg velikog. Ili slučajnost.',
+];
+
+/** 3–4 misses in a row — cooldown is getting close. */
+export const MISS_SLUMP_MESSAGES = [
+  'Pahuljica već pakuje kofer i kreće ka njemu.',
+  'Ekipa je počela tiho da vežba „tip ekipe“ umesto njega.',
+  'Kriza. Prešao na kafu bez šećera, kaže da mu kvari koncentraciju.',
+  'Statistika ga je zvala da pita da li je sve u redu kod kuće.',
+  'Igrači koje bira počeli su da se povređuju preventivno.',
+];
+
+/** No streak yet (new season or only void picks). */
+export const CLEAN_SLATE_MESSAGES = [
+  'Čist list — bez niza. Nevin kao novi tiket pre prve utakmice.',
+  'Bez niza. Ni vruć ni hladan — mlak, kao pivo koje je zaboravio na stolu.',
+  'Nula. Ni pogodak ni promašaj — savršen balans ništavila.',
+  'Čist list. Najbolja forma u karijeri, statistički gledano.',
+  'Bez niza. Čeka da vidi u kom pravcu će ga sudbina izdati.',
+];
+
 /**
  * One-line "mood" derived from the member's current status (BR: 3 hits = fire, 5 misses = cooldown).
  * `roll` in [0, 1) picks the message from the matching pool; callers keep it stable so the text does not change on re-render.
@@ -105,8 +143,9 @@ export function memberMood(status: MemberDto['status'], roll: number): { emoji: 
   if (hasFire) return { emoji: '🔥', text: pick(FIRE_MESSAGES) };
   if (streak === 2) return { emoji: '😏', text: pick(TWO_HITS_MESSAGES) };
   if (streak === -2) return { emoji: '🙈', text: pick(TWO_MISSES_MESSAGES) };
+  if (streak === 1) return { emoji: '😎', text: pick(ONE_HIT_MESSAGES) };
+  if (streak === -1) return { emoji: '😬', text: pick(ONE_MISS_MESSAGES) };
   if (streak > 0) return { emoji: '😎', text: `${streakText(streak)} — još ${3 - streak} do vatrice.` };
-  if (streak <= -3) return { emoji: '🥶', text: `${streakText(streak)} — još ${5 + streak} do hlađenja.` };
-  if (streak < 0) return { emoji: '😬', text: `${streakText(streak)}. Sledeći ide sigurno.` };
-  return { emoji: '🙂', text: 'Čist list — bez niza.' };
+  if (streak <= -3) return { emoji: '🥶', text: `${streakText(streak)}, još ${5 + streak} do hlađenja. ${pick(MISS_SLUMP_MESSAGES)}` };
+  return { emoji: '🙂', text: pick(CLEAN_SLATE_MESSAGES) };
 }

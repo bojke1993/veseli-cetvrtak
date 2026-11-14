@@ -1,6 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import {
+  CLEAN_SLATE_MESSAGES,
   COOLDOWN_MESSAGES,
+  MISS_SLUMP_MESSAGES,
+  ONE_HIT_MESSAGES,
+  ONE_MISS_MESSAGES,
   DOUBLE_FIRE_MESSAGES,
   FIRE_MESSAGES,
   TWO_HITS_MESSAGES,
@@ -18,6 +22,12 @@ describe('memberMood', () => {
     expect(memberMood(fire, roll)).toEqual({ emoji: '🔥', text: at(FIRE_MESSAGES) });
     expect(memberMood({ streak: 2, hasFire: false, onCooldown: false }, roll).text).toBe(at(TWO_HITS_MESSAGES));
     expect(memberMood({ streak: -2, hasFire: false, onCooldown: false }, roll).text).toBe(at(TWO_MISSES_MESSAGES));
+    expect(memberMood({ streak: 1, hasFire: false, onCooldown: false }, roll).text).toBe(at(ONE_HIT_MESSAGES));
+    expect(memberMood({ streak: -1, hasFire: false, onCooldown: false }, roll).text).toBe(at(ONE_MISS_MESSAGES));
+    expect(memberMood({ streak: 0, hasFire: false, onCooldown: false }, roll).text).toBe(at(CLEAN_SLATE_MESSAGES));
+    expect(memberMood({ streak: -4, hasFire: false, onCooldown: false }, roll).text).toBe(
+      `4 promašaja zaredom, još 1 do hlađenja. ${at(MISS_SLUMP_MESSAGES)}`,
+    );
   });
 
   it('roll near 1 stays inside every pool', () => {
@@ -31,7 +41,4 @@ describe('memberMood', () => {
     expect(memberMood({ streak: 5, hasFire: true, onCooldown: false }, 0).emoji).toBe('🔥');
   });
 
-  it('keeps the streak text for other statuses', () => {
-    expect(memberMood({ streak: 0, hasFire: false, onCooldown: false }, 0.5).text).toBe('Čist list — bez niza.');
-  });
 });
