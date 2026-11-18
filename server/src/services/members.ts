@@ -51,6 +51,7 @@ export async function listMembers(deps: Deps): Promise<MemberDto[]> {
       onCooldown: cooldown.has(m.id),
       warnings: sc?.warnings ?? 0,
       suspended: sc?.suspended ?? false,
+      recentWarning: sc?.recentWarning ?? false,
     };
     return {
       id: m.id,

@@ -25,7 +25,8 @@ describe('API: disciplinary measures (BR-37)', () => {
     expect(r.status).toBe(200);
     expect(r.body.createdIds).toHaveLength(1);
     expect(r.body.items[0]).toMatchObject({ memberId: 3, kind: 'warning', status: 'active', roundNumber: 1, issuedBy: 1 });
-    expect(await member(3)).toMatchObject({ warnings: 1, suspended: false });
+    expect(await member(3)).toMatchObject({ warnings: 1, suspended: false, recentWarning: true });
+    expect(await member(2)).toMatchObject({ recentWarning: false });
 
     const pub = await api(ctx, null, 'GET', '/sanctions?member=3');
     expect(pub.status).toBe(200);

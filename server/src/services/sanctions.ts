@@ -60,18 +60,27 @@ export async function listSanctions(deps: Deps, memberId?: number): Promise<Sanc
 }
 
 /** Per member: active warnings and whether a suspension is pending or being served in the active round. */
-export async function sanctionStatus(db: DB): Promise<Map<number, { warnings: number; suspended: boolean }>> {
+export async function sanctionStatus(
+  db: DB,
+): Promise<Map<number, { warnings: number; suspended: boolean; recentWarning: boolean }>> {
   const rows = await db.selectFrom('sanctions').selectAll().where('revoked_at', 'is', null).execute();
+  const lastResolved = await db
+    .selectFrom('rounds')
+    .select((eb) => eb.fn.max('resolved_at').as('at'))
+    .executeTakeFirst();
+  const lastResolvedAt = lastResolved?.at ? new Date(lastResolved.at as Date) : null;
   const active = await db
     .selectFrom('rounds')
     .select('id')
     .where('status', 'in', [...ACTIVE_ROUND])
     .orderBy('number', 'desc')
     .executeTakeFirst();
-  const out = new Map<number, { warnings: number; suspended: boolean }>();
+  const out = new Map<number, { warnings: number; suspended: boolean; recentWarning: boolean }>();
   for (const s of rows) {
-    const cur = out.get(s.member_id) ?? { warnings: 0, suspended: false };
+    const cur = out.get(s.member_id) ?? { warnings: 0, suspended: false, recentWarning: false };
     if (isActiveWarning(s)) cur.warnings++;
+    // Fresh until the next round is resolved.
+    if (s.kind === 'warning' && (!lastResolvedAt || s.issued_at > lastResolvedAt)) cur.recentWarning = true;
     if (s.kind === 'suspension' && (s.served_round_id === null || (active && s.served_round_id === active.id))) cur.suspended = true;
     out.set(s.member_id, cur);
   }

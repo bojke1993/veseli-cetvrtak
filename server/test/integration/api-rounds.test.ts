@@ -254,7 +254,7 @@ describe('API: cooldown slots, proposals and votes', () => {
 
   it('opens a round with a team slot for the member on cooldown', async () => {
     const members = await api(ctx, null, 'GET', '/members');
-    expect(members.body.members[1].status).toEqual({ streak: -5, hasFire: false, onCooldown: true, warnings: 0, suspended: false });
+    expect(members.body.members[1].status).toEqual({ streak: -5, hasFire: false, onCooldown: true, warnings: 0, suspended: false, recentWarning: false });
     expect(members.body.members[0].status).toMatchObject({ streak: 5, hasFire: true, onCooldown: false });
 
     const r = await api(ctx, ADMIN, 'POST', '/rounds', { gameDay: '2026-10-15' });

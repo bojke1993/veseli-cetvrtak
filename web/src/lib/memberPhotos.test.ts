@@ -9,10 +9,12 @@ import {
   FIRE_MESSAGES,
   TWO_HITS_MESSAGES,
   TWO_MISSES_MESSAGES,
+  WARNING_MESSAGES,
   memberMood,
 } from './memberPhotos';
 
 const cooldown = { streak: -5, hasFire: false, onCooldown: true };
+const warned = { streak: 1, hasFire: false, onCooldown: false, recentWarning: true };
 const fire = { streak: 3, hasFire: true, onCooldown: false };
 
 describe('memberMood', () => {
@@ -20,6 +22,7 @@ describe('memberMood', () => {
     const at = (list: string[]) => list[Math.floor(roll * list.length)];
     expect(memberMood(cooldown, roll)).toEqual({ emoji: '❄', text: at(COOLDOWN_MESSAGES) });
     expect(memberMood(fire, roll)).toEqual({ emoji: '🔥', text: at(FIRE_MESSAGES) });
+    expect(memberMood(warned, roll)).toEqual({ emoji: '🟨', text: at(WARNING_MESSAGES) });
     expect(memberMood({ streak: 2, hasFire: false, onCooldown: false }, roll).text).toBe(at(TWO_HITS_MESSAGES));
     expect(memberMood({ streak: -2, hasFire: false, onCooldown: false }, roll).text).toBe(at(TWO_MISSES_MESSAGES));
     expect(memberMood({ streak: 1, hasFire: false, onCooldown: false }, roll).text).toBe(at(ONE_HIT_MESSAGES));

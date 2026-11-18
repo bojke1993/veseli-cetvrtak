@@ -1,6 +1,6 @@
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import type { AuditEntryDto, PickDto, RoundDetailDto } from '@api';
-import { useRound } from '../api/queries';
+import { useRound, useSanctions } from '../api/queries';
 import { useAuth } from '../auth/AuthContext';
 import { ResultBadge, RoundStatusBadge } from '../components/LiveStatusBadge';
 import { LiveView, PickOwner } from '../components/LiveView';
@@ -20,6 +20,29 @@ import {
   RESOLUTION_LABEL,
   VOID_REASON_LABEL,
 } from '../lib/format';
+
+/** BR-37: measures given for this round (public note on the round). */
+function RoundSanctions({ roundId }: { roundId: number }) {
+  const q = useSanctions();
+  const items = (q.data?.items ?? []).filter((s) => s.roundId === roundId && s.status !== 'revoked');
+  if (items.length === 0) return null;
+  return (
+    <div className="alert" role="note">
+      <strong>Disciplinska napomena:</strong>
+      <ul className="simple-list">
+        {items.map((s) => (
+          <li key={s.id}>
+            <span role="img" aria-label={s.kind === 'warning' ? 'opomena' : 'preskakanje kola'}>
+              {s.kind === 'warning' ? '🟨' : '🟥'}
+            </span>{' '}
+            <MemberName id={s.memberId} showStatus={false} /> — {s.kind === 'warning' ? 'opomena' : 'preskakanje kola'}: {s.reason}
+          </li>
+        ))}
+      </ul>
+      <Link to="/disciplina">Sve disciplinske mere ›</Link>
+    </div>
+  );
+}
 
 function PickDetail({ pick }: { pick: PickDto }) {
   return (
@@ -199,6 +222,7 @@ export function RoundDetailView({ round }: { round: RoundDetailDto }) {
           </div>
         </dl>
         <RoundFlags round={round} />
+        <RoundSanctions roundId={round.id} />
         {round.fireChanges.length > 0 && (
           <p className="small">
             {round.fireChanges.map((f) => (

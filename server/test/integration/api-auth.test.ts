@@ -139,7 +139,7 @@ describe('API: auth, guests, CSRF, members', () => {
   it('lists members with status and lets the admin edit and transfer the role', async () => {
     const list = await api(ctx, null, 'GET', '/members');
     expect(list.body.members.map((m: any) => m.name)).toEqual(['Ivanišević', 'Tozislav', 'Lakićević', 'Simara']);
-    expect(list.body.members[0].status).toEqual({ streak: 0, hasFire: false, onCooldown: false, warnings: 0, suspended: false });
+    expect(list.body.members[0].status).toEqual({ streak: 0, hasFire: false, onCooldown: false, warnings: 0, suspended: false, recentWarning: false });
 
     const patch = await api(ctx, ADMIN, 'PATCH', '/members/2', { displayName: 'Toza', avatarUrl: 'https://x.y/a.png' });
     expect(patch.status).toBe(200);

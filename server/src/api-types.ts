@@ -50,6 +50,8 @@ export interface MemberStatus {
   warnings: number;
   /** BR-37: sits out the active round, or the next round to be opened, on a suspension. */
   suspended: boolean;
+  /** BR-37: got a warning after the last resolved round (profile shows a joke until the next round is resolved). */
+  recentWarning: boolean;
 }
 
 export interface MemberDto {

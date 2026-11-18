@@ -139,17 +139,27 @@ export const SUSPENSION_MESSAGES = [
   'Preskače kolo. Ima vremena da razmisli zašto se Rivero ne menja posle zaključenja.',
 ];
 
+/** Fresh warning (BR-37) — shown until the next round is resolved. */
+export const WARNING_MESSAGES = [
+  'Žuti karton. Tvrdi da je „samo malo improvizovao”. Tiket je improvizovao do nule.',
+  'Opomena. Ekipa se dogovorila za jednog igrača, on je čuo drugo ime. Sluh mu je sad na posmatranju.',
+  'Dobio opomenu i odmah pitao da li može žalba. Može — Ivaniševiću, koji je odbija.',
+  'Na tiketu jedno, u aplikaciji drugo. Kandidat za Ministarstvo kreativnog knjigovodstva.',
+  'Opomena u džepu. Još jedna i ovo kolo gleda sa tribina, sa kokicama.',
+];
+
 /**
  * One-line "mood" derived from the member's current status (BR: 3 hits = fire, 5 misses = cooldown).
  * `roll` in [0, 1) picks the message from the matching pool; callers keep it stable so the text does not change on re-render.
  */
 export function memberMood(
-  status: Pick<MemberDto['status'], 'streak' | 'hasFire' | 'onCooldown'> & { suspended?: boolean },
+  status: Pick<MemberDto['status'], 'streak' | 'hasFire' | 'onCooldown'> & { suspended?: boolean; recentWarning?: boolean },
   roll: number,
 ): { emoji: string; text: string } {
   const { streak, hasFire, onCooldown } = status;
   const pick = (messages: string[]) => messages[Math.floor(roll * messages.length)]!;
   if (status.suspended) return { emoji: '🟥', text: pick(SUSPENSION_MESSAGES) };
+  if (status.recentWarning) return { emoji: '🟨', text: pick(WARNING_MESSAGES) };
   if (onCooldown) return { emoji: '❄', text: pick(COOLDOWN_MESSAGES) };
   if (hasFire && streak >= 6) return { emoji: '🔥🔥', text: `${streakText(streak)}! ${pick(DOUBLE_FIRE_MESSAGES)}` };
   if (hasFire) return { emoji: '🔥', text: pick(FIRE_MESSAGES) };
