@@ -38,6 +38,7 @@ Stvari naučene tokom razvoja koje nisu očigledne iz koda. Dopunjavati kako pro
 
 - `player_game_stats` se puni samo za tipove koji postoje dok se utakmica prati. Tip prihvaćen posle kraja utakmice nema red, a izostanak reda se računa kao DNP; zato `runResolvePending` prvo dopunjava poene iz boxscore-a. U kolu #10 (27.10.2026.) Larkin (4 poena, 22:26) je pogrešno dobio DNP, a sve upućuje na ovaj uzrok (audit log nije proveren); ispravlja se ručnim razrešenjem.
 - Više predloga istog člana u kolu može ostati `accepted`, a tip je samo jedan: kolo #10 je imalo Lučića i Llulla, a u tip je ušao Llull (ispravljeno 03.11.2026.). Status predloga zato ne dokazuje šta je odigrano. Korekcija igrača zadržava staru granicu, pa je granicu po potrebi ispraviti posebno.
+- Preskakanje kola (suspenzija, BR-37) u bazi izgleda isto kao hlađenje: tip ekipe sa `cooldown_for_member_id`. Razlika se vidi samo iz `sanctions.served_round_id` — zato `loadDerivedInputs` učitava odslužene suspenzije, a svako mesto koje iz `picks` zaključuje „na hlađenju” mora da ih isključi (`RoundDerived.suspendedMemberIds`).
 - `proposals.created_at` se upisuje iz `deps.now()` (ne DB default), jer se po njemu proverava da li je predlog dat pre početka utakmice (kasno prihvatanje, `late_accept`).
 
 ## Lokalno okruženje (Windows)

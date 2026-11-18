@@ -2,11 +2,13 @@ import { Migrator, type Migration, type MigrationProvider } from 'kysely/migrati
 import type { DB } from './kysely.js';
 import * as m001 from './migrations/001_initial.js';
 import * as m002 from './migrations/002_proposal_odds.js';
+import * as m003 from './migrations/003_sanctions.js';
 
 /** Migrations are registered in code so they work identically from src (tsx) and dist (node). */
 const migrations: Record<string, Migration> = {
   '001_initial': m001,
   '002_proposal_odds': m002,
+  '003_sanctions': m003,
 };
 
 const provider: MigrationProvider = {

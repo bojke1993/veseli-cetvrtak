@@ -8,6 +8,8 @@ export interface DerivedRoundInput {
   status: RoundStatus;
   /** 'import' rounds are never reported as cooldown-inconsistent. Defaults to 'app'. */
   source?: RoundSource;
+  /** BR-37: members sitting this round out on a suspension (their slot is a team pick, but it is not a cooldown). */
+  suspendedMemberIds?: number[];
   picks: Array<{
     slot: number;
     kind: PickKind;
@@ -27,8 +29,10 @@ export interface RoundDerived {
   roundId: number;
   number: number;
   seasonCode: string;
-  /** Members whose slot in this round is a team pick (actual composition). */
+  /** Members whose slot in this round is a team pick because of a cooldown (actual composition). */
   cooldownMemberIds: number[];
+  /** Members whose slot in this round is a team pick because of a suspension (BR-37). */
+  suspendedMemberIds: number[];
   /** Members that should be on cooldown according to the rules (BR-21, BR-22, BR-33). */
   expectedCooldownMemberIds: number[];
   /** Actual != expected for a round that is no longer open (BR-30). */

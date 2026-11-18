@@ -1,6 +1,10 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient, type QueryClient } from '@tanstack/react-query';
 import type {
   ActualWinRequest,
+  IssueSanctionRequest,
+  IssueSanctionResponse,
+  RevokeSanctionRequest,
+  SanctionsResponse,
   AdminTasksResponse,
   AuditResponse,
   BlameResponse,
@@ -59,6 +63,7 @@ export const keys = {
   audit: (q: { roundId?: number; actor?: number | 'system' }) => ['audit', q] as const,
   adminTasks: ['admin', 'tasks'] as const,
   syncRuns: ['admin', 'sync-runs'] as const,
+  sanctions: (member?: number) => ['sanctions', member ?? 'all'] as const,
 };
 
 // ---------- Queries ----------
@@ -164,6 +169,14 @@ export function useAdminTasks(enabled: boolean) {
     queryFn: ({ signal }) => api.get<AdminTasksResponse>('/admin/tasks', signal),
     enabled,
     refetchInterval: enabled ? 60_000 : false,
+  });
+}
+
+/** BR-37: disciplinary measures (public). */
+export function useSanctions(member?: number) {
+  return useQuery({
+    queryKey: keys.sanctions(member),
+    queryFn: ({ signal }) => api.get<SanctionsResponse>(`/sanctions${member ? `?member=${member}` : ''}`, signal),
   });
 }
 
@@ -354,6 +367,28 @@ export function useAdminAction() {
       if (action === 'recalc') invalidateRoundData(qc);
       else void qc.invalidateQueries({ queryKey: ['games'] });
     },
+  });
+}
+
+function invalidateSanctions(qc: QueryClient) {
+  void qc.invalidateQueries({ queryKey: ['sanctions'] });
+  void qc.invalidateQueries({ queryKey: keys.members });
+  void qc.invalidateQueries({ queryKey: ['audit'] });
+}
+
+export function useIssueSanction() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (body: IssueSanctionRequest) => api.post<IssueSanctionResponse>('/sanctions', body),
+    onSuccess: () => invalidateSanctions(qc),
+  });
+}
+
+export function useRevokeSanction() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, body }: { id: number; body: RevokeSanctionRequest }) => api.post<SanctionsResponse>(`/sanctions/${id}/revoke`, body),
+    onSuccess: () => invalidateSanctions(qc),
   });
 }
 

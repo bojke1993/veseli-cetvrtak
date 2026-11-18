@@ -20,6 +20,7 @@ const BlamePage = lazy(() => import('./pages/BlamePage'));
 const AuditPage = lazy(() => import('./pages/AuditPage'));
 const TasksPage = lazy(() => import('./pages/TasksPage'));
 const SettingsPage = lazy(() => import('./pages/SettingsPage'));
+const DisciplinePage = lazy(() => import('./pages/DisciplinePage'));
 
 export function createQueryClient() {
   return new QueryClient({
@@ -50,6 +51,7 @@ export function AppRoutes() {
         <Route path="clanovi" element={<Lazy><MembersPage /></Lazy>} />
         <Route path="clanovi/:id" element={<Lazy><MemberProfilePage /></Lazy>} />
         <Route path="blejm" element={<Lazy><BlamePage /></Lazy>} />
+        <Route path="disciplina" element={<Lazy><DisciplinePage /></Lazy>} />
         <Route path="jos" element={<MorePage />} />
         <Route path="prijava" element={<LoginPage />} />
         <Route path="lozinka" element={<RequireAuth><ChangePasswordPage /></RequireAuth>} />

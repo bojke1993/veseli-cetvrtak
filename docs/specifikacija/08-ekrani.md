@@ -107,3 +107,8 @@ Sadržaj zavisi od stanja aktuelnog kola:
 ### EKR-13 — Zadaci admina
 - Lista otvorenih zadataka: "Kolo #N nije zaključeno — prva utakmica počinje za X min", "Razreši ručno: <igrač> (utakmica bez konačnih podataka)", "Unesi stvarni dobitak za kolo #N", "Nekonzistentno hlađenje u kolu #N", "Sinhronizacija igrača ne radi od <datum>".
 - Svaki zadatak vodi direktno na mesto rešavanja.
+
+### EKR-14 — Disciplina
+- Javna lista disciplinskih mera (FR-27): 🟨 opomena / 🟥 preskakanje kola, član, kolo-povod, obrazloženje, ko i kada, status (aktivna, pretvorena u preskakanje kola, preskače sledeće kolo, odsluženo u kolu #N, poništena).
+- Admin: forma "Nova mera" (član, mera, kolo-povod, obrazloženje) sa napomenom kada će opomena značiti preskakanje kola; dugme "Poništi" (uz razlog) za mere bez posledica.
+- Dostupno iz menija "Još"; mere člana prikazuju se i na profilu člana (EKR-09).

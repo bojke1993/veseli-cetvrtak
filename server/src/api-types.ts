@@ -46,6 +46,10 @@ export interface MemberStatus {
   hasFire: boolean;
   /** On cooldown in the current open/active round, or scheduled for the next round. */
   onCooldown: boolean;
+  /** BR-37: active warnings (not revoked, not yet turned into a suspension). */
+  warnings: number;
+  /** BR-37: sits out the active round, or the next round to be opened, on a suspension. */
+  suspended: boolean;
 }
 
 export interface MemberDto {
@@ -60,6 +64,39 @@ export interface MemberDto {
 export interface MembersResponse { members: MemberDto[] }
 export interface UpdateMemberRequest { displayName?: string; avatarUrl?: string | null }
 export interface ResetPasswordResponse { temporaryPassword: string }
+
+// ---------- Disciplinary measures (BR-37) ----------
+
+export type SanctionKind = 'warning' | 'suspension';
+/** warning: active | escalated (turned into a suspension); suspension: pending | served; both: revoked. */
+export type SanctionStatus = 'active' | 'escalated' | 'pending' | 'served' | 'revoked';
+
+export interface SanctionDto {
+  id: number;
+  memberId: number;
+  kind: SanctionKind;
+  status: SanctionStatus;
+  /** Round that caused the measure (informative). */
+  roundId: number | null;
+  roundNumber: number | null;
+  reason: string;
+  issuedBy: number;
+  issuedAt: string;
+  /** Suspension created automatically by the second active warning. */
+  escalation: boolean;
+  /** Warning: the suspension it led to. */
+  consumedById: number | null;
+  /** Suspension: the round the member sat out. */
+  servedRoundId: number | null;
+  servedRoundNumber: number | null;
+  revokedAt: string | null;
+  revokedBy: number | null;
+  revokeReason: string | null;
+}
+export interface SanctionsResponse { items: SanctionDto[]; warningsForSuspension: number }
+export interface IssueSanctionRequest { memberId: number; kind: SanctionKind; roundId?: number | null; reason: string }
+export interface IssueSanctionResponse extends SanctionsResponse { createdIds: number[] }
+export interface RevokeSanctionRequest { reason: string }
 
 // ---------- Players & games ----------
 
@@ -141,8 +178,10 @@ export interface PickDto {
   kind: PickKind;
   /** Personal pick owner. */
   memberId: number | null;
-  /** Team pick: the member on cooldown it replaces. */
+  /** Team pick: the member on cooldown (or suspension) it replaces. */
   cooldownForMemberId: number | null;
+  /** BR-37: team pick replacing a member who sits out on a suspension, not a cooldown. */
+  suspension: boolean;
   player: PlayerDto | null;
   /** Free-text player name for imported picks that were not matched to a player. */
   importPlayerName: string | null;
@@ -197,6 +236,8 @@ export interface RoundSummaryDto {
   /** Member blamed in this round, 'team' for a team pick, or null. */
   blame: number | 'team' | null;
   cooldownMemberIds: number[];
+  /** BR-37: members sitting this round out on a suspension (team pick instead). */
+  suspendedMemberIds: number[];
   hasCorrections: boolean;
   cooldownInconsistent: boolean;
   picks: Array<Pick<PickDto, 'slot' | 'kind' | 'memberId' | 'cooldownForMemberId' | 'line' | 'direction' | 'result'> & { playerName: string | null }>;

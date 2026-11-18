@@ -9,6 +9,7 @@ import { registerMemberRoutes } from './members.js';
 import { registerPlayerRoutes } from './players.js';
 import { registerProposalRoutes } from './proposals.js';
 import { registerRoundRoutes } from './rounds.js';
+import { registerSanctionRoutes } from './sanctions.js';
 import { registerStatsRoutes } from './stats.js';
 
 /** Registers all REST routes under /api (docs/design.md §6). */
@@ -20,6 +21,7 @@ export async function registerRoutes(app: FastifyInstance, deps: Deps): Promise<
   await registerRoundRoutes(app, deps);
   await registerProposalRoutes(app, deps);
   await registerStatsRoutes(app, deps);
+  await registerSanctionRoutes(app, deps);
   await registerAuditRoutes(app, deps);
   await registerAdminRoutes(app, deps);
   await registerImportRoutes(app, deps);

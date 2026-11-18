@@ -34,6 +34,8 @@
 | **Zaključavanje glasanja** | Akcija kojom admin zamrzava izbore kola; posle toga izmene su moguće samo kroz proceduru ispravke (FR-12). |
 | **Razrešenje** | Određivanje ishoda tipa (pogodak/promašaj/poništen) i tiketa. Može biti automatsko ili ručno. |
 | **Bilans** | Ukupno dobijeno − ukupno uplaćeno. |
+| **Opomena** | Disciplinska mera (🟨) koju admin izriče članu uz obrazloženje; druga aktivna opomena znači preskakanje kola (BR-37). |
+| **Preskakanje kola (suspenzija)** | Disciplinska mera (🟥): član ne bira tip u sledećem kolu, umesto njega igra tip ekipe; ne utiče na nizove ni hlađenja (BR-37). |
 | **Audit log** | Nepromenljiv zapis svih izmena posle zaključavanja i svih ručnih intervencija. |
 | **Sezona (seasonCode)** | Oznaka sezone Evrolige u API-ju, npr. `E2026` za sezonu 2026/27. |
 | **gameCode** | Identifikator utakmice unutar sezone u Euroleague API-ju. |

@@ -5,6 +5,7 @@ import { seasonForDate, todayInBelgrade } from '../domain/season.js';
 import type { SessionMember } from '../http/auth.js';
 import { conflict, notFound, unprocessable } from '../http/errors.js';
 import { writeAudit } from './audit.js';
+import { sanctionStatus } from './sanctions.js';
 
 export const ACTIVE_STATUSES = ['open', 'locked', 'in_progress'] as const;
 
@@ -30,7 +31,9 @@ export async function cooldownMemberIds(deps: Deps, derived: DerivedState, curre
       .where('round_id', '=', active.id)
       .where('kind', '=', 'team')
       .execute();
-    return new Set(picks.map((p) => p.cooldown_for_member_id).filter((x): x is number => x !== null));
+    // BR-37: a team slot of a suspended member is not a cooldown.
+    const suspended = new Set(derived.rounds.get(active.id)?.suspendedMemberIds ?? []);
+    return new Set(picks.map((p) => p.cooldown_for_member_id).filter((x): x is number => x !== null && !suspended.has(x)));
   }
   return new Set(derived.cooldownForNextRound(currentSeason));
 }
@@ -40,8 +43,15 @@ export async function listMembers(deps: Deps): Promise<MemberDto[]> {
   const derived = await deps.derived.get();
   const season = seasonForDate(todayInBelgrade(deps.now()));
   const cooldown = await cooldownMemberIds(deps, derived, season);
+  const sanctions = await sanctionStatus(deps.db);
   return rows.map((m) => {
-    const status: MemberStatus = { ...memberStreak(derived, m.id, season), onCooldown: cooldown.has(m.id) };
+    const sc = sanctions.get(m.id);
+    const status: MemberStatus = {
+      ...memberStreak(derived, m.id, season),
+      onCooldown: cooldown.has(m.id),
+      warnings: sc?.warnings ?? 0,
+      suspended: sc?.suspended ?? false,
+    };
     return {
       id: m.id,
       name: m.name,

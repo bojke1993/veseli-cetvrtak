@@ -72,3 +72,14 @@ Oznake: ☐ nije urađeno · ☑ urađeno · ⏸ blokirano. Kolona **REQ** vezuj
 | T-53 | Code review (`/code-review`) i ispravke — 10 nalaza: 9 ispravljeno, 1 delimično (ispravka igrača posle kraja utakmice u kolu iz aplikacije i dalje briše ishod; admin dobija zadatak za ručno razrešenje) + regresioni testovi | — | ☑ |
 | T-54 | Kompletno pokretanje testova (server 108, web 40), typecheck, build | REQ-37 | ☑ |
 | T-55 | Deploy na VM | REQ-38 | ⏸ čeka VM (naručilac još nema VM) |
+
+## Faza 4 — Disciplinske mere (P-24, 18.11.2026.)
+
+| ID | Zadatak | REQ | Status |
+|----|---------|-----|--------|
+| T-70 | Specifikacija: BR-37, P-24, FR-27, REQ-40, EKR-14, model (SANCTION), uloge, pojmovnik | REQ-40 | ☑ |
+| T-71 | Migracija `003_sanctions`, servis (izricanje, eskalacija, poništavanje), `GET/POST /sanctions`, `POST /sanctions/:id/revoke` | REQ-40.1–40.3, REQ-40.6 | ☑ |
+| T-72 | Primena preskakanja kola pri otvaranju kola; izvedeno stanje razlikuje suspenziju od hlađenja | REQ-40.4, REQ-40.5 | ☑ |
+| T-73 | UI: ekran „Disciplina” (EKR-14), 🟨/🟥 uz ime člana, mere na profilu, 🟥 u kolu | REQ-40.7 | ☑ |
+| T-74 | Testovi (jedinični + API) | REQ-37 | ☑ |
+| T-75 | Deploy, unos prve mere (opomena Lakićeviću, kolo #15) i ispravka tipa u kolu #15 (Dobrić više 5,5 @ 1,90) | REQ-40 | ☐ |

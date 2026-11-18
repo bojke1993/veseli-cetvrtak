@@ -38,7 +38,7 @@ export async function createProposal(
   const round = await getRoundOr404(deps.db, roundId);
   requireOpenRound(round);
   const cooldown = await cooldownInRound(deps.db, round.id);
-  if (cooldown.has(member.id)) throw forbidden('Član na hlađenju ne može predlagati tipove u ovom kolu.');
+  if (cooldown.has(member.id)) throw forbidden('Član na hlađenju ili suspenziji ne može predlagati tipove u ovom kolu.');
 
   let cooldownFor: number | null = null;
   if (input.kind === 'team') {

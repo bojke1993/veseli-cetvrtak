@@ -6,6 +6,7 @@ import { MemberName, useMemberMap } from '../components/MemberName';
 import { memberMood, memberPhoto } from '../lib/memberPhotos';
 import { StatsFilter, useStatsQuery } from '../components/StatsFilter';
 import { Card, QueryView } from '../components/ui';
+import { SanctionList } from './DisciplinePage';
 import { formatDate, formatMoney, formatPercent, lineLabel, streakText } from '../lib/format';
 
 function MemberHero({ id }: { id: number }) {
@@ -105,6 +106,9 @@ export default function MemberProfilePage() {
               ) : (
                 <p className="muted">Nema tipova.</p>
               )}
+            </Card>
+            <Card title="Disciplinske mere">
+              <SanctionList memberId={memberId} />
             </Card>
             <Card title="Omiljeni igrači">
               {s.favoritePlayers.length ? (

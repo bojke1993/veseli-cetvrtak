@@ -61,6 +61,7 @@ Kolona **Izvor** povezuje zahtev sa specifikacijom (FR = funkcionalni zahtev, BR
 | REQ-36 | Bezbednost | NFR-12…NFR-17, NFR-24 |
 | REQ-37 | Pouzdanost, rezervne kopije i testabilnost | NFR-18…NFR-22 |
 | REQ-38 | Isporuka kao jedan Docker image na besplatnom hostingu | zahtev naručioca (stack), NFR-23 |
+| REQ-40 | Disciplinske mere (opomena, preskakanje kola) | FR-27, BR-37, P-24 |
 
 ---
 
@@ -487,6 +488,18 @@ Kriterijumi prihvatanja:
 4. Sistem ĆE integraciju sa spoljnim API-jem testirati nad snimljenim JSON odgovorima.
 5. Sistem ĆE pisati strukturirane logove pozadinskih poslova.
 
+### REQ-40 — Disciplinske mere
+**Kao** administrator, **želim** da članu izreknem opomenu ili preskakanje kola sa obrazloženjem, **kako bi** se dogovor o odigranom tiketu poštovao.
+**Izvor:** FR-27, BR-37, P-24
+
+1. KADA admin izrekne meru (opomena ili preskakanje kola) sa obrazloženjem, ONDA sistem ĆE je sačuvati sa članom, opcionim kolom-povodom, autorom i vremenom i upisati zapis u audit log.
+2. AKO obrazloženje nije uneto, ONDA sistem NEĆE izreći meru.
+3. KADA član dobije drugu aktivnu opomenu, ONDA sistem ĆE automatski izreći preskakanje kola i označiti obe opomene kao iskorišćene.
+4. KADA se otvori novo kolo, a član ima neprimenjeno preskakanje kola i nije na hlađenju, ONDA sistem ĆE njegovo mesto napraviti tipom ekipe i označiti meru kao odsluženu u tom kolu.
+5. Sistem NEĆE kolo preskočeno zbog suspenzije računati kao hlađenje, niti njime menjati nizove (BR-37).
+6. KADA admin poništi opomenu koja je dovela do neprimenjenog preskakanja kola, ONDA sistem ĆE poništiti i to preskakanje i vratiti ostale opomene u aktivne; primenjeno preskakanje kola se NE MOŽE poništiti.
+7. Sistem ĆE mere prikazivati svima (i gostima), a uz ime člana prikazivati 🟨 za aktivnu opomenu i 🟥 za preskakanje kola.
+
 ### REQ-38 — Isporuka kao jedan Docker image na besplatnom hostingu
 **Kao** administrator, **želim** da se cela aplikacija pokreće iz jednog Docker image-a, **kako bi** postavljanje i održavanje bilo jednostavno i besplatno.
 **Izvor:** zahtev naručioca (tehnološki stack), NFR-23, P-21
@@ -520,7 +533,9 @@ Pitanja koja specifikacija nije rešavala ili su bila u suprotnosti sa novim teh
 | Specifikacija | Zahtev |
 |---------------|--------|
 | FR-01…FR-22, FR-24, FR-25 | REQ-01…REQ-33 (vidi kolonu "Izvor" u Pregledu) |
+| FR-27 | REQ-40 |
 | FR-23 (povučeno) | REQ-32.4 (izričito bez obaveštenja) |
 | BR-01…BR-35 | REQ-03, REQ-06…REQ-23, REQ-31, REQ-02 |
+| BR-37 | REQ-40 |
 | NFR-01…NFR-24 | REQ-13, REQ-34…REQ-38 |
 | Poglavlje 7 (integracije) | REQ-04, REQ-05, REQ-13, REQ-14, REQ-33 |

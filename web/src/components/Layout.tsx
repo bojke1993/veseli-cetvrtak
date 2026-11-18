@@ -20,6 +20,7 @@ export function useMoreItems() {
   const items: Array<{ to: string; label: string; badge?: number }> = [
     { to: '/blejm', label: 'Blejm lista' },
     { to: '/clanovi', label: 'Članovi' },
+    { to: '/disciplina', label: 'Disciplina' },
   ];
   if (isMember) items.push({ to: '/audit', label: 'Audit log' });
   if (isAdmin) items.push({ to: '/zadaci', label: 'Zadaci', badge: taskCount });

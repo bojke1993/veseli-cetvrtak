@@ -33,10 +33,10 @@ export function calledPaths(fn: ReturnType<typeof mockFetch>): string[] {
 }
 
 export const MEMBERS: MemberDto[] = [
-  { id: 1, name: 'Ivanišević', displayName: 'Ivanišević', avatarUrl: null, isAdmin: true, sortOrder: 1, status: { streak: 2, hasFire: false, onCooldown: false } },
-  { id: 2, name: 'Tozislav', displayName: 'Tozislav', avatarUrl: null, isAdmin: false, sortOrder: 2, status: { streak: -5, hasFire: false, onCooldown: true } },
-  { id: 3, name: 'Lakićević', displayName: 'Lakićević', avatarUrl: null, isAdmin: false, sortOrder: 3, status: { streak: 3, hasFire: true, onCooldown: false } },
-  { id: 4, name: 'Simara', displayName: 'Simara', avatarUrl: null, isAdmin: false, sortOrder: 4, status: { streak: 0, hasFire: false, onCooldown: false } },
+  { id: 1, name: 'Ivanišević', displayName: 'Ivanišević', avatarUrl: null, isAdmin: true, sortOrder: 1, status: { streak: 2, hasFire: false, onCooldown: false, warnings: 0, suspended: false } },
+  { id: 2, name: 'Tozislav', displayName: 'Tozislav', avatarUrl: null, isAdmin: false, sortOrder: 2, status: { streak: -5, hasFire: false, onCooldown: true, warnings: 0, suspended: false } },
+  { id: 3, name: 'Lakićević', displayName: 'Lakićević', avatarUrl: null, isAdmin: false, sortOrder: 3, status: { streak: 3, hasFire: true, onCooldown: false, warnings: 1, suspended: false } },
+  { id: 4, name: 'Simara', displayName: 'Simara', avatarUrl: null, isAdmin: false, sortOrder: 4, status: { streak: 0, hasFire: false, onCooldown: false, warnings: 0, suspended: false } },
 ];
 
 export const ADMIN_ME: Me = { memberId: 1, name: 'Ivanišević', displayName: 'Ivanišević', username: 'ivan', isAdmin: true, mustChangePassword: false };

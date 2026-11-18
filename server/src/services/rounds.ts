@@ -48,6 +48,7 @@ import {
 } from './dto.js';
 import { listGameDays } from './games.js';
 import { applyPickResult, refreshRoundOutcome } from './resolution.js';
+import { markSuspensionsServed, pendingSuspensions } from './sanctions.js';
 
 export const LINE_MESSAGE = 'Dozvoljene su samo granice x,5 (npr. 14,5 ili 15,5).';
 export const RESOLVED_STATUSES: RoundStatus[] = ['won', 'lost', 'void'];
@@ -175,6 +176,7 @@ function summaryBase(round: Round, picks: Pick[], derived: DerivedState): Omit<R
     cooldownMemberIds:
       rd?.cooldownMemberIds ??
       picks.filter((p) => p.kind === 'team' && p.cooldown_for_member_id !== null).map((p) => p.cooldown_for_member_id!),
+    suspendedMemberIds: rd?.suspendedMemberIds ?? [],
     hasCorrections: round.has_corrections === 1,
     cooldownInconsistent: rd?.cooldownInconsistent ?? false,
   };
@@ -220,6 +222,7 @@ export async function buildRoundDetail(deps: Deps, roundId: number, viewer: Sess
   const statKey = (g: number, p: number) => `${g}:${p}`;
   const statsMap = new Map(stats.map((s) => [statKey(s.game_id, s.player_id), s]));
 
+  const suspended = new Set(derived.rounds.get(round.id)?.suspendedMemberIds ?? []);
   const pickDtos: PickDto[] = picks.map((p) => {
     const game = p.game_id !== null ? data.games.get(p.game_id) ?? null : null;
     const player = p.player_id !== null ? data.players.get(p.player_id) ?? null : null;
@@ -250,6 +253,7 @@ export async function buildRoundDetail(deps: Deps, roundId: number, viewer: Sess
       kind: p.kind,
       memberId: p.member_id,
       cooldownForMemberId: p.cooldown_for_member_id,
+      suspension: p.kind === 'team' && p.cooldown_for_member_id !== null && suspended.has(p.cooldown_for_member_id),
       player: player ? playerDto(player, data.clubs) : null,
       importPlayerName: p.import_player_name,
       game: game ? gameDto(game, data.clubs) : null,
@@ -430,7 +434,7 @@ export async function suggestPayer(db: DB): Promise<number | null> {
 /** Serializes round creation (single Node process): a double click must not open two rounds. */
 let createRoundQueue: Promise<unknown> = Promise.resolve();
 
-/** REQ-06: opens a new round with 4 slots (personal or team for members on cooldown). */
+/** REQ-06: opens a new round with 4 slots (personal, or team for members on cooldown or suspension). */
 export function createRound(deps: Deps, actor: SessionMember, gameDay: string): Promise<number> {
   const run = createRoundQueue.then(() => createRoundExclusive(deps, actor, gameDay));
   createRoundQueue = run.catch(() => undefined);
@@ -454,8 +458,12 @@ async function createRoundExclusive(deps: Deps, actor: SessionMember, gameDay: s
   const season = seasonForDate(gameDay);
   const derived = await deps.derived.get();
   const cooldown = new Set(derived.cooldownForNextRound(season));
+  // BR-37: a pending suspension also gives the member's slot to the team (cooldown takes precedence).
+  const suspended = await pendingSuspensions(deps.db, cooldown, now);
   const members = await deps.db.selectFrom('members').select(['id']).orderBy('sort_order').execute();
   const payer = await suggestPayer(deps.db);
+
+  const sitsOut = (id: number) => cooldown.has(id) || suspended.has(id);
 
   const roundId = await deps.db.transaction().execute(async (trx) => {
     await trx
@@ -500,12 +508,13 @@ async function createRoundExclusive(deps: Deps, actor: SessionMember, gameDay: s
         members.map((m, i) => ({
           round_id: id,
           slot: i + 1,
-          kind: cooldown.has(m.id) ? ('team' as const) : ('personal' as const),
-          member_id: cooldown.has(m.id) ? null : m.id,
-          cooldown_for_member_id: cooldown.has(m.id) ? m.id : null,
+          kind: sitsOut(m.id) ? ('team' as const) : ('personal' as const),
+          member_id: sitsOut(m.id) ? null : m.id,
+          cooldown_for_member_id: sitsOut(m.id) ? m.id : null,
         })),
       )
       .execute();
+    await markSuspensionsServed(trx, suspended, id, now);
     return id;
   });
   void actor;

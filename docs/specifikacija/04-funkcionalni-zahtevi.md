@@ -392,3 +392,18 @@ Povučeno odlukom tima (P-20): prva verzija nema obaveštenja van aplikacije (pu
 - KP4: Svako kolo mora imati tačno 4 tipa (BR-02), a tipovi `Ekipa` moraju imati popunjeno `umesto`.
 - KP5: Admin može preuzeti prazan šablon XLSX sa ispravnim nazivima kolona.
 - KP6: Posle uvoza, nizovi, hlađenje i vatrice članova odgovaraju stanju iz poslednjeg uvezenog kola (FR-16 KP4).
+
+## FR-27 — Disciplinske mere
+**Opis:** Admin izriče i poništava disciplinske mere članovima (opomena, preskakanje kola) sa obrazloženjem; sistem automatski pretvara drugu aktivnu opomenu u preskakanje kola i primenjuje ga pri otvaranju sledećeg kola (BR-37, P-24).
+**Akter:** Admin (izricanje, poništavanje); svi (pregled) · **Prioritet:** S
+**Preduslovi:** —
+**Tok:**
+1. Admin na ekranu "Disciplina" (EKR-14) bira člana, meru (opomena / preskakanje kola), opciono kolo koje je povod, i unosi obrazloženje.
+2. Ako je to druga aktivna opomena člana, sistem odmah dodaje i meru "preskakanje kola" (oznaka "automatski") i to javlja adminu u aplikaciji.
+3. Pri otvaranju sledećeg kola (FR-05) mesto suspendovanog člana postaje tip ekipe; mera dobija status "odsluženo u kolu #N".
+4. Admin može poništiti meru koja još nije imala posledice, uz razlog.
+**KP:**
+- KP1: Bez obrazloženja mera se ne može izreći; bez razloga se ne može poništiti.
+- KP2: Uz ime člana prikazuje se 🟨 dok ima aktivnu opomenu i 🟥 dok preskače kolo (zakazano ili tekuće).
+- KP3: Lista mera vidljiva je svima, i na profilu člana (EKR-09).
+- KP4: Svaka akcija se upisuje u audit log (`sanction_issue`, `sanction_revoke`, `suspension_served`).

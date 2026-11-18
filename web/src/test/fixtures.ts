@@ -35,6 +35,7 @@ export function pick(slot: number, over: Partial<PickDto> = {}): PickDto {
     kind: 'personal',
     memberId: slot,
     cooldownForMemberId: null,
+    suspension: false,
     player: null,
     importPlayerName: null,
     game: null,
@@ -72,6 +73,7 @@ export function roundDetail(over: Partial<RoundDetailDto> = {}): RoundDetailDto 
     outcomeLabel: null,
     blame: null,
     cooldownMemberIds: [2],
+    suspendedMemberIds: [],
     hasCorrections: false,
     cooldownInconsistent: false,
     lockedAt: null,
@@ -119,6 +121,7 @@ export function roundSummary(id: number, over: Partial<RoundSummaryDto> = {}): R
     blame: 3,
     cooldownMemberIds: [],
     hasCorrections: false,
+    suspendedMemberIds: [],
     cooldownInconsistent: false,
     picks: [1, 2, 3, 4].map((slot) => ({
       slot,

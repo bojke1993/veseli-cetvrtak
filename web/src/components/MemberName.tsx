@@ -22,10 +22,37 @@ export function memberLabel(map: Map<number, MemberDto>, id: number | null | und
 /** Hit streak at which the 🔥 is shown twice (display only — still one vatrica by BR-23). */
 export const DOUBLE_FIRE_STREAK = 6;
 
-export function StatusIcons({ cooldown, fire, streak = 0 }: { cooldown?: boolean; fire?: boolean; streak?: number }) {
+export function StatusIcons({
+  cooldown,
+  fire,
+  streak = 0,
+  warnings = 0,
+  suspended = false,
+}: {
+  cooldown?: boolean;
+  fire?: boolean;
+  streak?: number;
+  warnings?: number;
+  suspended?: boolean;
+}) {
   const double = streak >= DOUBLE_FIRE_STREAK;
   return (
     <>
+      {suspended && (
+        <span className="status-icon" role="img" aria-label="preskače kolo (suspenzija)" title="Preskače kolo (suspenzija)">
+          🟥
+        </span>
+      )}
+      {warnings > 0 && (
+        <span
+          className="status-icon"
+          role="img"
+          aria-label={warnings === 1 ? 'opomena' : `${warnings} opomene`}
+          title={warnings === 1 ? 'Opomena — sledeća znači preskakanje kola' : `${warnings} opomene`}
+        >
+          🟨{warnings > 1 ? `×${warnings}` : ''}
+        </span>
+      )}
       {cooldown && (
         <span className="status-icon" role="img" aria-label="na hlađenju" title="Na hlađenju">
           ❄
@@ -64,7 +91,13 @@ export function MemberName({
   return (
     <span className={chip ? 'member-chip' : 'member-name'}>
       {name}
-      {showStatus && <StatusIcons cooldown={cooldown} fire={m?.status.hasFire} streak={m?.status.streak} />}
+      {showStatus && <StatusIcons
+          cooldown={cooldown}
+          fire={m?.status.hasFire}
+          streak={m?.status.streak}
+          warnings={m?.status.warnings}
+          suspended={m?.status.suspended}
+        />}
     </span>
   );
 }

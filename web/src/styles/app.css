@@ -641,6 +641,14 @@ input[aria-invalid='true'] {
   font-weight: 600;
   font-size: 0.875rem;
 }
+.sanction-list li {
+  display: grid;
+  gap: 4px;
+  justify-items: start;
+}
+.sanction-revoked {
+  text-decoration: line-through;
+}
 .input-suffix {
   display: flex;
   align-items: center;

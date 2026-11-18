@@ -196,7 +196,7 @@ Keš rezultata rekalkulacije (FR-16); može se u svakom trenutku obrisati i izra
 | id | UUID | |
 | at | datetime | |
 | actor_member_id | FK → MEMBER? | null = sistem |
-| action | enum | `lock`, `auto_lock`, `unlock`, `correct`, `manual_resolve`, `auto_recheck_fix`, `actual_win_override`, `admin_transfer`, `round_delete`, `full_recalc`, `history_import` |
+| action | enum | `lock`, `auto_lock`, `unlock`, `correct`, `manual_resolve`, `auto_recheck_fix`, `actual_win_override`, `admin_transfer`, `round_delete`, `full_recalc`, `history_import`, `sanction_issue`, `sanction_revoke`, `suspension_served` |
 | round_id | FK → ROUND? | |
 | entity, entity_id, field | string | |
 | old_value, new_value | json | |
@@ -212,3 +212,19 @@ Samo dodavanje (append-only), bez izmene i brisanja (FR-22).
 - Granica: `line mod 1 = 0,5` za kola sa `source = app` (BR-09).
 - Statistike (FR-17…FR-19) računaju se iz PICK/ROUND, a MEMBER_ROUND_STATE je samo keš.
 - Brisanje: dozvoljeno samo za ROUND u statusu `open` (FR-24), kaskadno sa PICK/PROPOSAL; PLAYER i GAME se nikad ne brišu fizički.
+### SANCTION (Disciplinska mera) — BR-37, FR-27
+| Atribut | Tip | Opis |
+|---------|-----|------|
+| id | int | |
+| member_id | FK → MEMBER | kome je mera izrečena |
+| kind | enum | `warning` (opomena), `suspension` (preskakanje kola) |
+| round_id | FK → ROUND? | kolo koje je povod (informativno) |
+| reason | string | obrazloženje (obavezno) |
+| issued_by, issued_at | FK → MEMBER, datetime | ko i kada je izrekao |
+| escalation | bool | preskakanje kola nastalo automatski iz druge opomene |
+| consumed_by_id | FK → SANCTION? | opomena: preskakanje kola u koje je pretvorena |
+| served_round_id | FK → ROUND? | preskakanje kola: kolo u kome je član preskočio (postavlja se pri otvaranju kola) |
+| revoked_at, revoked_by, revoke_reason | | poništavanje (uz razlog) |
+
+Mesto suspendovanog člana u kolu je PICK sa `kind = team` i `cooldown_for_member_id = član`, kao kod hlađenja; razlika (suspenzija, ne hlađenje) se izvodi iz `SANCTION.served_round_id`.
+

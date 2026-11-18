@@ -63,7 +63,7 @@ export async function listRounds(deps: Deps, q: RoundsQuery): Promise<RoundsResp
           case 'blame':
             return rd?.blame === q.member;
           case 'cooldown':
-            return ps.some((p) => p.kind === 'team' && p.cooldown_for_member_id === q.member);
+            return rd?.cooldownMemberIds.includes(q.member) ?? false;
           default:
             return own !== undefined;
         }

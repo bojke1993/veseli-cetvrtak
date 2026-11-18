@@ -27,12 +27,26 @@ export async function loadDerivedInputs(db: DB): Promise<DerivedRoundInput[]> {
     });
     byRound.set(p.round_id, list);
   }
+  const served = await db
+    .selectFrom('sanctions')
+    .select(['served_round_id', 'member_id'])
+    .where('kind', '=', 'suspension')
+    .where('served_round_id', 'is not', null)
+    .where('revoked_at', 'is', null)
+    .execute();
+  const suspendedByRound = new Map<number, number[]>();
+  for (const s of served) {
+    const list = suspendedByRound.get(s.served_round_id!) ?? [];
+    list.push(s.member_id);
+    suspendedByRound.set(s.served_round_id!, list);
+  }
   return rounds.map((r) => ({
     roundId: r.id,
     number: r.number,
     seasonCode: r.season_code,
     status: r.status,
     source: r.source,
+    suspendedMemberIds: suspendedByRound.get(r.id) ?? [],
     picks: byRound.get(r.id) ?? [],
   }));
 }

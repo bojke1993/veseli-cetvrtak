@@ -20,7 +20,7 @@ export function toSummary(r: RoundDetailDto): RoundSummaryDto {
   };
 }
 
-export function RoundFlags({ round }: { round: Pick<RoundSummaryDto, 'cooldownMemberIds' | 'hasCorrections' | 'source' | 'cooldownInconsistent' | 'actualWinProvisional'> }) {
+export function RoundFlags({ round }: { round: Pick<RoundSummaryDto, 'cooldownMemberIds' | 'suspendedMemberIds' | 'hasCorrections' | 'source' | 'cooldownInconsistent' | 'actualWinProvisional'> }) {
   return (
     <span className="flags">
       {round.cooldownMemberIds.length > 0 && (
@@ -29,6 +29,19 @@ export function RoundFlags({ round }: { round: Pick<RoundSummaryDto, 'cooldownMe
             ❄
           </span>{' '}
           {round.cooldownMemberIds.map((id, i) => (
+            <span key={id}>
+              {i > 0 && ', '}
+              <MemberName id={id} showStatus={false} />
+            </span>
+          ))}
+        </span>
+      )}
+      {round.suspendedMemberIds.length > 0 && (
+        <span className="flag flag-bad" title="Preskače kolo (disciplinska mera)">
+          <span role="img" aria-label="suspenzija">
+            🟥
+          </span>{' '}
+          {round.suspendedMemberIds.map((id, i) => (
             <span key={id}>
               {i > 0 && ', '}
               <MemberName id={id} showStatus={false} />

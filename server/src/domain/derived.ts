@@ -56,9 +56,11 @@ export function computeDerived(input: DerivedRoundInput[]): DerivedState {
     }
 
     const expected = ids.filter((id) => state[id]!.missStreak >= COOLDOWN_MISS_STREAK);
-    const actual = sortedNums(
-      r.picks.filter((p) => p.kind === 'team' && p.cooldownForMemberId !== null).map((p) => p.cooldownForMemberId!),
-    );
+    // BR-37: a suspension also turns the member's slot into a team pick, but it is not a cooldown.
+    const suspended = new Set(r.suspendedMemberIds ?? []);
+    const teamFor = r.picks.filter((p) => p.kind === 'team' && p.cooldownForMemberId !== null).map((p) => p.cooldownForMemberId!);
+    const actual = sortedNums(teamFor.filter((id) => !suspended.has(id)));
+    const suspendedIds = sortedNums(teamFor.filter((id) => suspended.has(id)));
     const cooldownSet = new Set(actual);
 
     const fireChanges: RoundDerived['fireChanges'] = [];
@@ -108,6 +110,7 @@ export function computeDerived(input: DerivedRoundInput[]): DerivedState {
       number: r.number,
       seasonCode: r.seasonCode,
       cooldownMemberIds: actual,
+      suspendedMemberIds: suspendedIds,
       expectedCooldownMemberIds: expected,
       // Imported history is taken as played (the cooldown rule did not exist in 2025/26).
       cooldownInconsistent: r.status !== 'open' && r.source !== 'import' && !sameSet(actual, expected),

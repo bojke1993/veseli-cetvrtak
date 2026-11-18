@@ -168,3 +168,22 @@ describe('computeDerived', () => {
     expect([...y.rounds.values()]).toEqual([...x.rounds.values()]);
   });
 });
+
+describe('computeDerived: suspension (BR-37)', () => {
+  it('a suspension team slot is not a cooldown, keeps streaks and is not inconsistent', () => {
+    const rounds: DerivedRoundInput[] = [];
+    for (let n = 1; n <= 4; n++) rounds.push(round(n, ['hit', 'hit', 'miss', 'hit']));
+    const susp = round(5, ['hit', 'hit', ['team', 'hit'], 'hit']);
+    susp.suspendedMemberIds = [3];
+    rounds.push(susp);
+    rounds.push(round(6, ['hit', 'hit', 'miss', 'hit']));
+    const d = computeDerived(rounds);
+    const r5 = d.rounds.get(susp.roundId)!;
+    expect(r5.cooldownMemberIds).toEqual([]);
+    expect(r5.suspendedMemberIds).toEqual([3]);
+    expect(r5.cooldownInconsistent).toBe(false);
+    expect(r5.after[3]!.missStreak).toBe(4); // not reset like after a cooldown (BR-22)
+    expect(d.rounds.get(rounds[5]!.roundId)!.after[3]!.missStreak).toBe(5);
+    expect(d.cooldownForNextRound('E2026')).toEqual([3]);
+  });
+});

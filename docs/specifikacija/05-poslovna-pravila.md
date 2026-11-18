@@ -8,7 +8,7 @@
 
 **BR-02 — Sastav tiketa.** Svako kolo ima tačno 4 tipa:
 - po jedan **lični tip** za svakog člana koji nije na hlađenju,
-- po jedan **tip ekipe** za svakog člana koji jeste na hlađenju (P-12).
+- po jedan **tip ekipe** za svakog člana koji jeste na hlađenju (P-12) ili preskače kolo zbog disciplinske mere (BR-37).
 
 **BR-03 — Broj kola.** Redni broj kola dodeljuje sistem: `max(postojeći broj) + 1`. Ne može se uneti ručno. Ako se nezaključeno kolo obriše, njegov broj se ponovo koristi.
 
@@ -110,3 +110,15 @@ Tiket može dobiti status *Gubitan* i pre kraja svih utakmica, čim je neki tip 
 **BR-34 — Uvezena istorijska kola (P-17).** Kola uvezena iz XLS fajla (FR-25) tretiraju se kao prava kola: ulaze u svu statistiku, nizove, hlađenja, vatrice i blejm, i podležu istim pravilima BR-12…BR-33. Pošto nemaju live podatke, njihov ishod tipa (pogodak/promašaj/poništen) uzima se iz fajla. Uvoz je dozvoljen samo dok u aplikaciji ne postoji nijedno kolo uneto kroz aplikaciju; ponovljeni uvoz zamenjuje ceo prethodno uvezeni skup. Uvezena kola dobijaju brojeve 1…N hronološki po datumu, a prvo kolo otvoreno u aplikaciji dobija N+1 (BR-03).
 
 **BR-35 — Javni pregled (P-18).** Svi podaci osim audit loga dostupni su za pregled bez prijave, preko javnog linka. Bez prijave nije moguća nijedna izmena, predlog ni glasanje.
+
+**BR-37 — Disciplinske mere (P-24).** Admin može članu izreći disciplinsku meru uz **obavezno obrazloženje** i, po želji, kolo koje je povod. Mere su:
+- **Opomena** (🟨) — upozorenje bez posledica na tiket.
+- **Preskakanje kola** (🟥, suspenzija) — član ne bira lični tip u **sledećem kolu koje se otvori**; umesto njega se igra tip ekipe, kao kod hlađenja (BR-26, BR-27: član na suspenziji ne predlaže i ne glasa u tom kolu).
+
+Pravila:
+1. **Eskalacija:** kada član dobije **drugu aktivnu opomenu**, sistem automatski izriče preskakanje kola; obe opomene time postaju iskorišćene (brojač opomena kreće od nule).
+2. Preskakanje kola se primenjuje pri otvaranju sledećeg kola (kolo koje je već otvoreno se ne menja). Ako je član u tom kolu na hlađenju, preskakanje se prenosi na prvo sledeće kolo u kome bi igrao.
+3. Kolo preskočeno zbog suspenzije **nije hlađenje**: ne menja nizove, ne resetuje niz promašaja (BR-22), ne broji se u hlađenja i ne proverava se kao "nekonzistentno hlađenje". Tip ekipe u tom kolu pripisuje se Ekipi (BR-26).
+4. Admin može poništiti meru, uz razlog, dok nije imala posledice: opomenu i preskakanje kola koje još nije primenjeno. Poništavanje opomene koja je dovela do (još neprimenjenog) preskakanja kola poništava i to preskakanje, a ostale opomene ponovo postaju aktivne. Primenjeno preskakanje kola se ne može poništiti.
+5. Opomene ne zastarevaju i ne resetuju se na početku sezone.
+6. Mere su javne (BR-35); izricanje, poništavanje i primena upisuju se u audit log.

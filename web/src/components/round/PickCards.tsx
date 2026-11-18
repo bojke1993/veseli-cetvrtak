@@ -3,6 +3,7 @@ import type { Direction, GameDto, PickDto, PickKind, PlayerDto, ProposalDto, Rou
 import { useAcceptProposal, useCreateProposal, useDeletePick, useSetPick, useVote } from '../../api/queries';
 import { useAuth } from '../../auth/AuthContext';
 import { formatDateTime, formatOdds, lineLabel, parseLine, parseOdds, toInputText } from '../../lib/format';
+import { SitOutIcon } from '../LiveView';
 import { MemberName } from '../MemberName';
 import { PlayerAutocomplete } from '../PlayerAutocomplete';
 import { gameStarted, PlayerInfo } from '../PlayerInfo';
@@ -377,17 +378,14 @@ export function TeamPickCard({ round, pick }: { round: RoundDetailDto; pick: Pic
     (p) => p.kind === 'team' && p.cooldownForMemberId === pick.cooldownForMemberId && (p.status === 'pending' || p.status === 'accepted'),
   );
   const sorted = [...proposals].sort((a, b) => b.votes.length - a.votes.length || a.id - b.id);
-  const canParticipate = !!me && !round.cooldownMemberIds.includes(me.memberId);
+  const sitsOut = !!me && (round.cooldownMemberIds.includes(me.memberId) || round.suspendedMemberIds.includes(me.memberId));
+  const canParticipate = !!me && !sitsOut;
 
   return (
     <article className="card pick-card team-card" aria-label={`Tip ${pick.slot}`}>
       <header className="card-header">
         <h3 className="card-title">
-          Tip ekipe (umesto: <MemberName id={pick.cooldownForMemberId} showStatus={false} />{' '}
-          <span role="img" aria-label="na hlađenju">
-            ❄
-          </span>
-          )
+          Tip ekipe (umesto: <MemberName id={pick.cooldownForMemberId} showStatus={false} /> <SitOutIcon suspension={pick.suspension} />)
         </h3>
         <span className="small muted">#{pick.slot}</span>
       </header>

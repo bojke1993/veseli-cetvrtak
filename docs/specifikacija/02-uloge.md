@@ -31,6 +31,8 @@ Ukupan broj korisničkih naloga je tačno 4 (jedan po članu). Novi nalozi se ne
 | Brisanje kola | ✔ (samo nezaključeno) | ✘ | ✘ |
 | Pregled audit loga | ✔ | ✔ | ✘ |
 | Prenos uloge administratora | ✔ | ✘ | ✘ |
+| Izricanje i poništavanje disciplinskih mera (opomena, preskakanje kola) | ✔ (uz obrazloženje) | ✘ | ✘ |
+| Pregled disciplinskih mera | ✔ | ✔ | ✔ |
 
 \* gost = neprijavljen posetilac (javni pregled je uključen, P-18). Uvoz istorijskih kola (FR-25) može samo administrator.
 

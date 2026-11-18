@@ -37,7 +37,10 @@ export type AuditAction =
   | 'round_delete'
   | 'full_recalc'
   | 'history_import'
-  | 'late_accept';
+  | 'late_accept'
+  | 'sanction_issue'
+  | 'sanction_revoke'
+  | 'suspension_served';
 
 export interface MembersTable {
   id: number; // 1..4, fixed
@@ -199,6 +202,25 @@ export interface AuditLogTable {
   reason: string | null;
 }
 
+export type SanctionKind = 'warning' | 'suspension';
+
+/** BR-37: disciplinary measure. A suspension is served in the first round opened after it (served_round_id). */
+export interface SanctionsTable {
+  id: Generated<number>;
+  member_id: number;
+  kind: SanctionKind;
+  round_id: number | null; // round that caused it (informative)
+  reason: string;
+  issued_by: number;
+  issued_at: Date;
+  escalation: Bool; // suspension created automatically by the second active warning
+  consumed_by_id: number | null; // warning: the escalation suspension it led to
+  served_round_id: number | null; // suspension: round the member sat out
+  revoked_at: Date | null;
+  revoked_by: number | null;
+  revoke_reason: string | null;
+}
+
 export interface SyncRunsTable {
   id: Generated<number>;
   type: SyncType;
@@ -223,6 +245,7 @@ export interface Database {
   proposal_votes: ProposalVotesTable;
   audit_log: AuditLogTable;
   sync_runs: SyncRunsTable;
+  sanctions: SanctionsTable;
 }
 
 export type Member = Selectable<MembersTable>;
@@ -235,3 +258,4 @@ export type Pick = Selectable<PicksTable>;
 export type PickUpdate = Updateable<PicksTable>;
 export type Proposal = Selectable<ProposalsTable>;
 export type AuditEntry = Selectable<AuditLogTable>;
+export type Sanction = Selectable<SanctionsTable>;

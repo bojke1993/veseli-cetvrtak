@@ -15,6 +15,7 @@ Trenutna faza: **specifikacija** (nema koda). Stack još nije izabran.
 - **Kolo = jedno veče** (bilo koji dan); svi tipovi su sa utakmica tog dana. Granice su samo x,5.
 - Poništeni tipovi (DNP, utakmica odložena/otkazana sa dana kola) ne računaju se ni kao pogodak ni kao promašaj.
 - Tip ekipe (umesto člana na hlađenju) pripisuje se "Ekipi", ne ulazi u lične nizove.
+- **Disciplina** (BR-37): admin izriče opomenu 🟨 ili preskakanje kola 🟥 uz obrazloženje; 2. aktivna opomena = preskakanje sledećeg kola (tip ekipe, ali nije hlađenje — ne dira nizove).
 - Na početku nove sezone Evrolige nizovi, vatrice i zakazano hlađenje se resetuju.
 - Admin je Ivanišević; ostali članovi imaju naloge (predlozi); gosti vide sve bez prijave (samo pregled). Nema obaveštenja van aplikacije.
 - Istorija se uvozi iz XLS-a (Google Sheets) i tretira kao prava kola.

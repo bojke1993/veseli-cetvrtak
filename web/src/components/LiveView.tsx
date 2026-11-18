@@ -23,14 +23,24 @@ export function sortPicksByGameTime(picks: PickDto[]): PickDto[] {
   });
 }
 
-export function PickOwner({ pick }: { pick: Pick<PickDto, 'kind' | 'memberId' | 'cooldownForMemberId'> }) {
+/** Why a member's slot went to the team: ❄ cooldown or 🟥 suspension (BR-37). */
+export function SitOutIcon({ suspension }: { suspension?: boolean }) {
+  return suspension ? (
+    <span role="img" aria-label="suspenzija" title="Preskače kolo (disciplinska mera)">
+      🟥
+    </span>
+  ) : (
+    <span role="img" aria-label="na hlađenju">
+      ❄
+    </span>
+  );
+}
+
+export function PickOwner({ pick }: { pick: Pick<PickDto, 'kind' | 'memberId' | 'cooldownForMemberId'> & { suspension?: boolean } }) {
   if (pick.kind === 'team') {
     return (
       <span className="pick-owner">
-        Ekipa umesto <MemberName id={pick.cooldownForMemberId} showStatus={false} />{' '}
-        <span role="img" aria-label="na hlađenju">
-          ❄
-        </span>
+        Ekipa umesto <MemberName id={pick.cooldownForMemberId} showStatus={false} /> <SitOutIcon suspension={pick.suspension} />
       </span>
     );
   }

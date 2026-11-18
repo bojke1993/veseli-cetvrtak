@@ -71,6 +71,16 @@ function OpenRoundCard({ round }: { round: RoundDetailDto }) {
             </dd>
           </div>
         )}
+        {round.suspendedMemberIds.length > 0 && (
+          <div>
+            <dt>Preskače kolo 🟥</dt>
+            <dd>
+              {round.suspendedMemberIds.map((id) => (
+                <MemberName key={id} id={id} chip showStatus={false} />
+              ))}
+            </dd>
+          </div>
+        )}
       </dl>
       <Link to="/kolo" className="btn btn-primary">
         Otvori kolo
