@@ -1,6 +1,7 @@
 import type {
   CorrectionRequest,
   CurrentRoundResponse,
+  LiveStatus,
   ManualResolveRequest,
   PickDto,
   PickLiveDto,
@@ -24,6 +25,7 @@ import type {
   VoidReason,
 } from '../db/schema.js';
 import type { Deps } from '../deps.js';
+import { chancePercent, pickChance, ticketChance } from '../domain/chance.js';
 import { computeDerived } from '../domain/derived.js';
 import type { DerivedRoundInput, DerivedState } from '../domain/derived-types.js';
 import { round2, toNum } from '../domain/money.js';
@@ -34,6 +36,7 @@ import type { SessionMember } from '../http/auth.js';
 import { conflict, notFound, unprocessable } from '../http/errors.js';
 import { writeAudit } from './audit.js';
 import { loadDerivedInputs } from './derived.js';
+import { loadPlayerForms } from './form.js';
 import {
   auditDto,
   gameDto,
@@ -204,6 +207,36 @@ export async function buildRoundSummaries(deps: Deps, rounds: Round[], derived?:
   });
 }
 
+/** BR-39: fills `pick.chance` (percent) from live data and the player form; returns the ticket chance. */
+async function addChances(deps: Deps, picks: PickDto[]): Promise<number | null> {
+  const ids = picks.map((p) => p.player?.id).filter((x): x is number => x !== undefined);
+  const forms = await loadPlayerForms(deps, ids);
+  const raw: Array<number | null> = [];
+  const statuses: LiveStatus[] = [];
+  for (const p of picks) {
+    const form = p.player ? forms.get(p.player.id) : undefined;
+    const c =
+      p.live && p.game && p.line !== null && p.direction !== null
+        ? pickChance({
+            direction: p.direction,
+            line: p.line,
+            status: p.live.status,
+            gameStatus: p.game.status,
+            points: p.live.points,
+            secondsPlayed: p.live.secondsPlayed,
+            quarter: p.game.liveQuarter,
+            clock: p.game.liveClock,
+            formAveragePoints: form?.average ?? null,
+            formAverageMinutes: form?.averageMinutes ?? null,
+          })
+        : null;
+    p.chance = chancePercent(c);
+    raw.push(c);
+    statuses.push(p.live?.status ?? 'not_started');
+  }
+  return chancePercent(ticketChance(raw, statuses));
+}
+
 /** Full round view incl. live data (REQ-28, REQ-13). */
 export async function buildRoundDetail(deps: Deps, roundId: number, viewer: SessionMember | null): Promise<RoundDetailDto> {
   const round = await getRoundOr404(deps.db, roundId);
@@ -265,6 +298,7 @@ export async function buildRoundDetail(deps: Deps, roundId: number, viewer: Sess
       voidReason: p.void_reason,
       resolution: p.resolution,
       live,
+      chance: null,
     };
   });
 
@@ -321,10 +355,12 @@ export async function buildRoundDetail(deps: Deps, roundId: number, viewer: Sess
   // Ticket indicator while in progress (REQ-13.6).
   let ticketAlive: boolean | null = null;
   let passingCount: number | null = null;
+  let ticketChancePct: number | null = null;
   if (round.status === 'in_progress' || round.status === 'locked') {
     const statuses = pickDtos.map((p) => p.live?.status ?? null);
     ticketAlive = !statuses.some((s) => s === 'sure_miss' || s === 'final_miss');
     passingCount = statuses.filter((s) => s === 'passing' || s === 'sure_hit' || s === 'final_hit').length;
+    ticketChancePct = await addChances(deps, pickDtos);
   }
 
   const pickGames = [...data.games.values()];
@@ -355,8 +391,10 @@ export async function buildRoundDetail(deps: Deps, roundId: number, viewer: Sess
     fireChanges: rd?.fireChanges ?? [],
     ticketAlive,
     passingCount,
+    ticketChance: ticketChancePct,
     liveUpdatedAt: polled.length > 0 ? new Date(Math.max(...polled)).toISOString() : null,
     canUnlock: round.status === 'locked' && !anyStarted,
+    proposalsOpen: round.status === 'open' && !anyStarted,
     firstGameAt: firstGame !== null ? new Date(firstGame).toISOString() : null,
     missingForLock: round.status === 'open' ? missingForLock(round, picks, names) : [],
     audit,
@@ -769,7 +807,8 @@ export async function lockRound(deps: Deps, roundId: number, actorMemberId: numb
   deps.bus.roundChanged(round.id);
 }
 
-async function anyPickGameStarted(db: DB, roundId: number, now: Date): Promise<boolean> {
+/** Whether a game of any pick has started (postponed/cancelled games do not count). */
+export async function anyPickGameStarted(db: DB, roundId: number, now: Date): Promise<boolean> {
   const games = await db
     .selectFrom('picks')
     .innerJoin('games', 'games.id', 'picks.game_id')

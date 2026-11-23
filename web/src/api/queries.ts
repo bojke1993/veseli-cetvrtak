@@ -18,6 +18,7 @@ import type {
   CurrentRoundResponse,
   GameDaysResponse,
   GamesResponse,
+  PlayerFormResponse,
   ImportColumn,
   ImportCommitRequest,
   ImportCommitResponse,
@@ -55,6 +56,7 @@ export const keys = {
   gameDays: ['games', 'days'] as const,
   games: (day: string) => ['games', 'day', day] as const,
   playerSearch: (q: string, day?: string, roundId?: number) => ['players', 'search', q, day ?? null, roundId ?? null] as const,
+  playerForm: (id: number) => ['players', 'form', id] as const,
   seasons: ['stats', 'seasons'] as const,
   overview: (q: StatsQuery) => ['stats', 'overview', q] as const,
   membersStats: (q: StatsQuery) => ['stats', 'members', q] as const,
@@ -116,6 +118,16 @@ export function usePlayerSearch(q: string, day?: string, roundId?: number) {
     enabled: term.length >= 2,
     staleTime: 30_000,
     placeholderData: keepPreviousData,
+  });
+}
+
+/** FR-29: last 5 games of a player (chronological) and the team's history with him. */
+export function usePlayerForm(id: number | null) {
+  return useQuery({
+    queryKey: keys.playerForm(id ?? 0),
+    queryFn: ({ signal }) => api.get<PlayerFormResponse>(`/players/${id}/form`, signal),
+    enabled: id !== null,
+    staleTime: 10 * 60_000,
   });
 }
 

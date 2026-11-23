@@ -73,6 +73,19 @@ Oznake: ☐ nije urađeno · ☑ urađeno · ⏸ blokirano. Kolona **REQ** vezuj
 | T-54 | Kompletno pokretanje testova (server 108, web 40), typecheck, build | REQ-37 | ☑ |
 | T-55 | Deploy na VM | REQ-38 | ⏸ čeka VM (naručilac još nema VM) |
 
+## Faza 3 — Ponuda kladionica i izmena tipa do zaključavanja (P-23, 16.11.2026.)
+
+Plan i odluke: `docs/plan-ponuda-kladionica.md`.
+
+| ID | Zadatak | REQ | Status |
+|----|---------|-----|--------|
+| T-60 | Specifikacija: BR-28, BR-36, P-23, FR-08/09/11, FR-26, NFR-25, REQ-09/11/19/39, EKR-04, model, integracije | REQ-09, REQ-11, REQ-19, REQ-39 | ☑ |
+| T-61 | Zatvaranje predloga i glasanja na početku prve utakmice tipova (`proposalsOpen`), odbrojavanje u EKR-04 | REQ-11.7, REQ-11.8, REQ-19.2 | ☑ |
+| T-62 | „Promeni tip” posle prihvatanja: novi predlog, prikaz važećeg tipa i izmene na čekanju, jedan `accepted` po mestu | REQ-09.3, REQ-09.6 | ☑ |
+| T-63 | Verifikacija izvora (Mozzart, Meridian, BalkanBet) na dan kola, sa VM-a; nalazi u learnings | REQ-39 | ☐ |
+| T-64 | `OddsProvider` + migracija `005_odds` (bookmakers, odds_offers, odds_bookmaker_code) + `oddsPoll` + `GET /rounds/:id/odds` | REQ-39 | ☐ (čeka T-63) |
+| T-65 | UI blok „Ponuda kladionica” + logotipi + izvor kvote u kartici i detalju kola | REQ-39 | ☐ (čeka T-64) |
+
 ## Faza 4 — Disciplinske mere (P-24, 18.11.2026.)
 
 | ID | Zadatak | REQ | Status |
@@ -83,3 +96,15 @@ Oznake: ☐ nije urađeno · ☑ urađeno · ⏸ blokirano. Kolona **REQ** vezuj
 | T-73 | UI: ekran „Disciplina” (EKR-14), 🟨/🟥 uz ime člana, mere na profilu, 🟥 u kolu | REQ-40.7 | ☑ |
 | T-74 | Testovi (jedinični + API) | REQ-37 | ☑ |
 | T-75 | Deploy, unos prve mere (opomena Lakićeviću, kolo #15) i ispravka tipa u kolu #15 (Dobrić više 5,5 @ 1,90) | REQ-40 | ☐ |
+
+## Faza 5 — Rekordi, bedževi, forma igrača, live šanse (P-25, 23.11.2026.)
+
+| ID | Zadatak | REQ | Status |
+|----|---------|-----|--------|
+| T-80 | Specifikacija: BR-38…40, P-25, FR-28…30, NFR-26, REQ-41…43, EKR-03/04/08/09, model, integracije | REQ-41…43 | ☑ |
+| T-81 | `domain/records.ts` (rekordi, bedževi, „za dlaku”), proširen DTO statistike, `last10` hronološki | REQ-41 | ☑ |
+| T-82 | UI: „Kuća slavnih” na Statistici, bedževi i „Za dlaku” na profilu | REQ-41 | ☑ |
+| T-83 | Migracija `004_boxscore`, čuvanje boxscore-a svih igrača, posao `boxscoreBackfill`, forma u pretrazi igrača | REQ-42 | ☑ |
+| T-84 | UI: `PlayerForm` u pretrazi i kartici tipa | REQ-42 | ☑ |
+| T-85 | `domain/chance.ts`, šanse u detalju kola, indikator i proslava (`Celebration`) | REQ-43 | ☑ |
+

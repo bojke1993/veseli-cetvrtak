@@ -32,6 +32,7 @@ Prioriteti: **M** (mora), **T** (treba), **M-B** (može, ako bude vremena).
 | ~~FR-23~~ | ~~Obaveštenja~~ — povučeno (P-20) | — | — |
 | FR-24 | Brisanje nezaključenog kola | Admin | T |
 | FR-25 | Uvoz istorijskih kola iz XLS/XLSX | Admin | M |
+| FR-26 | Ponuda kladionica za izabranog igrača | Admin, Član | T |
 
 ---
 
@@ -130,6 +131,7 @@ Prioriteti: **M** (mora), **T** (treba), **M-B** (može, ako bude vremena).
 - KP2: Unos cele granice (npr. 15) se odbija porukom "Dozvoljene su samo granice x,5 (npr. 14,5 ili 15,5)".
 - KP3: Nije moguće izabrati utakmicu koja je počela (BR-08).
 - KP4: Decimalni separator prihvata i zarez i tačku.
+- KP5: Posle izbora igrača prikazuje se ponuda kladionica (FR-26); izbor ponude popunjava granicu, smer i kvotu.
 
 ## FR-08 — Tip ekipe za člana na hlađenju
 **Opis:** Kada je član na hlađenju, ostali članovi biraju 4. tip umesto njega.
@@ -144,6 +146,7 @@ Prioriteti: **M** (mora), **T** (treba), **M-B** (može, ako bude vremena).
 - KP2: Tip ekipe je u celoj aplikaciji jasno označen kao "Ekipa", ne imenom člana na hlađenju (BR-26).
 - KP3: Ako je više članova na hlađenju, postoji po jedan tip ekipe za svakog (P-12).
 - KP4: Predlozi i glasovi ostaju sačuvani u istoriji kola.
+- KP5: Predlozi i glasanje su mogući samo do početka prve utakmice među tipovima kola (BR-28, P-23).
 
 ## FR-09 — Predlog izbora od strane člana
 **Opis:** Član može sam da unese predlog svog ličnog tipa, koji admin prihvata ili menja.
@@ -154,8 +157,8 @@ Prioriteti: **M** (mora), **T** (treba), **M-B** (može, ako bude vremena).
 2. Predlog se prikazuje adminu kao "Predlog — čeka potvrdu".
 3. Admin prihvata predlog (postaje tip) ili ga menja.
 **KP:**
-- KP1: Član vidi i menja samo svoj predlog, i to samo dok kolo nije zaključeno.
-- KP2: Prihvaćen predlog i dalje može da menja samo admin.
+- KP1: Član vidi i menja samo svoj predlog, i to samo do početka prve utakmice među tipovima kola (BR-28, P-23).
+- KP2: ~~Prihvaćen predlog i dalje može da menja samo admin.~~ Izmenjeno (P-23): član menja i prihvaćen tip — dugmetom „Promeni tip” šalje novi predlog (popunjen važećim tipom); važeći tip ostaje na snazi dok admin ne prihvati izmenu. Admin i dalje može direktno da menja svaki tip.
 - KP3: Admin može da unese tip i bez predloga člana.
 
 ## FR-10 — Unos uplate, kvote, uplatioca i potencijalnog dobitka
@@ -180,7 +183,7 @@ Prioriteti: **M** (mora), **T** (treba), **M-B** (može, ako bude vremena).
 1. Admin klikne "Zaključi glasanje"; sistem prikazuje rezime tiketa i traži potvrdu.
 2. Po potvrdi, status kola postaje *Zaključen*; svi tipovi i finansijski podaci postaju samo za čitanje.
 3. Kada počne prva utakmica kola, status postaje *U toku*.
-4. Automatsko zaključavanje: ako kolo nije zaključeno, a kompletno je, sistem ga zaključava u trenutku početka prve utakmice (BR-28).
+4. Automatsko zaključavanje: ako kolo nije zaključeno, a kompletno je, sistem ga zaključava u trenutku početka prve utakmice (BR-28). U istom trenutku se zatvaraju predlozi i glasanje članova, i kada kolo nije kompletno (P-23).
 **KP:**
 - KP1: Dugme je onemogućeno dok podaci nisu kompletni; prikazuje se šta nedostaje.
 - KP2: Posle zaključavanja polja za unos nisu dostupna ni adminu (osim kroz FR-12).
@@ -393,6 +396,20 @@ Povučeno odlukom tima (P-20): prva verzija nema obaveštenja van aplikacije (pu
 - KP5: Admin može preuzeti prazan šablon XLSX sa ispravnim nazivima kolona.
 - KP6: Posle uvoza, nizovi, hlađenje i vatrice članova odgovaraju stanju iz poslednjeg uvezenog kola (FR-16 KP4).
 
+## FR-26 — Ponuda kladionica za izabranog igrača
+**Opis:** Za izabranog igrača prikazuje se ponuda poena igrača kladionica Mozzart, Meridian i BalkanBet (BR-36, P-23).
+**Akter:** Admin (unos tipa), Član (predlog) · **Prioritet:** T
+**Preduslovi:** Izabran igrač (FR-06) u otvorenom kolu; predlozi nisu zatvoreni.
+**Tok:**
+1. Ispod izabranog igrača prikazuje se blok „Ponuda kladionica”: za svaku kladionicu logo i ime, granica, kvota za Više i kvota za Manje, i vreme poslednjeg osvežavanja. Igrač može imati više granica u ponudi iste kladionice.
+2. Klik na kvotu popunjava granicu, smer i kvotu tipa ili predloga i pamti kladionicu kao izvor kvote.
+3. Polja se i dalje mogu ručno menjati; ručna promena kvote briše izvor.
+**KP:**
+- KP1: Ako nijedna kladionica nema igrača u ponudi, prikazuje se „Nijedna kladionica trenutno nema ovog igrača u ponudi”; ručni unos radi kao i ranije.
+- KP2: Kladionica čija ponuda trenutno nije dostupna označena je sivo („ponuda nedostupna”); ostale se prikazuju normalno.
+- KP3: Browser nikad ne poziva kladionice direktno; ponuda se preuzima na serveru i čuva (poglavlje 7.7).
+- KP4: Izvor kvote se prikazuje u kartici tipa i detalju kola i ne utiče na obračun.
+
 ## FR-27 — Disciplinske mere
 **Opis:** Admin izriče i poništava disciplinske mere članovima (opomena, preskakanje kola) sa obrazloženjem; sistem automatski pretvara drugu aktivnu opomenu u preskakanje kola i primenjuje ga pri otvaranju sledećeg kola (BR-37, P-24).
 **Akter:** Admin (izricanje, poništavanje); svi (pregled) · **Prioritet:** S
@@ -407,3 +424,37 @@ Povučeno odlukom tima (P-20): prva verzija nema obaveštenja van aplikacije (pu
 - KP2: Uz ime člana prikazuje se 🟨 dok ima aktivnu opomenu i 🟥 dok preskače kolo (zakazano ili tekuće).
 - KP3: Lista mera vidljiva je svima, i na profilu člana (EKR-09).
 - KP4: Svaka akcija se upisuje u audit log (`sanction_issue`, `sanction_revoke`, `suspension_served`).
+
+## FR-28 — Rekordi, bedževi i „za dlaku”
+**Opis:** Sistem iz istorije kola izvodi rekorde ekipe, bedževe članova i statistiku promašaja „za dlaku” (BR-38, P-25).
+**Akter:** svi (pregled) · **Prioritet:** C
+**Preduslovi:** postoji bar jedno razrešeno kolo.
+**Tok:**
+1. Na ekranu Statistika (EKR-08) sekcija „Kuća slavnih” prikazuje rekorde za izabrani period, svaki sa članom, igračem (ako postoji) i linkom na kolo.
+2. Na profilu člana (EKR-09) prikazuju se osvojeni bedževi (emoji, naziv, broj osvajanja, prvo kolo) i pločica „Za dlaku” (broj promašaja za 0,5 i izgubljeni potencijalni dobitak tiketa 3/4).
+**KP:**
+- KP1: Rekordi i bedževi se menjaju posle ispravke ili rekalkulacije (BR-30), kao i ostala statistika.
+- KP2: Tip bez poznatih konačnih poena (npr. uvezen bez poena) ne ulazi u „za dlaku” ni u „najubedljiviji pogodak”.
+
+## FR-29 — Forma igrača pri izboru tipa
+**Opis:** Pri izboru igrača prikazuje se njegova forma i istorija ekipe sa njim (BR-40, P-25).
+**Akter:** član, admin · **Prioritet:** C
+**Preduslovi:** sačuvan boxscore završenih utakmica (7.2, posao `boxscoreBackfill`).
+**Tok:**
+1. U listi rezultata pretrage (FR-06) uz igrača se prikazuje prosek poena i mali grafikon poslednjih 5 utakmica.
+2. Posle izbora, u kartici tipa: 5 stubića (najstarija utakmica levo, najnovija desno) sa poenima i protivnikom, prosek, „Birali smo ga N×, K pogođeno” i, kad je granica uneta, „Iznad granice X u K od 5”.
+3. Ako podataka nema: „Nema podataka o formi”.
+**KP:**
+- KP1: Redosled je uvek hronološki sa leva na desno.
+- KP2: DNP utakmica se prikazuje kao „DNP” i ne ulazi u prosek.
+
+## FR-30 — Live šanse tiketa i proslava
+**Opis:** Tokom kola prikazuje se gruba procena šansi tipova i tiketa (BR-39); kada tiket postane dobitan, aplikacija ga proslavlja (P-25).
+**Akter:** svi · **Prioritet:** C
+**Tok:**
+1. Indikator tiketa (EKR-03) prikazuje „Šanse ~N %” uz napomenu „gruba procena”; kartica tipa prikazuje šansu tipa.
+2. Kada tiket postane dobitan (sva 4 tipa pogođena/sigurna), na ekranu se jednom po kolu prikazuju konfete i telefon kratko zavibrira (ako uređaj podržava).
+3. Kada tiket padne, ikonica indikatora kratko „potone”.
+**KP:**
+- KP1: Korisnici sa podešavanjem „smanji pokrete” (prefers-reduced-motion) ne vide animacije, samo poruku.
+- KP2: Proslava se ne ponavlja pri ponovnom otvaranju istog kola na istom uređaju.

@@ -181,7 +181,7 @@ describe('stats service', () => {
       currentStreak: 4, longestHitStreak: 4, longestMissStreak: 0, fires: 1, hasFire: true, onCooldown: false,
       overPercent: 100, underPercent: null,
     });
-    expect(m1!.last10).toEqual(['hit', 'void', 'hit', 'hit', 'hit']);
+    expect(m1!.last10).toEqual(['hit', 'hit', 'hit', 'void', 'hit']); // chronological (BR-40)
     expect(m1!.favoritePlayers).toEqual([
       { playerId: players[0], name: 'Shane Larkin', picks: 4, hits: 4 },
       { playerId: null, name: 'Đorđe Test', picks: 1, hits: 0 },

@@ -1,8 +1,9 @@
 import type { FastifyInstance } from 'fastify';
-import type { CreatePlayerRequest, PlayerSearchResponse } from '../api-types.js';
+import type { CreatePlayerRequest, PlayerFormResponse, PlayerSearchResponse } from '../api-types.js';
 import type { Deps } from '../deps.js';
 import { requireAdmin } from '../http/auth.js';
-import { createPlayer, searchPlayers } from '../services/players.js';
+import { getPlayerForm } from '../services/form.js';
+import { createPlayer, getPlayer, searchPlayers } from '../services/players.js';
 import { day } from './schemas.js';
 
 export async function registerPlayerRoutes(app: FastifyInstance, deps: Deps): Promise<void> {
@@ -18,6 +19,16 @@ export async function registerPlayerRoutes(app: FastifyInstance, deps: Deps): Pr
       },
     },
     async (request): Promise<PlayerSearchResponse> => ({ items: await searchPlayers(deps, request.query) }),
+  );
+
+  // FR-29: public, like the rest of the read-only views (BR-35).
+  app.get<{ Params: { id: number } }>(
+    '/players/:id/form',
+    { schema: { params: { type: 'object', required: ['id'], properties: { id: { type: 'integer', minimum: 1 } } } } },
+    async (request): Promise<PlayerFormResponse> => {
+      await getPlayer(deps, request.params.id); // 404 for an unknown player
+      return { form: await getPlayerForm(deps, request.params.id) };
+    },
   );
 
   app.post<{ Body: CreatePlayerRequest }>(

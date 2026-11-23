@@ -47,6 +47,7 @@ export function pick(slot: number, over: Partial<PickDto> = {}): PickDto {
     voidReason: null,
     resolution: null,
     live: null,
+    chance: null,
     ...over,
   };
 }
@@ -89,8 +90,10 @@ export function roundDetail(over: Partial<RoundDetailDto> = {}): RoundDetailDto 
     fireChanges: [],
     ticketAlive: null,
     passingCount: null,
+    ticketChance: null,
     liveUpdatedAt: null,
     canUnlock: false,
+    proposalsOpen: true,
     firstGameAt: '2026-10-15T18:30:00Z',
     missingForLock: ['Tip: Lakićević', 'Tip: Simara'],
     audit: [],
@@ -120,8 +123,8 @@ export function roundSummary(id: number, over: Partial<RoundSummaryDto> = {}): R
     outcomeLabel: '3/4',
     blame: 3,
     cooldownMemberIds: [],
-    hasCorrections: false,
     suspendedMemberIds: [],
+    hasCorrections: false,
     cooldownInconsistent: false,
     picks: [1, 2, 3, 4].map((slot) => ({
       slot,

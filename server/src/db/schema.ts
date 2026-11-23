@@ -111,6 +111,8 @@ export interface GamesTable {
   final_at: Date | null;
   recheck_done_at: Date | null;
   last_polled_at: Date | null;
+  /** FR-29: final box score of all players stored (migration 004). */
+  boxscore_saved_at: Date | null;
   is_manual: Bool;
 }
 

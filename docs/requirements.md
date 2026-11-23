@@ -61,6 +61,7 @@ Kolona **Izvor** povezuje zahtev sa specifikacijom (FR = funkcionalni zahtev, BR
 | REQ-36 | Bezbednost | NFR-12…NFR-17, NFR-24 |
 | REQ-37 | Pouzdanost, rezervne kopije i testabilnost | NFR-18…NFR-22 |
 | REQ-38 | Isporuka kao jedan Docker image na besplatnom hostingu | zahtev naručioca (stack), NFR-23 |
+| REQ-39 | Ponuda kladionica za izabranog igrača | FR-26, BR-36, NFR-25, P-23 |
 | REQ-40 | Disciplinske mere (opomena, preskakanje kola) | FR-27, BR-37, P-24 |
 
 ---
@@ -164,9 +165,10 @@ Kriterijumi prihvatanja:
 **Kao** član, **želim** da sam predložim svoj tip, **kako bi** admin samo potvrdio umesto da prepisuje.
 **Izvor:** FR-09
 
-1. DOK je kolo otvoreno i član nije na hlađenju, sistem ĆE dozvoliti članu da unese ili izmeni predlog svog ličnog tipa (igrač, granica, smer, obavezna kvota).
+1. DOK je kolo otvoreno, nije počela prva utakmica među tipovima kola i član nije na hlađenju, sistem ĆE dozvoliti članu da unese ili izmeni predlog svog ličnog tipa (igrač, granica, smer, obavezna kvota).
 2. KADA član sačuva predlog, ONDA sistem ĆE ga prikazati administratoru sa oznakom "Predlog — čeka potvrdu".
-3. KADA administrator prihvati predlog, ONDA sistem ĆE od njega kreirati lični tip tog člana, zajedno sa kvotom; dalje izmene može vršiti samo administrator.
+3. KADA administrator prihvati predlog, ONDA sistem ĆE od njega kreirati lični tip tog člana, zajedno sa kvotom, a prethodno prihvaćen predlog za isto mesto označiti kao zamenjen.
+6. DOK su predlozi otvoreni (REQ-09.1), sistem ĆE dozvoliti članu da promeni i već prihvaćen tip slanjem novog predloga, popunjenog važećim tipom; važeći tip ostaje na snazi dok administrator ne prihvati izmenu (P-23).
 4. AKO član pokuša da izmeni tip drugog člana, ONDA sistem ĆE odbiti zahtev.
 5. Sistem ĆE dozvoliti administratoru da unese tip i bez predloga člana.
 
@@ -190,6 +192,8 @@ Kriterijumi prihvatanja:
 4. AKO u trenutku početka prve utakmice kolo nije kompletno, ONDA sistem ĆE administratoru prikazati upozorenje, onemogućiti unos tipova čija je utakmica počela i dozvoliti samo da se takav tip označi kao poništen.
 5. DOK je do početka prve utakmice nezaključenog kola manje od 60 minuta, sistem ĆE administratoru prikazivati upozorenje sa odbrojavanjem.
 6. KADA počne prva utakmica zaključanog kola, ONDA sistem ĆE promeniti status kola u *U toku*.
+7. KADA počne prva utakmica među tipovima otvorenog kola, ONDA sistem ĆE odbijati nove predloge i glasove članova (i kada kolo nije kompletno); administrator i dalje može da prihvati predlog dat pre toga (P-23).
+8. DOK predlozi nisu zatvoreni, sistem ĆE svima prikazivati odbrojavanje „Predlozi se zatvaraju za …”.
 
 ### REQ-12 — Ispravka posle zaključavanja
 **Kao** administrator, **želim** da ispravim grešku u unosu i posle zaključavanja, **kako bi** evidencija odgovarala stvarnom tiketu, uz trag ko je i zašto menjao.
@@ -289,7 +293,7 @@ Kriterijumi prihvatanja:
 **Izvor:** FR-08, BR-02, BR-26, BR-27, P-05, P-12
 
 1. Sistem ĆE za svakog člana na hlađenju formirati po jedno mesto "Tip ekipe (umesto: <ime> ❄)", tako da tiket uvek ima tačno 4 tipa.
-2. DOK je kolo otvoreno, sistem ĆE dozvoliti članovima koji nisu na hlađenju da dodaju predlog tipa ekipe i da glasaju (👍) za postojeće predloge.
+2. DOK je kolo otvoreno i nije počela prva utakmica među tipovima kola, sistem ĆE dozvoliti članovima koji nisu na hlađenju da dodaju predlog tipa ekipe i da glasaju (👍) za postojeće predloge.
 3. AKO član na hlađenju pokuša da doda predlog ili glasa, ONDA sistem ĆE odbiti zahtev.
 4. KADA administrator izabere predlog (ili unese sopstveni), ONDA sistem ĆE ga postaviti kao tip ekipe.
 5. Sistem ĆE tip ekipe pripisati "Ekipi": ulazi u ishod tiketa i ukupnu statistiku, ali NE ulazi u lične statistike, nizove, vatrice ni hlađenja nijednog člana.
@@ -488,6 +492,17 @@ Kriterijumi prihvatanja:
 4. Sistem ĆE integraciju sa spoljnim API-jem testirati nad snimljenim JSON odgovorima.
 5. Sistem ĆE pisati strukturirane logove pozadinskih poslova.
 
+### REQ-39 — Ponuda kladionica za izabranog igrača
+**Kao** član ili administrator, **želim** da za izabranog igrača vidim ponudu kladionica, **kako bih** brzo i tačno uneo granicu i kvotu.
+**Izvor:** FR-26, BR-36, NFR-25, P-23
+
+1. KADA se u otvorenom kolu izabere igrač, ONDA sistem ĆE prikazati ponudu poena tog igrača kladionica Mozzart, Meridian i BalkanBet koje ga imaju u ponudi: logo i ime kladionice, granicu, kvotu za više i za manje i vreme osvežavanja.
+2. KADA korisnik izabere kvotu iz ponude, ONDA sistem ĆE popuniti granicu, smer i kvotu i zapamtiti kladionicu kao izvor kvote.
+3. AKO korisnik ručno promeni kvotu, ONDA sistem ĆE obrisati izvor kvote.
+4. AKO nijedna kladionica nema igrača u ponudi, ONDA sistem ĆE prikazati „Nijedna kladionica trenutno nema ovog igrača u ponudi” i ručni unos ostaje dostupan.
+5. AKO ponuda kladionice nije dostupna, ONDA sistem ĆE je označiti kao „ponuda nedostupna” bez uticaja na ostale kladionice i ostatak aplikacije.
+6. Sistem ĆE ponudu preuzimati isključivo na serveru, preko adaptera `OddsProvider`, i samo dok su predlozi otvoreni.
+
 ### REQ-40 — Disciplinske mere
 **Kao** administrator, **želim** da članu izreknem opomenu ili preskakanje kola sa obrazloženjem, **kako bi** se dogovor o odigranom tiketu poštovao.
 **Izvor:** FR-27, BR-37, P-24
@@ -499,6 +514,34 @@ Kriterijumi prihvatanja:
 5. Sistem NEĆE kolo preskočeno zbog suspenzije računati kao hlađenje, niti njime menjati nizove (BR-37).
 6. KADA admin poništi opomenu koja je dovela do neprimenjenog preskakanja kola, ONDA sistem ĆE poništiti i to preskakanje i vratiti ostale opomene u aktivne; primenjeno preskakanje kola se NE MOŽE poništiti.
 7. Sistem ĆE mere prikazivati svima (i gostima), a uz ime člana prikazivati 🟨 za aktivnu opomenu i 🟥 za preskakanje kola.
+
+### REQ-41 — Rekordi, bedževi i „za dlaku”
+**Kao** član, **želim** da vidim rekorde ekipe i svoje bedževe, **kako bi** statistika bila zabavnija.
+**Izvor:** FR-28, BR-38, P-25
+
+1. Sistem ĆE na ekranu Statistika prikazati rekorde iz BR-38 za izabrani period, svaki sa članom i linkom na kolo.
+2. Sistem ĆE na profilu člana prikazati osvojene bedževe (naziv, broj osvajanja, prvo kolo) i broj promašaja „za dlaku” sa izgubljenim potencijalnim dobitkom.
+3. AKO tip nema poznate konačne poene, ONDA sistem NEĆE uključiti taj tip u „za dlaku” ni u „najubedljiviji pogodak”.
+4. KADA se ishod kola ispravi ili statistika rekalkuliše, ONDA sistem ĆE prikazati ažurirane rekorde i bedževe.
+
+### REQ-42 — Forma igrača pri izboru tipa
+**Kao** član ili administrator, **želim** da pri izboru igrača vidim njegovu formu, **kako bih** lakše izabrao tip.
+**Izvor:** FR-29, BR-40, NFR-26, P-25
+
+1. KADA se u pretrazi ili u kartici tipa prikaže igrač, ONDA sistem ĆE prikazati poene u poslednjih 5 završenih utakmica, hronološki (najstarija levo, najnovija desno), i prosek bez DNP utakmica.
+2. Sistem ĆE prikazati koliko je puta ekipa birala igrača i koliko puta je tip pogođen.
+3. KADA je granica uneta, ONDA sistem ĆE prikazati u koliko od tih utakmica je igrač bio iznad granice.
+4. Sistem ĆE posle kraja utakmice sačuvati boxscore svih igrača, a stare utakmice sezone dopunjavati postepeno, bez ugrožavanja live praćenja.
+5. AKO podataka o formi nema, ONDA sistem ĆE prikazati „Nema podataka o formi”.
+
+### REQ-43 — Live šanse tiketa i proslava
+**Kao** član, **želim** da tokom kola vidim procenu šansi i da aplikacija proslavi dobitan tiket.
+**Izvor:** FR-30, BR-39, P-25
+
+1. Dok je kolo zaključeno ili u toku, sistem ĆE prikazivati procenu šanse svakog tipa i tiketa, uz napomenu da je procena gruba.
+2. Sistem NEĆE koristiti procenu šansi ni za jedan obračun.
+3. KADA tiket postane dobitan, ONDA sistem ĆE jednom po kolu i uređaju prikazati konfete i pokrenuti kratku vibraciju (ako je uređaj podržava).
+4. AKO korisnik ima uključeno smanjenje pokreta, ONDA sistem NEĆE prikazivati animacije.
 
 ### REQ-38 — Isporuka kao jedan Docker image na besplatnom hostingu
 **Kao** administrator, **želim** da se cela aplikacija pokreće iz jednog Docker image-a, **kako bi** postavljanje i održavanje bilo jednostavno i besplatno.
@@ -533,9 +576,16 @@ Pitanja koja specifikacija nije rešavala ili su bila u suprotnosti sa novim teh
 | Specifikacija | Zahtev |
 |---------------|--------|
 | FR-01…FR-22, FR-24, FR-25 | REQ-01…REQ-33 (vidi kolonu "Izvor" u Pregledu) |
+| FR-26 | REQ-39 |
 | FR-27 | REQ-40 |
+| FR-28 | REQ-41 |
+| FR-29 | REQ-42 |
+| FR-30 | REQ-43 |
 | FR-23 (povučeno) | REQ-32.4 (izričito bez obaveštenja) |
-| BR-01…BR-35 | REQ-03, REQ-06…REQ-23, REQ-31, REQ-02 |
+| BR-01…BR-36 | REQ-03, REQ-06…REQ-23, REQ-31, REQ-02 |
 | BR-37 | REQ-40 |
-| NFR-01…NFR-24 | REQ-13, REQ-34…REQ-38 |
+| BR-38 | REQ-41 |
+| BR-39 | REQ-43 |
+| BR-40 | REQ-42 |
+| NFR-01…NFR-25 | REQ-13, REQ-34…REQ-38 |
 | Poglavlje 7 (integracije) | REQ-04, REQ-05, REQ-13, REQ-14, REQ-33 |

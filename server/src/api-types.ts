@@ -139,7 +139,33 @@ export interface PlayerSearchItem extends PlayerDto {
   selectable: boolean;
   /** Reason shown when not selectable, e.g. "Ne igra 16.10." */
   note: string | null;
+  /** FR-29: compact player form for the autocomplete. */
+  form: PlayerFormDto;
 }
+
+/** FR-29 / BR-40: last finished games of a player (chronological: oldest first) and the team's history with him. */
+export interface PlayerFormDto {
+  playerId: number;
+  games: Array<{
+    gameId: number;
+    gameDay: string;
+    /** Opponent club short name, null when it cannot be told (player changed clubs). */
+    opponent: string | null;
+    home: boolean | null;
+    points: number;
+    /** Did not play (0 seconds). */
+    dnp: boolean;
+  }>;
+  /** Average points over games played (DNP excluded); null without data. */
+  average: number | null;
+  /** Average minutes over games played (DNP excluded); null without data. */
+  averageMinutes: number | null;
+  /** Personal and team picks of this player that were resolved as hit or miss. */
+  ourPicks: number;
+  ourHits: number;
+}
+/** GET /players/:id/form */
+export interface PlayerFormResponse { form: PlayerFormDto }
 /** GET /players/search?q=&day=&roundId= (roundId marks players already used in that round). */
 export interface PlayerSearchResponse { items: PlayerSearchItem[] }
 export interface CreatePlayerRequest { firstName: string; lastName: string; clubCode: string | null; position?: string | null }
@@ -196,6 +222,8 @@ export interface PickDto {
   voidReason: VoidReason | null;
   resolution: Resolution | null;
   live: PickLiveDto | null;
+  /** BR-39: rough chance in percent (0–100) that the pick passes, while the round is locked/in progress. */
+  chance: number | null;
 }
 
 export interface ProposalDto {
@@ -258,10 +286,14 @@ export interface RoundDetailDto extends Omit<RoundSummaryDto, 'picks'> {
   /** Ticket indicator while in progress (REQ-13.6). */
   ticketAlive: boolean | null;
   passingCount: number | null;
+  /** BR-39: rough chance in percent that the ticket wins (product of the pick chances); information only. */
+  ticketChance: number | null;
   /** Last successful live refresh among the round's games. */
   liveUpdatedAt: string | null;
   /** Whether the whole round can still be unlocked (no game started). */
   canUnlock: boolean;
+  /** Members can still propose and vote: the round is open and no pick's game has started (BR-28). */
+  proposalsOpen: boolean;
   /** Earliest game start among the round's picks. */
   firstGameAt: string | null;
   /** What is still missing before locking (REQ-11.1), Serbian labels. */
@@ -366,7 +398,33 @@ export interface OverviewStatsDto {
   balanceSeries: Array<{ roundId: number; number: number; gameDay: string; balance: number }>;
   team: TeamStatsDto;
   hasProvisional: boolean;
+  /** BR-38: "Kuća slavnih"; only records that exist for the period, in a fixed order. */
+  records: TeamRecordDto[];
 }
+
+export type RecordCode =
+  | 'biggest_win'
+  | 'top_ticket_odds'
+  | 'top_pick_odds'
+  | 'biggest_margin'
+  | 'longest_hit_streak'
+  | 'longest_miss_streak'
+  | 'costliest_blame'
+  | 'most_painful_near_miss';
+
+export interface TeamRecordDto {
+  code: RecordCode;
+  /** Money, odds, points margin or streak length, depending on `code`. */
+  value: number;
+  memberId: number | 'team' | null;
+  roundId: number;
+  roundNumber: number;
+  playerName: string | null;
+}
+
+export type BadgeCode = 'sniper' | 'brave' | 'near_miss' | 'ice' | 'blame_king' | 'perfect_month';
+
+export interface BadgeDto { code: BadgeCode; count: number; firstRoundId: number; firstRoundNumber: number }
 
 export interface MemberStatsDto {
   memberId: number;
@@ -385,10 +443,14 @@ export interface MemberStatsDto {
   fires: number;
   onCooldown: boolean;
   hasFire: boolean;
+  /** Chronological: oldest first, newest last (BR-40). */
   last10: Array<PickResult>;
   overPercent: number | null;
   underPercent: number | null;
   favoritePlayers: Array<{ playerId: number | null; name: string; picks: number; hits: number }>;
+  badges: BadgeDto[];
+  /** BR-38: misses by exactly 0.5 points. */
+  nearMisses: { count: number; lostPotentialWin: number };
 }
 export interface OverviewResponse { stats: OverviewStatsDto }
 export interface MembersStatsResponse { members: MemberStatsDto[] }

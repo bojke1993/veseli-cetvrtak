@@ -48,6 +48,8 @@ Sadržaj zavisi od stanja aktuelnog kola:
   - **trenutni poeni** velikim brojem pored granice i smera (npr. "**12** / više 14,5"), "fali još 3",
   - minuti u igri, lične greške,
   - status iz tabele u FR-13 (boja + ikonica + tekst).
+- Indikator tiketa prikazuje i „Šanse ~N %” (gruba procena, FR-30); kartica tipa prikazuje šansu tipa.
+- Kada tiket postane dobitan: konfete i kratka vibracija, jednom po kolu (FR-30).
 - Vreme poslednjeg osvežavanja; upozorenje "Podaci kasne" posle 2 min.
 - Ponašanje: automatsko osvežavanje bez reload-a; kratka animacija pri promeni poena; ekran ne sme da "skače" pri osvežavanju.
 
@@ -55,12 +57,14 @@ Sadržaj zavisi od stanja aktuelnog kola:
 - Zaglavlje: Kolo #N (automatski), datum otvaranja (automatski), **dan kola** (izbor iz liste dana sa utakmicama, uz spisak utakmica tog dana), kolo Evrolige (automatski, informativno).
 - **4 kartice tipova** (redosled članova fiksan):
   - lična kartica: ime člana + ❄/🔥; polje za pretragu igrača (autocomplete, FR-06) → nakon izbora prikazuje igrača, klub, utakmicu (sa mogućnošću promene), polje granica, prekidač Više/Manje, kvota (obavezna);
-  - ako postoji predlog člana (FR-09): oznaka "Predlog — čeka potvrdu" sa dugmadima Prihvati / Izmeni;
+  - u pretrazi i posle izbora igrača: forma (FR-29) — 5 stubića poslednjih utakmica, najstarija levo, najnovija desno; prosek; „Birali smo ga N×, K pogođeno”; „Iznad granice u K od 5”;
+  - posle izbora igrača: blok „Ponuda kladionica” (FR-26) — logo i ime kladionice, granica, kvote Više/Manje, vreme osvežavanja; klik popunjava polja;
+  - ako postoji predlog člana (FR-09): oznaka "Predlog — čeka potvrdu" (ili "Izmena — čeka potvrdu" kada član menja već prihvaćen tip) sa dugmadima Prihvati / Izmeni;
   - kartica tipa ekipe (FR-08): lista predloga sa glasovima 👍, dugme "Dodaj predlog" (članovi koji nisu na hlađenju), admin bira "Izaberi ovaj predlog".
 - **Tiket sekcija:** uplata, uplatilac (padajuća lista 4 člana, predlog po rotaciji), automatska ukupna kvota sa prikazom računice (ili brojem unetih kvota, npr. 3/4) i automatski potencijalni dobitak.
 - Dugme **"Zaključi glasanje"** (samo admin) — onemogućeno uz listu onoga što nedostaje.
-- Upozorenje sa odbrojavanjem kad je do početka prve utakmice < 60 min.
-- Član (ne-admin) vidi sve kartice samo za čitanje, osim svog predloga i predloga tipa ekipe.
+- Odbrojavanje do početka prve utakmice među tipovima: „Predlozi se zatvaraju za …” (svima); upozorenje kad je < 60 min. Posle početka: „Predlozi i glasanje su zatvoreni” (P-23).
+- Član (ne-admin) vidi sve kartice samo za čitanje, osim svog predloga i predloga tipa ekipe. Na svojoj kartici ima „Predloži svoj tip”, „Izmeni svoj predlog” ili, kada je tip već prihvaćen, „Promeni tip” (P-23); dugmad nestaju kada se predlozi zatvore.
 - Automatsko čuvanje svake izmene (nema dugmeta "Sačuvaj"); indikator "Sačuvano".
 - Admin: dugme "Obriši kolo" (FR-24) u meniju.
 
@@ -86,11 +90,12 @@ Sadržaj zavisi od stanja aktuelnog kola:
 - Grafikon raspodele ishoda (4/4…0/4 + "sa poništenim") sa brojem i procentom.
 - Grafikon kretanja bilansa kroz kola (linija).
 - Statistika "Ekipa".
+- Sekcija „Kuća slavnih” (FR-28): rekordi sa članom i linkom na kolo.
 - Filter perioda.
 
 ### EKR-09 — Statistika članova i profil člana
 - Tabela: član, pogođeni, promašeni, %, blejm, broj uplata, uplaćeno, trenutni niz, najduži niz pogodaka/promašaja, hlađenja, vatrice; sortiranje po kolonama; na telefonu horizontalni skrol sa fiksiranom prvom kolonom.
-- Klik na člana → profil: svi pokazatelji iz FR-18, niz poslednjih 10 tipova, % za Više/Manje, omiljeni igrači, lista njegovih tipova (link na kola).
+- Klik na člana → profil: svi pokazatelji iz FR-18, bedževi i „Za dlaku” (FR-28), niz poslednjih 10 tipova (najstariji levo, najnoviji desno), % za Više/Manje, omiljeni igrači, lista njegovih tipova (link na kola).
 
 ### EKR-10 — Blejm rang lista
 - Rang lista iz FR-19; prvo mesto istaknuto (šaljivo, npr. "Kralj blejma"); red "Ekipa" na dnu.

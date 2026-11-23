@@ -13,6 +13,7 @@ import type {
 import type { Deps } from '../deps.js';
 import type { DerivedState, RoundDerived } from '../domain/derived-types.js';
 import { MEMBER_IDS, isResolvedStatus } from '../domain/derived.js';
+import { computeBadges, computeRecords, nearMisses } from '../domain/records.js';
 import { round1, round2, toNum } from '../domain/money.js';
 import { seasonForDate, seasonName, todayInBelgrade } from '../domain/season.js';
 import { notFound } from '../http/errors.js';
@@ -28,6 +29,8 @@ interface StatPick {
   playerName: string | null;
   line: number | null;
   direction: Direction | null;
+  odds: number | null;
+  finalPoints: number | null;
   result: PickResult | null;
 }
 
@@ -76,6 +79,7 @@ async function loadRounds(deps: StatsDeps, q: StatsQuery): Promise<StatRound[]> 
     .select([
       'picks.round_id', 'picks.slot', 'picks.kind', 'picks.member_id', 'picks.cooldown_for_member_id',
       'picks.player_id', 'picks.import_player_name', 'picks.line', 'picks.direction', 'picks.result',
+      'picks.odds', 'picks.final_points',
       'players.full_name',
     ])
     .where('picks.round_id', 'in', rows.map((r) => r.id))
@@ -94,6 +98,8 @@ async function loadRounds(deps: StatsDeps, q: StatsQuery): Promise<StatRound[]> 
       playerName: p.full_name ?? p.import_player_name,
       line: toNum(p.line),
       direction: p.direction,
+      odds: toNum(p.odds),
+      finalPoints: p.final_points,
       result: p.result,
     });
     byRound.set(p.round_id, list);
@@ -185,7 +191,7 @@ export async function listSeasons(deps: StatsDeps): Promise<SeasonsResponse> {
 }
 
 export async function getOverview(deps: StatsDeps, q: StatsQuery): Promise<OverviewStatsDto> {
-  const [rounds, derived] = await Promise.all([loadRounds(deps, q), deps.derived.get()]);
+  const [rounds, derived, ids] = await Promise.all([loadRounds(deps, q), deps.derived.get(), memberIdsInOrder(deps)]);
 
   let totalStaked = 0;
   let totalWon = 0;
@@ -236,6 +242,7 @@ export async function getOverview(deps: StatsDeps, q: StatsQuery): Promise<Overv
     balanceSeries,
     team: teamStats(rounds, derived),
     hasProvisional: rounds.some((r) => r.provisional),
+    records: computeRecords(rounds, derived, ids),
   };
 }
 
@@ -348,10 +355,12 @@ function buildMemberStats(
     fires,
     onCooldown: status.onCooldown,
     hasFire: status.hasFire,
-    last10: results.slice(-10).reverse(),
+    last10: results.slice(-10),
     overPercent: pct(dir.over.hits, dir.over.hits + dir.over.misses),
     underPercent: pct(dir.under.hits, dir.under.hits + dir.under.misses),
     favoritePlayers,
+    badges: computeBadges(memberId, rounds, derived),
+    nearMisses: nearMisses(memberId, rounds, derived),
   };
 }
 

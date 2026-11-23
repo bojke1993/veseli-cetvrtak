@@ -7,6 +7,7 @@ import { SitOutIcon } from '../LiveView';
 import { MemberName } from '../MemberName';
 import { PlayerAutocomplete } from '../PlayerAutocomplete';
 import { gameStarted, PlayerInfo } from '../PlayerInfo';
+import { PlayerForm } from '../PlayerForm';
 import { MutationError } from '../ui';
 import { DecimalInput, DirectionToggle, LineInput } from './PickFields';
 import { useSave } from './SaveContext';
@@ -33,16 +34,34 @@ function draftFromProposal(p: ProposalDto, odds: string): Draft {
   return { player: p.player, game: p.game, lineText: toInputText(p.line), direction: p.direction, oddsText: odds };
 }
 
-function SelectedPlayer({ player, game, onClear, disabled }: { player: PlayerDto; game: GameDto | null; onClear: () => void; disabled?: boolean }) {
+function SelectedPlayer({
+  player,
+  game,
+  onClear,
+  disabled,
+  lineText,
+}: {
+  player: PlayerDto;
+  game: GameDto | null;
+  onClear: () => void;
+  disabled?: boolean;
+  /** Line as typed; a valid one adds "over the line in K of N" to the form (FR-29). */
+  lineText?: string;
+}) {
+  const parsed = lineText ? parseLine(lineText) : null;
+  const line = parsed && 'value' in parsed ? parsed.value : null;
   return (
-    <div className="selected-player">
-      <PlayerInfo player={player} game={game} />
-      {!disabled && (
-        <button type="button" className="btn btn-small" onClick={onClear}>
-          Promeni igrača
-        </button>
-      )}
-    </div>
+    <>
+      <div className="selected-player">
+        <PlayerInfo player={player} game={game} />
+        {!disabled && (
+          <button type="button" className="btn btn-small" onClick={onClear}>
+            Promeni igrača
+          </button>
+        )}
+      </div>
+      <PlayerForm playerId={player.id} line={line} />
+    </>
   );
 }
 
@@ -158,7 +177,7 @@ function PickForm({ round, pick, prefill, onPrefillUsed }: { round: RoundDetailD
   return (
     <div className="pick-form">
       {draft.player ? (
-        <SelectedPlayer player={draft.player} game={draft.game} onClear={clear} />
+        <SelectedPlayer player={draft.player} game={draft.game} onClear={clear} lineText={draft.lineText} />
       ) : (
         <PlayerAutocomplete day={round.gameDay} roundId={round.id} onSelect={(it) => commit({ ...draft, player: it, game: it.game })} />
       )}
@@ -180,6 +199,14 @@ function PickForm({ round, pick, prefill, onPrefillUsed }: { round: RoundDetailD
   );
 }
 
+/** Starting values of the proposal form: a pending proposal or the pick in force. */
+type ProposalInitial = Pick<ProposalDto, 'game' | 'odds'> & {
+  player: PlayerDto | null;
+  line: number | null;
+  direction: Direction | null;
+  comment?: string | null;
+};
+
 /** Proposal form used by members ("Predloži svoj tip") and for team proposals ("Dodaj predlog"). */
 function ProposalForm({
   round,
@@ -192,8 +219,8 @@ function ProposalForm({
   round: RoundDetailDto;
   kind: PickKind;
   cooldownForMemberId?: number;
-  /** Pending proposal being changed: its values are the starting point. */
-  initial?: ProposalDto;
+  /** Pending proposal or the pick in force being changed: its values are the starting point. */
+  initial?: ProposalInitial;
   onDone: () => void;
   submitLabel: string;
 }) {
@@ -236,6 +263,7 @@ function ProposalForm({
         <SelectedPlayer
           player={player}
           game={game}
+          lineText={lineText}
           onClear={() => {
             setPlayer(null);
             setGame(null);
@@ -317,7 +345,10 @@ export function PersonalPickCard({ round, pick }: { round: RoundDetailDto; pick:
   const [prefill, setPrefill] = useState<Draft | null>(null);
   const pending = round.proposals.filter((p) => p.kind === 'personal' && p.proposedBy === pick.memberId && p.status === 'pending');
   const isOwn = !!me && me.memberId === pick.memberId;
-  const canPropose = isOwn && !isAdmin && !round.cooldownMemberIds.includes(me.memberId);
+  // P-23: until the first game among the picks starts, a member may change even an accepted pick by a new proposal.
+  const canPropose = isOwn && !isAdmin && !round.cooldownMemberIds.includes(me.memberId) && round.proposalsOpen;
+  const hasPick = !!pick.player;
+  const isChange = hasPick && pending.length > 0;
   const clearPrefill = () => setPrefill(null);
 
   return (
@@ -332,7 +363,7 @@ export function PersonalPickCard({ round, pick }: { round: RoundDetailDto; pick:
       {pending.map((p) => (
         <div key={p.id} className="proposal pending">
           <span className="badge tone-neutral">
-            <span aria-hidden="true">⏳</span> Predlog — čeka potvrdu
+            <span aria-hidden="true">⏳</span> {isChange ? 'Izmena — čeka potvrdu' : 'Predlog — čeka potvrdu'}
           </span>
           <ProposalSummary p={p} />
           {isAdmin && (
@@ -352,15 +383,24 @@ export function PersonalPickCard({ round, pick }: { round: RoundDetailDto; pick:
       {isAdmin ? (
         <PickForm round={round} pick={pick} prefill={prefill} onPrefillUsed={clearPrefill} />
       ) : (
-        <ReadOnlyPick pick={pick} />
+        <>
+          {isChange && <h4 className="subhead">Važeći tip (dok admin ne potvrdi izmenu)</h4>}
+          <ReadOnlyPick pick={pick} />
+        </>
       )}
 
       {canPropose &&
         (proposing ? (
-          <ProposalForm round={round} kind="personal" initial={pending[0]} onDone={() => setProposing(false)} submitLabel="Pošalji predlog" />
+          <ProposalForm
+            round={round}
+            kind="personal"
+            initial={pending[0] ?? (hasPick ? pick : undefined)}
+            onDone={() => setProposing(false)}
+            submitLabel={hasPick ? 'Pošalji izmenu' : 'Pošalji predlog'}
+          />
         ) : (
           <button type="button" className="btn" onClick={() => setProposing(true)}>
-            {pending.length ? 'Izmeni svoj predlog' : 'Predloži svoj tip'}
+            {pending.length ? 'Izmeni svoj predlog' : hasPick ? 'Promeni tip' : 'Predloži svoj tip'}
           </button>
         ))}
     </article>
@@ -378,8 +418,9 @@ export function TeamPickCard({ round, pick }: { round: RoundDetailDto; pick: Pic
     (p) => p.kind === 'team' && p.cooldownForMemberId === pick.cooldownForMemberId && (p.status === 'pending' || p.status === 'accepted'),
   );
   const sorted = [...proposals].sort((a, b) => b.votes.length - a.votes.length || a.id - b.id);
+  // Team proposals and votes also close at the first game among the picks (BR-28, P-23).
   const sitsOut = !!me && (round.cooldownMemberIds.includes(me.memberId) || round.suspendedMemberIds.includes(me.memberId));
-  const canParticipate = !!me && !sitsOut;
+  const canParticipate = !!me && !sitsOut && round.proposalsOpen;
 
   return (
     <article className="card pick-card team-card" aria-label={`Tip ${pick.slot}`}>

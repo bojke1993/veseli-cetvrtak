@@ -346,6 +346,54 @@ describe('API: proposal given before tip-off, accepted after', () => {
   });
 });
 
+describe('API: changing an accepted pick by a new proposal; proposals close at the first game (BR-28, P-23)', () => {
+  let ctx: ApiCtx;
+  let fx: Awaited<ReturnType<typeof seedFixtures>>;
+  beforeAll(async () => {
+    ctx = await createApiCtx();
+    fx = await seedFixtures(ctx.deps);
+  });
+  afterAll(async () => {
+    await ctx.close();
+  });
+
+  it('a member changes an accepted pick by a new proposal; members can no longer propose or vote after tip-off', async () => {
+    const roundId = (await api(ctx, ADMIN, 'POST', '/rounds', { gameDay: '2026-10-15' })).body.round.id;
+    const propose = (as: string, playerId: number, line: number) =>
+      api(ctx, as, 'POST', `/rounds/${roundId}/proposals`, { kind: 'personal', playerId, line, direction: 'over', odds: 1.85 });
+
+    const first = await propose('lakicevic', fx.players.sloukas, 10.5);
+    expect(first.body.round.proposalsOpen).toBe(true);
+    const firstId = first.body.round.proposals[0].id;
+    await api(ctx, ADMIN, 'POST', `/proposals/${firstId}/accept`);
+
+    // Change after acceptance: a new proposal; the accepted pick stays in force until the admin accepts it.
+    const change = await propose('lakicevic', fx.players.jones, 12.5);
+    expect(change.status).toBe(200);
+    expect(change.body.round.picks[2].player.id).toBe(fx.players.sloukas);
+    const changeId = change.body.round.proposals.find((p: any) => p.id !== firstId).id;
+    const acc = await api(ctx, ADMIN, 'POST', `/proposals/${changeId}/accept`);
+    expect(acc.body.round.picks[2]).toMatchObject({ memberId: 3, line: 12.5 });
+    expect(acc.body.round.picks[2].player.id).toBe(fx.players.jones);
+    const statuses = Object.fromEntries(acc.body.round.proposals.map((p: any) => [p.id, p.status]));
+    expect(statuses).toEqual({ [firstId]: 'superseded', [changeId]: 'accepted' });
+
+    const pending = await propose('simara', fx.players.nedovic, 8.5);
+    const pendingId = pending.body.round.proposals.find((p: any) => p.status === 'pending').id;
+
+    ctx.deps.setNow(new Date('2026-10-15T18:05:00Z')); // Jones' game (first among the picks) started at 18:00Z
+    const detail = await api(ctx, 'simara', 'GET', `/rounds/${roundId}`);
+    expect(detail.body.round).toMatchObject({ status: 'open', proposalsOpen: false });
+    expect((await propose('simara', fx.players.nedovic, 9.5)).status).toBe(409);
+    expect((await api(ctx, 'lakicevic', 'POST', `/proposals/${pendingId}/vote`)).status).toBe(409);
+
+    // The round is incomplete, so it stays open for the admin, who can still accept a proposal given in time.
+    const late = await api(ctx, ADMIN, 'POST', `/proposals/${pendingId}/accept`);
+    expect(late.status).toBe(200);
+    expect(late.body.round.picks[3].player.id).toBe(fx.players.nedovic);
+  });
+});
+
 describe('API: mandatory pick odds and derived total odds (P-22)', () => {
   let ctx: ApiCtx;
   let fx: Awaited<ReturnType<typeof seedFixtures>>;

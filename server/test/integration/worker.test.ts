@@ -2,7 +2,9 @@ import { afterEach, describe, expect, it } from 'vitest';
 import type { BusEvent } from '../../src/live/bus.js';
 import type { ProviderBoxscoreLine, ProviderClub, ProviderGame, ProviderPlayer } from '../../src/provider/types.js';
 import { syncPlayers, syncSchedule } from '../../src/services/sync.js';
-import { runAutoLock, runLivePoll, runNotPlayed, runRecheck, runResolvePending, runSchedule } from '../../src/worker/jobs.js';
+import { getPlayerForm } from '../../src/services/form.js';
+import { searchPlayers } from '../../src/services/players.js';
+import { runAutoLock, runBoxscoreBackfill, runLivePoll, runNotPlayed, runRecheck, runResolvePending, runSchedule } from '../../src/worker/jobs.js';
 import { startScheduler } from '../../src/worker/scheduler.js';
 import { createTestDeps, type TestDeps } from '../helpers/deps.js';
 
@@ -645,5 +647,87 @@ describe('code review regressions', () => {
     const r = await runLivePoll(d);
     expect(r.polled).toEqual([f.game1]);
     expect(d.provider.calls).toEqual(['getHeader:E2026:41', 'getBoxscore:E2026:41']);
+  });
+});
+
+describe('boxscoreBackfill and player form (FR-29)', () => {
+  async function finalGame(d: TestDeps, code: number, home: string, away: string, at: string): Promise<number> {
+    const r = await d.db
+      .insertInto('games')
+      .values({
+        season_code: SEASON,
+        game_code: code,
+        euroleague_round: 4,
+        home_club_code: home,
+        away_club_code: away,
+        scheduled_at: new Date(at),
+        game_day: at.slice(0, 10),
+        status: 'final',
+        home_score: 80,
+        away_score: 70,
+        live_quarter: null,
+        live_clock: null,
+        started_at: null,
+        final_at: null,
+        recheck_done_at: null,
+        last_polled_at: null,
+        is_manual: 0,
+      })
+      .executeTakeFirstOrThrow();
+    return Number(r.insertId);
+  }
+
+  it('stores all players of finished games once, newest first, and builds a chronological form', async () => {
+    const f = await setup();
+    const d = f.deps;
+    const older = await finalGame(d, 40, 'MAD', 'PAR', '2026-10-10T18:00:00Z');
+    await d.db.updateTable('games').set({ status: 'final' }).where('id', '=', f.game1).execute();
+    d.provider.boxscores.set(40, { live: false, lines: [line('000001', 7, 1200), line('000003', 4, 300), line('000004', 20, 1800, 'MAD')] });
+    d.provider.boxscores.set(41, { live: false, lines: [line('000001', 13, 1500), line('000002', 9, 1400, 'MIL'), line('000003', 0, 0), line('999999', 5, 100)] });
+
+    expect(await runBoxscoreBackfill(d)).toEqual([f.game1, older]);
+    expect(d.provider.calls).toEqual(['getBoxscore:E2026:41', 'getBoxscore:E2026:40']);
+    expect(await runBoxscoreBackfill(d)).toEqual([]); // already stored
+    expect((await game(d, f.game1)).boxscore_saved_at).not.toBeNull();
+    const rows = await d.db.selectFrom('player_game_stats').selectAll().where('game_id', '=', f.game1).execute();
+    expect(rows).toHaveLength(3); // unknown player code skipped
+    expect(rows.every((r) => r.is_final === 1)).toBe(true);
+
+    await d.db.updateTable('picks').set({ result: 'hit' }).where('player_id', '=', f.players[0]!).execute();
+    const p1 = await getPlayerForm(d, f.players[0]!);
+    expect(p1).toEqual({
+      playerId: f.players[0],
+      games: [
+        { gameId: older, gameDay: '2026-10-10', opponent: 'Real Madrid', home: false, points: 7, dnp: false },
+        { gameId: f.game1, gameDay: '2026-10-15', opponent: 'Milan', home: true, points: 13, dnp: false },
+      ],
+      average: 10,
+      averageMinutes: 22.5,
+      ourPicks: 1,
+      ourHits: 1,
+    });
+    const p3 = await getPlayerForm(d, f.players[2]!);
+    expect(p3.games.map((g) => g.dnp)).toEqual([false, true]);
+    expect(p3.average).toBe(4);
+
+    const items = await searchPlayers(d, { q: 'player one' });
+    expect(items[0]!.form.games.map((g) => g.points)).toEqual([7, 13]);
+  });
+
+  it('yields to live polling and stops at the first error', async () => {
+    const f = await setup();
+    const d = f.deps;
+    await finalGame(d, 40, 'MAD', 'PAR', '2026-10-10T18:00:00Z');
+    d.setNow('2026-10-15T18:20:00Z');
+    d.provider.headers.set(41, { live: true, homeScore: 30, awayScore: 28, quarter: '2', clock: '05:12' });
+    await runLivePoll(d);
+    d.provider.calls.length = 0;
+    expect(await runBoxscoreBackfill(d)).toEqual([]);
+    expect(d.provider.calls).toEqual([]);
+
+    d.setNow('2026-10-16T10:00:00Z');
+    d.provider.failWith = new Error('429');
+    expect(await runBoxscoreBackfill(d)).toEqual([]);
+    expect(d.provider.calls).toEqual(['getBoxscore:E2026:40']);
   });
 });

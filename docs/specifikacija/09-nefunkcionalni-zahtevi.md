@@ -24,6 +24,7 @@
 - **NFR-15 — Zaštita od uobičajenih napada.** Validacija svih ulaza na serveru, zaštita od CSRF, XSS (escapovanje), SQL injection (parametrizovani upiti); ograničenje broja pokušaja prijave (FR-01 KP2).
 - **NFR-16 — Integritet podataka.** Zaključano kolo se ne može izmeniti mimo FR-12 ni direktnim API pozivom; audit log je append-only (FR-22).
 - **NFR-17 — Privatnost.** Javni pregled je uključen (BR-35), ali aplikacija nije indeksirana (robots noindex) i dostupna je samo onima koji imaju link. Gostima se ne prikazuju e-mail adrese ni audit log. Ne čuvaju se podaci o plaćanju.
+- **NFR-25 — Ponuda kladionica (BR-36).** Preuzimanje ponude kladionica ne sme ugroziti ostatak aplikacije: najviše 1 zahtev na 10 s po kladionici, pauza posle greške, keširanje odgovora; nedostupnost kladionice prikazuje se kao „ponuda nedostupna”, a ručni unos kvote uvek radi.
 - **NFR-24 — Uvoz fajla.** Otpremljeni XLS/XLSX (do 5 MB) obrađuje se na serveru bez izvršavanja makroa ili formula iz fajla; čitaju se samo vrednosti ćelija.
 
 ## 9.5 Pouzdanost i održavanje
@@ -33,3 +34,4 @@
 - **NFR-21 — Testabilnost.** Poslovna pravila (BR-12…BR-30) implementirana kao čiste funkcije pokrivene jediničnim testovima, uključujući testne slučajeve iz FR-16 KP4; integracija testirana nad snimljenim JSON odgovorima API-ja.
 - **NFR-22 — Logovanje i praćenje.** Strukturirani logovi worker-a; upozorenje adminu ako live poller ne uspe 5 puta zaredom.
 - **NFR-23 — Troškovi (P-21).** Budžet je 0 EUR: rešenje mora da radi na besplatnom hostingu (besplatni planovi za web aplikaciju, bazu i pozadinske poslove) i besplatnom Euroleague API-ju. Arhitektura mora uzeti u obzir ograničenja besplatnih planova (npr. "uspavljivanje" servera — live poller mora biti pokrenut zakazanim poslom pre početka utakmica).
+- **NFR-26 — Prikupljanje forme igrača (FR-29).** Preuzimanje boxscore-a starih utakmica koristi samo budžet zahteva koji live praćenje ne troši (najviše 3 zahteva po ciklusu workera) i staje pri grešci; live praćenje uvek ima prednost.

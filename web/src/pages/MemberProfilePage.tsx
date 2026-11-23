@@ -8,6 +8,8 @@ import { StatsFilter, useStatsQuery } from '../components/StatsFilter';
 import { Card, QueryView } from '../components/ui';
 import { SanctionList } from './DisciplinePage';
 import { formatDate, formatMoney, formatPercent, lineLabel, streakText } from '../lib/format';
+import { BADGE_META, nearMissMessage } from '../lib/records';
+import type { MemberStatsDto } from '@api';
 
 function MemberHero({ id }: { id: number }) {
   const member = useMemberMap().get(id);
@@ -34,6 +36,43 @@ function MemberHero({ id }: { id: number }) {
   );
 }
 
+/** FR-28 — badges earned in the selected period */
+export function BadgeList({ badges }: { badges: MemberStatsDto['badges'] }) {
+  if (badges.length === 0) return <p className="muted small">Još nema bedževa.</p>;
+  return (
+    <ul className="badges">
+      {badges.map((b) => {
+        const meta = BADGE_META[b.code];
+        return (
+          <li key={b.code} className="badge-chip" title={`${meta.description} — prvi put u kolu #${b.firstRoundNumber}`}>
+            <span aria-hidden="true">{meta.emoji}</span> {meta.label}
+            {b.count > 1 && <span className="badge-count">×{b.count}</span>}
+            <span className="sr-only">
+              {' '}
+              — {meta.description}, prvi put u kolu #{b.firstRoundNumber}
+            </span>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
+function NearMissTile({ nearMisses }: { nearMisses: MemberStatsDto['nearMisses'] }) {
+  const roll = useMemo(() => Math.random(), []);
+  const message = nearMissMessage(nearMisses.count, roll);
+  return (
+    <div className="stat-tile">
+      <span className="kv-label">Za dlaku (promašaj za 0,5)</span>
+      <span className="stat-value">
+        {nearMisses.count}
+        {nearMisses.lostPotentialWin > 0 && <> · {formatMoney(nearMisses.lostPotentialWin)}</>}
+      </span>
+      {message && <span className="small muted">{message}</span>}
+    </div>
+  );
+}
+
 /** EKR-09 — member profile */
 export default function MemberProfilePage() {
   const { id } = useParams();
@@ -50,6 +89,9 @@ export default function MemberProfilePage() {
       <QueryView q={stats}>
         {({ stats: s, picks }) => (
           <>
+            <Card title="Bedževi">
+              <BadgeList badges={s.badges} />
+            </Card>
             <div className="stat-tiles">
               <div className="stat-tile">
                 <span className="kv-label">Pogođeni / promašeni / poništeni</span>
@@ -93,16 +135,23 @@ export default function MemberProfilePage() {
                   {formatPercent(s.overPercent)} / {formatPercent(s.underPercent)}
                 </span>
               </div>
+              <NearMissTile nearMisses={s.nearMisses} />
             </div>
             <Card title="Poslednjih 10 tipova">
               {s.last10.length ? (
-                <ol className="last10" aria-label="Poslednjih 10 tipova, od najstarijeg">
-                  {s.last10.map((r, i) => (
-                    <li key={i}>
-                      <ResultIcon result={r} />
-                    </li>
-                  ))}
-                </ol>
+                <>
+                  <ol className="last10" aria-label="Poslednjih 10 tipova, od najstarijeg do najnovijeg">
+                    {s.last10.map((r, i) => (
+                      <li key={i}>
+                        <ResultIcon result={r} />
+                      </li>
+                    ))}
+                  </ol>
+                  <div className="timeline-hint" aria-hidden="true">
+                    <span>← starije</span>
+                    <span>novije →</span>
+                  </div>
+                </>
               ) : (
                 <p className="muted">Nema tipova.</p>
               )}

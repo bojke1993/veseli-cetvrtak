@@ -6,8 +6,9 @@ import { PlayerAutocomplete } from './PlayerAutocomplete';
 import { calledPaths, mockFetch, renderWithProviders } from '../test/utils';
 import { GAME, PLAYER } from '../test/fixtures';
 
+const NO_FORM = { playerId: 0, games: [], average: null, averageMinutes: null, ourPicks: 0, ourHits: 0 };
 const ITEMS: PlayerSearchItem[] = [
-  { ...PLAYER, game: GAME, selectable: true, note: null },
+  { ...PLAYER, game: GAME, selectable: true, note: null, form: NO_FORM },
   {
     ...PLAYER,
     id: 101,
@@ -16,6 +17,7 @@ const ITEMS: PlayerSearchItem[] = [
     game: null,
     selectable: false,
     note: 'Ne igra 15.10.',
+    form: NO_FORM,
   },
 ];
 

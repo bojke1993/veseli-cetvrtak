@@ -23,6 +23,7 @@ const overview = {
     balanceSeries: [],
     team: { picks: 0, hits: 0, misses: 0, voids: 0, hitPercent: null, blames: 0 },
     hasProvisional: false,
+    records: [],
   },
 };
 

@@ -3,6 +3,7 @@ import {
   logJob,
   runAutoLock,
   runBackup,
+  runBoxscoreBackfill,
   runLivePoll,
   runNotPlayed,
   runPlayers,
@@ -21,6 +22,7 @@ const JOBS: Array<[string, (deps: Deps) => Promise<unknown>]> = [
   ['livePoll', runLivePoll],
   ['resolvePending', runResolvePending],
   ['recheck', runRecheck],
+  ['boxscoreBackfill', runBoxscoreBackfill],
   ['backup', runBackup],
 ];
 

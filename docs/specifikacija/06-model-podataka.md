@@ -98,6 +98,7 @@ erDiagram
 | final_at | datetime? | kada je API označio kraj |
 | recheck_done_at | datetime? | ponovna provera posle 12 h (BR-15) |
 | last_polled_at | datetime? | |
+| boxscore_saved_at | datetime? | kada je sačuvan konačni boxscore svih igrača (FR-29) |
 Jedinstvenost: (`season_code`, `game_code`).
 
 ### PLAYER_GAME_STAT (Boxscore red)
@@ -111,7 +112,7 @@ Jedinstvenost: (`season_code`, `game_code`).
 | fouls | int? | |
 | is_final | bool | podaci posle kraja utakmice |
 | updated_at | datetime | |
-Jedinstvenost: (`game_id`, `player_id`). Čuvaju se samo igrači koji su izabrani u nekom tipu (radi uštede), osim ako se drugačije odluči.
+Jedinstvenost: (`game_id`, `player_id`); indeks po `player_id`. Tokom utakmice se osvežavaju samo igrači izabrani u nekom tipu; posle kraja utakmice čuva se boxscore **svih** igrača (P-25, forma igrača FR-29).
 
 ### ROUND (Kolo)
 | Atribut | Tip | Opis |
@@ -151,6 +152,7 @@ Jedinstvenost: (`game_id`, `player_id`). Čuvaju se samo igrači koji su izabran
 | line | decimal | granica, uvek x,5 (BR-09); izuzetak su uvezena kola |
 | direction | enum | `over` (više) / `under` (manje) |
 | odds | decimal? | pojedinačna kvota |
+| odds_bookmaker_code | FK → BOOKMAKER? | kladionica iz čije ponude je kvota preuzeta (BR-36); null = ručni unos |
 | final_points | int? | konačni poeni |
 | result | enum? | `hit`, `miss`, `void`; null dok nije razrešen |
 | void_reason | enum? | `dnp`, `game_not_played` (odložena/otkazana, BR-14) |
@@ -167,11 +169,25 @@ Ograničenja: tačno 4 tipa po kolu; (`round_id`, `member_id`) jedinstveno za li
 | proposed_by | FK → MEMBER | |
 | kind | enum | `personal` (FR-09) / `team` (FR-08) |
 | cooldown_for_member_id | FK → MEMBER? | za `team` |
-| player_id, game_id, line, direction | | kao u PICK |
+| player_id, game_id, line, direction, odds, odds_bookmaker_code | | kao u PICK |
 | comment | string? | |
-| status | enum | `pending`, `accepted`, `rejected`, `superseded` |
+| status | enum | `pending`, `accepted`, `rejected`, `superseded`; po mestu (slotu) najviše jedan `accepted` — prihvatanje novog predloga prethodni prihvaćeni označava kao `superseded` (P-23) |
 
 PROPOSAL_VOTE: `proposal_id`, `member_id`, `created_at`; jedinstveno (`proposal_id`, `member_id`).
+
+### BOOKMAKER (Kladionica) i ODDS_OFFER (Ponuda) — BR-36, FR-26
+BOOKMAKER: `code` (`mozzart`, `meridian`, `balkanbet`), `name`, `logo_path`, `is_enabled`, `last_ok_at`, `last_error`.
+
+ODDS_OFFER (keš ponude, briše se/osvežava pri svakom preuzimanju):
+| Atribut | Tip | Opis |
+|---------|-----|------|
+| bookmaker_code | FK → BOOKMAKER | |
+| game_id | FK → GAME | |
+| player_id | FK → PLAYER | upareno po imenu sa igračima dva kluba sa utakmice |
+| line | decimal | granica (x,5) |
+| over_odds, under_odds | decimal? | kvota za više / manje |
+| fetched_at | datetime | |
+Jedinstveno (`bookmaker_code`, `game_id`, `player_id`, `line`).
 
 ### MEMBER_ROUND_STATE (Snimak stanja člana posle kola — izvedeno)
 Keš rezultata rekalkulacije (FR-16); može se u svakom trenutku obrisati i izračunati ponovo (BR-30).
@@ -203,15 +219,6 @@ Keš rezultata rekalkulacije (FR-16); može se u svakom trenutku obrisati i izra
 | reason | string | obavezno za ručne akcije |
 Samo dodavanje (append-only), bez izmene i brisanja (FR-22).
 
-### SYNC_RUN (Evidencija sinhronizacija)
-`id`, `type` (`players`, `schedule`, `live`, `final`, `recheck`), `started_at`, `finished_at`, `status` (`ok`/`error`), `error_message`, `items_changed`. Koristi se za upozorenja o zastarelim podacima (FR-03 KP2, FR-13 KP2).
-
-## 6.3 Ključne veze i pravila integriteta
-- ROUND 1 — 4 PICK (BR-02); broj tipova `team` u kolu = broj članova na hlađenju.
-- PICK → GAME → (home/away CLUB); igrač tipa mora pripadati jednom od klubova utakmice u trenutku unosa, a `GAME.scheduled_at` mora pasti na `ROUND.game_day` (BR-07).
-- Granica: `line mod 1 = 0,5` za kola sa `source = app` (BR-09).
-- Statistike (FR-17…FR-19) računaju se iz PICK/ROUND, a MEMBER_ROUND_STATE je samo keš.
-- Brisanje: dozvoljeno samo za ROUND u statusu `open` (FR-24), kaskadno sa PICK/PROPOSAL; PLAYER i GAME se nikad ne brišu fizički.
 ### SANCTION (Disciplinska mera) — BR-37, FR-27
 | Atribut | Tip | Opis |
 |---------|-----|------|
@@ -228,3 +235,12 @@ Samo dodavanje (append-only), bez izmene i brisanja (FR-22).
 
 Mesto suspendovanog člana u kolu je PICK sa `kind = team` i `cooldown_for_member_id = član`, kao kod hlađenja; razlika (suspenzija, ne hlađenje) se izvodi iz `SANCTION.served_round_id`.
 
+### SYNC_RUN (Evidencija sinhronizacija)
+`id`, `type` (`players`, `schedule`, `live`, `final`, `recheck`), `started_at`, `finished_at`, `status` (`ok`/`error`), `error_message`, `items_changed`. Koristi se za upozorenja o zastarelim podacima (FR-03 KP2, FR-13 KP2).
+
+## 6.3 Ključne veze i pravila integriteta
+- ROUND 1 — 4 PICK (BR-02); broj tipova `team` u kolu = broj članova na hlađenju.
+- PICK → GAME → (home/away CLUB); igrač tipa mora pripadati jednom od klubova utakmice u trenutku unosa, a `GAME.scheduled_at` mora pasti na `ROUND.game_day` (BR-07).
+- Granica: `line mod 1 = 0,5` za kola sa `source = app` (BR-09).
+- Statistike (FR-17…FR-19) računaju se iz PICK/ROUND, a MEMBER_ROUND_STATE je samo keš.
+- Brisanje: dozvoljeno samo za ROUND u statusu `open` (FR-24), kaskadno sa PICK/PROPOSAL; PLAYER i GAME se nikad ne brišu fizički.

@@ -29,7 +29,7 @@
 **BR-10 — Uplata i uplatilac.** Uplata je pozitivan iznos u RSD sa najviše 2 decimale (BR-31). Uplatilac je tačno jedan od četiri člana (može biti i član na hlađenju).
 
 **BR-11 — Potencijalni dobitak (P-04).** `potencijalni dobitak = uplata × ukupna kvota`.
-- **Pojedinačna kvota** je obavezna za svaki tip (≥ 1,01; najviše 2 decimale): tip se ne može sačuvati bez nje, ko god da ga unosi. Član je unosi uz predlog; prihvatanjem predloga prelazi na tip; admin može da je promeni (P-22).
+- **Pojedinačna kvota** je obavezna za svaki tip (≥ 1,01; najviše 2 decimale): tip se ne može sačuvati bez nje, ko god da ga unosi. Član je unosi uz predlog; prihvatanjem predloga prelazi na tip; admin može da je promeni (P-22). Kvota (i granica) se može preuzeti iz ponude kladionica (BR-36) i zatim ručno promeniti.
 - **Ukupna kvota** se računa automatski kao proizvod četiri pojedinačne kvote, zaokružen na 2 decimale, i ne unosi se ručno u otvorenom kolu. Dok neka kvota nedostaje, ukupna kvota nije određena i kolo se ne može zaključati.
 - Pojedinačna kvota se može uneti ili promeniti i posle početka utakmice dok je kolo otvoreno (igrač, granica i smer tada ostaju zaključani).
 - Posle zaključavanja: ispravka pojedinačne kvote ponovo računa ukupnu; ciljana ispravka ukupne kvote ostaje moguća uz razlog (npr. kladionica je zaokružila ili dala bonus).
@@ -90,6 +90,7 @@ Tiket može dobiti status *Gubitan* i pre kraja svih utakmica, čim je neki tip 
 ## 5.6 Zaključavanje i ispravke
 
 **BR-28 — Zaključavanje.** Po zaključavanju glasanja izbori, uplata, kvota i uplatilac se ne mogu menjati kroz standardni unos. Ako admin ne zaključa kolo, a sva 4 tipa su kompletna, sistem ga **automatski zaključava** u trenutku početka prve utakmice kola. Ako tipovi nisu kompletni u tom trenutku, sistem prikazuje upozorenje adminu u aplikaciji (EKR-13), a tipovi čija je utakmica počela više se ne mogu uneti (takvi tipovi se mogu samo označiti kao poništeni).
+- **Zatvaranje predloga (P-23).** U trenutku početka prve utakmice među tipovima kola zatvaraju se predlozi i glasanje članova (lični tip i tip ekipe), i onda kada nekompletno kolo ostane otvoreno za admina. Do tada član može da promeni i već prihvaćen tip — slanjem novog predloga, koji admin prihvata. Predlog dat pre zatvaranja admin može da prihvati i posle (zapisuje se u audit log ako je utakmica tog tipa već počela).
 
 **BR-29 — Ispravka posle zaključavanja (P-09).**
 1. **Otključavanje** celog kola dozvoljeno je samo dok nijedna utakmica tog kola nije počela.
@@ -111,6 +112,8 @@ Tiket može dobiti status *Gubitan* i pre kraja svih utakmica, čim je neki tip 
 
 **BR-35 — Javni pregled (P-18).** Svi podaci osim audit loga dostupni su za pregled bez prijave, preko javnog linka. Bez prijave nije moguća nijedna izmena, predlog ni glasanje.
 
+**BR-36 — Ponuda kladionica (P-23).** Za izabranog igrača aplikacija prikazuje ponudu poena igrača kladionica **Mozzart, Meridian i BalkanBet** (granica, kvota za više i za manje, logo i ime kladionice, vreme osvežavanja), ako je kladionica ima u ponudi i ako je ponuda dostupna. Ponuda je samo pomoć pri unosu: izbor ponude popunjava granicu, smer i kvotu, koje se i dalje mogu ručno menjati; uz tip se pamti kladionica iz čije ponude je kvota preuzeta (samo informativno, briše se ako se kvota ručno promeni). Na obračun utiču isključivo unete pojedinačne kvote (BR-11). Ako ponuda nije dostupna, kvota se unosi ručno kao i ranije. Ponuda se prati samo dok su predlozi otvoreni; posle toga se ne osvežava.
+
 **BR-37 — Disciplinske mere (P-24).** Admin može članu izreći disciplinsku meru uz **obavezno obrazloženje** i, po želji, kolo koje je povod. Mere su:
 - **Opomena** (🟨) — upozorenje bez posledica na tiket.
 - **Preskakanje kola** (🟥, suspenzija) — član ne bira lični tip u **sledećem kolu koje se otvori**; umesto njega se igra tip ekipe, kao kod hlađenja (BR-26, BR-27: član na suspenziji ne predlaže i ne glasa u tom kolu).
@@ -122,3 +125,19 @@ Pravila:
 4. Admin može poništiti meru, uz razlog, dok nije imala posledice: opomenu i preskakanje kola koje još nije primenjeno. Poništavanje opomene koja je dovela do (još neprimenjenog) preskakanja kola poništava i to preskakanje, a ostale opomene ponovo postaju aktivne. Primenjeno preskakanje kola se ne može poništiti.
 5. Opomene ne zastarevaju i ne resetuju se na početku sezone.
 6. Mere su javne (BR-35); izricanje, poništavanje i primena upisuju se u audit log.
+
+**BR-38 — Rekordi, bedževi i „za dlaku” (P-25).** Izvedeni podaci (BR-30), računaju se iz razrešenih kola za izabrani period/sezonu, samo iz **ličnih** tipova (tip ekipe se ne pripisuje članu).
+- **Promašaj „za dlaku”**: promašen tip sa poznatim konačnim poenima kod koga je razlika između poena i granice tačno **0,5** (npr. više 14,5 → 14 poena; manje 9,5 → 10 poena).
+- **Rekordi** (Kuća slavnih): najveći dobitak, najveća kvota dobitnog tiketa, najveća kvota pogođenog tipa, najubedljiviji pogodak (najveća razlika poena i granice), najduži niz pogodaka i promašaja, najskuplji blejm (potencijalni dobitak tiketa 3/4), najbolnije „za dlaku” (tiket 3/4 čiji je jedini promašaj bio za dlaku). Kod izjednačenja važi raniji rekord.
+- **Bedževi** člana (broj osvajanja + prvo kolo):
+  - 🎯 **Snajper** — niz od 5 pogodaka zaredom (svaki put kada niz dostigne 5);
+  - 🦁 **Hrabri** — pogođen tip sa kvotom ≥ 2,00;
+  - 🤏 **Za dlaku** — promašaj za dlaku;
+  - 🧊 **Ledeni** — hlađenje (BR-21);
+  - 👑 **Kralj blejma** — član sa najviše blejmova u sezoni (samo ako je jedini prvi);
+  - 💯 **Savršen mesec** — svi razrešeni lični tipovi člana u kalendarskom mesecu su pogoci (najmanje 3).
+- Nijedan od ovih podataka ne utiče na tiket, nizove, hlađenje ni vatricu.
+
+**BR-39 — Šanse tiketa (P-25).** Tokom kola aplikacija prikazuje grubu procenu verovatnoće da tip, odnosno tiket, prođe. Procena je **samo informacija**: ne utiče na obračun, statistiku ni na bilo koju odluku sistema. Pogođen/siguran tip ima šansu 100 %, promašen/siguran promašaj 0 %, poništen tip se ne računa; šansa tiketa je proizvod šansi tipova.
+
+**BR-40 — Forma igrača (P-25).** Pri izboru igrača prikazuje se njegovih **poslednjih 5 završenih utakmica Evrolige** (poeni, protivnik, DNP ako nije ušao), poređanih **hronološki: najstarija levo, najnovija desno**, prosek poena (bez DNP) i istorija ekipe sa tim igračem (koliko puta je biran i koliko pogođen). Pošto je uneta granica, prikazuje se i koliko je puta u tih 5 utakmica bio iznad nje. I ostali nizovi u aplikaciji (npr. „Poslednjih 10 tipova” na profilu) prikazuju se istim redosledom.

@@ -88,8 +88,8 @@ Sva vremena su `DATETIME` u **UTC**; `game_day` je `DATE` po zoni Europe/Belgrad
 | `seasons` | `code` PK (`E2026`), `name`, `start_date` |
 | `clubs` | `code` PK, `name`, `short_name`, `crest_url` |
 | `players` | `id` PK, `external_code` UNIQUE NULL, `first_name`, `last_name`, `full_name`, `search_name` (bez dijakritika, mala slova), `club_code`, `position`, `jersey`, `photo_url`, `is_active`, `is_manual`, `last_synced_at` |
-| `games` | `id` PK, `season_code`, `game_code`, UNIQUE(`season_code`,`game_code`), `euroleague_round`, `home_club_code`, `away_club_code`, `scheduled_at`, `game_day`, `status` ENUM(`scheduled`,`live`,`final`,`postponed`,`cancelled`), `home_score`, `away_score`, `live_quarter`, `live_clock`, `started_at`, `final_at`, `recheck_done_at`, `last_polled_at`, `is_manual` |
-| `player_game_stats` | PK(`game_id`,`player_id`), `points`, `seconds_played`, `fouls`, `is_final`, `updated_at` |
+| `games` | `id` PK, `season_code`, `game_code`, UNIQUE(`season_code`,`game_code`), `euroleague_round`, `home_club_code`, `away_club_code`, `scheduled_at`, `game_day`, `status` ENUM(`scheduled`,`live`,`final`,`postponed`,`cancelled`), `home_score`, `away_score`, `live_quarter`, `live_clock`, `started_at`, `final_at`, `recheck_done_at`, `last_polled_at`, `is_manual`, `boxscore_saved_at` (004) |
+| `player_game_stats` | PK(`game_id`,`player_id`), INDEX(`player_id`), `points`, `seconds_played`, `fouls`, `is_final`, `updated_at` — tokom utakmice samo izabrani igrači, posle kraja svi (forma, P-25) |
 | `rounds` | `id` PK, `number` UNIQUE, `opened_at`, `game_day`, `season_code`, `euroleague_round`, `source` ENUM(`app`,`import`), `status` ENUM(`open`,`locked`,`in_progress`,`won`,`lost`,`void`), `stake`, `total_odds`, `payer_member_id`, `actual_win`, `actual_win_provisional`, `actual_win_manual`, `hits`, `misses`, `voids`, `locked_at`, `locked_by`, `resolved_at`, `has_corrections` |
 | `picks` | `id` PK, `round_id`, `slot` 1–4, UNIQUE(`round_id`,`slot`), `kind` ENUM(`personal`,`team`), `member_id` (lični), `cooldown_for_member_id` (tip ekipe), `player_id`, UNIQUE(`round_id`,`player_id`), `game_id`, `line`, `direction` ENUM(`over`,`under`), `odds`, `final_points`, `result` ENUM(`hit`,`miss`,`void`), `void_reason` ENUM(`dnp`,`game_not_played`), `resolution` ENUM(`auto`,`manual`,`import`), `resolved_at`, `import_player_name` |
 | `proposals` | `id` PK, `round_id`, `proposed_by`, `kind`, `cooldown_for_member_id`, `player_id`, `line`, `direction`, `odds`, `comment`, `status` ENUM(`pending`,`accepted`,`rejected`,`superseded`), `created_at` |
@@ -111,6 +111,8 @@ Sva vremena su `DATETIME` u **UTC**; `game_day` je `DATE` po zoni Europe/Belgrad
 | `seasonForDate(day)` | BR-33 | `E{godina}` ako je mesec ≥ 7, inače `E{godina-1}` |
 | `computeDerived(rounds)` | BR-20…BR-26, BR-30, BR-33 | po kolu i članu: niz, ❄, 🔥, blejm; očekivano hlađenje za sledeće kolo; nekonzistentnosti |
 | `normalizeName(s)` | FR-06 KP1 | mala slova, bez dijakritika (uključujući đ→dj) |
+| `computeRecords`, `computeBadges`, `nearMisses` (`records.ts`) | BR-38 | rekordi, bedževi, „za dlaku” iz razrešenih kola i `computeDerived` |
+| `pickChance`, `ticketChance` (`chance.ts`) | BR-39 | gruba procena: normalna aproksimacija projekcije poena (tempo × očekivane minute iz forme) |
 
 Pravila `computeDerived` (hronološki po `number`, samo razrešena kola):
 1. Pri promeni sezone: svi nizovi = 0, vatrica = ne, zakazano hlađenje = ne.
@@ -176,6 +178,7 @@ Scheduler "tick" na 30 s; svaki posao ima uslov pokretanja i zaštitu od preklap
 | `resolvePending` | svaki tick | završene utakmice čiji su tipovi ostali nerazrešeni (npr. pad procesa) → ponovno razrešenje |
 | `notPlayed` | svaki tick | dan kola prošao (06:00 sledećeg dana), utakmica nije počela → `void(game_not_played)` |
 | `recheck` | 12 h posle `final_at` | ponovni boxscore; promena ishoda → ispravka + audit |
+| `boxscoreBackfill` | svaki tick, posle `livePoll` | završene utakmice sezone bez `boxscore_saved_at` → Boxscore → svi igrači u `player_game_stats`; najviše 3 zahteva po ticku, samo iz preostalog budžeta |
 | `backup` | dnevno 03:00 (samo u kontejneru) | `mysqldump` → `/backups/vc-YYYYMMDD.sql.gz`, čuva 30 |
 
 Pri pokretanju procesa poslovi nastavljaju od stanja u bazi (REQ-38.6).

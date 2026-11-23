@@ -6,10 +6,21 @@ import { toNum } from '../domain/money.js';
 import type { SessionMember } from '../http/auth.js';
 import { conflict, forbidden, notFound, unprocessable } from '../http/errors.js';
 import { writeAudit } from './audit.js';
-import { getRoundOr404, validateOdds, validateSelection, writePick } from './rounds.js';
+import { anyPickGameStarted, getRoundOr404, validateOdds, validateSelection, writePick } from './rounds.js';
 
 function requireOpenRound(round: Round): void {
   if (round.status !== 'open') throw conflict('Predlozi i glasanje su mogući samo dok je kolo otvoreno.');
+}
+
+/**
+ * BR-28: members propose and vote only until the first game among the round's picks starts,
+ * even when an incomplete round is still open for the admin.
+ */
+async function requireProposalsOpen(deps: Deps, round: Round): Promise<void> {
+  requireOpenRound(round);
+  if (await anyPickGameStarted(deps.db, round.id, deps.now())) {
+    throw conflict('Predlozi i glasanje su zatvoreni — počela je prva utakmica kola.');
+  }
 }
 
 async function cooldownInRound(db: DB, roundId: number): Promise<Set<number>> {
@@ -36,7 +47,7 @@ export async function createProposal(
   input: CreateProposalRequest,
 ): Promise<void> {
   const round = await getRoundOr404(deps.db, roundId);
-  requireOpenRound(round);
+  await requireProposalsOpen(deps, round);
   const cooldown = await cooldownInRound(deps.db, round.id);
   if (cooldown.has(member.id)) throw forbidden('Član na hlađenju ili suspenziji ne može predlagati tipove u ovom kolu.');
 
@@ -96,7 +107,7 @@ async function getProposalOr404(db: DB, id: number): Promise<Proposal> {
 export async function vote(deps: Deps, member: SessionMember, proposalId: number, on: boolean): Promise<number> {
   const p = await getProposalOr404(deps.db, proposalId);
   const round = await getRoundOr404(deps.db, p.round_id);
-  requireOpenRound(round);
+  await requireProposalsOpen(deps, round);
   if ((await cooldownInRound(deps.db, round.id)).has(member.id)) {
     throw forbidden('Član na hlađenju ne može da glasa u ovom kolu.');
   }
@@ -115,7 +126,8 @@ export async function vote(deps: Deps, member: SessionMember, proposalId: number
 }
 
 /**
- * Admin accepts a proposal → it becomes the slot's pick; other proposals for the slot are superseded.
+ * Admin accepts a proposal → it becomes the slot's pick; other pending or earlier accepted
+ * proposals for the slot are superseded (a member may change an accepted pick by a new proposal).
  * A proposal given before its game started can be accepted after tip-off (the ticket was played
  * with it); such an acceptance is written to the audit log.
  */
@@ -156,7 +168,8 @@ export async function acceptProposal(deps: Deps, proposalId: number, actorMember
       .set({ status: 'superseded' })
       .where('round_id', '=', round.id)
       .where('id', '!=', p.id)
-      .where('status', '=', 'pending')
+      // An earlier accepted proposal for the slot is replaced too, so 'accepted' marks the pick in force.
+      .where('status', 'in', ['pending', 'accepted'])
       .where('kind', '=', p.kind);
     others =
       p.kind === 'personal'

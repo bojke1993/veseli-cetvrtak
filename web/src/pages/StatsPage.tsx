@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import type { OutcomeBucket, OverviewStatsDto, TeamStatsDto } from '@api';
+import type { OutcomeBucket, OverviewStatsDto, TeamRecordDto, TeamStatsDto } from '@api';
 import { useOverview } from '../api/queries';
+import { memberLabel, useMemberMap } from '../components/MemberName';
 import { StatsFilter, useStatsQuery } from '../components/StatsFilter';
 import { Card, EmptyState, QueryView } from '../components/ui';
 import { formatDate, formatMoney, formatPercent } from '../lib/format';
+import { RECORD_META, recordValue } from '../lib/records';
 
 const BUCKET_LABEL: Record<OutcomeBucket['key'], string> = {
   '4/4': '4/4',
@@ -114,6 +116,36 @@ function BalanceChart({ series }: { series: OverviewStatsDto['balanceSeries'] })
   );
 }
 
+/** FR-28 — "Kuća slavnih" */
+export function HallOfFame({ records }: { records: TeamRecordDto[] }) {
+  const members = useMemberMap();
+  if (records.length === 0) return <p className="muted small">Još nema rekorda.</p>;
+  return (
+    <ul className="records">
+      {records.map((r) => {
+        const meta = RECORD_META[r.code];
+        const who = r.memberId === 'team' ? 'Ekipa' : r.memberId !== null ? memberLabel(members, r.memberId) : null;
+        return (
+          <li key={r.code} className="record">
+            <span className="record-emoji" aria-hidden="true">
+              {meta.emoji}
+            </span>
+            <span className="record-body">
+              <span className="kv-label">{meta.label}</span>
+              <span className="record-value">{recordValue(r)}</span>
+              <span className="small muted">
+                {[who, r.playerName].filter(Boolean).join(' · ')}
+                {who || r.playerName ? ' · ' : ''}
+                <Link to={`/kolo/${r.roundId}`}>kolo #{r.roundNumber}</Link>
+              </span>
+            </span>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
 export function TeamStats({ team }: { team: TeamStatsDto }) {
   return (
     <dl className="kv-list">
@@ -195,6 +227,9 @@ export default function StatsPage() {
                   <span className="stat-value">{s.longestLosingRun}</span>
                 </div>
               </div>
+              <Card title="Kuća slavnih">
+                <HallOfFame records={s.records} />
+              </Card>
               <Card title="Raspodela ishoda">
                 <Distribution buckets={s.distribution} />
               </Card>

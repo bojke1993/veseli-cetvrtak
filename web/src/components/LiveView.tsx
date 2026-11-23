@@ -9,6 +9,7 @@ import {
   pointsText,
 } from '../lib/format';
 import { useNow } from '../hooks/useNow';
+import { Celebration } from './Celebration';
 import { LiveStatusBadge } from './LiveStatusBadge';
 import { MemberName } from './MemberName';
 import { GameLine, PlayerInfo } from './PlayerInfo';
@@ -51,18 +52,39 @@ export function PickOwner({ pick }: { pick: Pick<PickDto, 'kind' | 'memberId' | 
   );
 }
 
-export function TicketIndicator({ round }: { round: Pick<RoundDetailDto, 'ticketAlive' | 'passingCount' | 'picks'> }) {
+/** BR-39: rough ticket chance; shown only while the outcome is still open. */
+export function TicketChance({ chance }: { chance: number | null }) {
+  if (chance === null || chance === 0 || chance === 100) return null;
+  return (
+    <span className="ticket-chance" title="Gruba procena na osnovu forme igrača i tempa poena — ne utiče na obračun">
+      <span className="ticket-chance-text small">
+        Šanse <strong className="tabular">~{chance}%</strong> <span className="muted">(gruba procena)</span>
+      </span>
+      <span className="ticket-chance-track" aria-hidden="true">
+        <span className="ticket-chance-fill" style={{ width: `${chance}%` }} />
+      </span>
+    </span>
+  );
+}
+
+export function TicketIndicator({ round }: { round: Pick<RoundDetailDto, 'ticketAlive' | 'passingCount' | 'picks' | 'ticketChance'> }) {
   if (round.ticketAlive === null) return null;
   if (round.ticketAlive) {
     return (
-      <span className="ticket-indicator tone-good" role="status">
-        <span aria-hidden="true">●</span> Tiket živ — {round.passingCount ?? 0}/{round.picks.length || 4} u prolazu
-      </span>
+      <div className="ticket-indicator-row">
+        <span className="ticket-indicator tone-good" role="status">
+          <span aria-hidden="true">●</span> Tiket živ — {round.passingCount ?? 0}/{round.picks.length || 4} u prolazu
+        </span>
+        <TicketChance chance={round.ticketChance} />
+      </div>
     );
   }
   return (
     <span className="ticket-indicator tone-awful" role="status">
-      <span aria-hidden="true">✘</span> Tiket pao
+      <span aria-hidden="true" className="ticket-sink">
+        ✘
+      </span>{' '}
+      Tiket pao
     </span>
   );
 }
@@ -95,6 +117,9 @@ export function LivePickCard({ pick, compact = false }: { pick: PickDto; compact
           <span>Min: {formatSecondsPlayed(live?.secondsPlayed)}</span>
           <span>Lične: {live?.fouls ?? '–'}</span>
           {pick.odds != null && <span>Kvota: {formatOdds(pick.odds)}</span>}
+          {pick.chance != null && pick.chance > 0 && pick.chance < 100 && (
+            <span title="Gruba procena (BR-39)">Šansa: ~{pick.chance}%</span>
+          )}
           {notStarted && pick.game && <span>počinje u {formatTime(pick.game.scheduledAt)}</span>}
         </footer>
       )}
@@ -115,6 +140,7 @@ export function LiveView({ round, compact = false }: { round: RoundDetailDto; co
   const picks = sortPicksByGameTime(round.picks);
   return (
     <div className="live-view">
+      <Celebration round={round} />
       {!compact && (
         <div className="live-header card">
           <div className="kv-row">

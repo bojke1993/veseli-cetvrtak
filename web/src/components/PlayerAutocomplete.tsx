@@ -3,6 +3,7 @@ import type { PlayerSearchItem } from '@api';
 import { usePlayerSearch } from '../api/queries';
 import { useDebounce } from '../hooks/useDebounce';
 import { formatTime } from '../lib/format';
+import { FormSummary } from './PlayerForm';
 import { Avatar, gameLabel } from './PlayerInfo';
 
 export const SEARCH_DEBOUNCE_MS = 150;
@@ -154,6 +155,7 @@ export function PlayerAutocomplete({
                   </span>
                   {it.note && <span className="small note">{it.note}</span>}
                 </span>
+                {it.form && <FormSummary form={it.form} />}
               </li>
             );
           })}

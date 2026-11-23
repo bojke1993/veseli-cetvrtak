@@ -7,6 +7,7 @@
 | Raspored utakmica (gameCode, timovi, termin, status) | FR-04, FR-05, FR-07 | 1× dnevno; na dan utakmice na 15 min |
 | Live boxscore (poeni, minuti po igraču, rezultat, četvrtina) | FR-13 | na 30 s tokom utakmica sa tipom |
 | Konačni boxscore | FR-14 | po završetku + ponovna provera posle 12 h |
+| Konačni boxscore svih igrača (forma, FR-29) | FR-29, FR-30 | jednom po završenoj utakmici; stare utakmice sezone postepeno (najviše 3 zahteva po ciklusu, samo iz preostalog budžeta) |
 
 ## 7.2 Preporučeni izvor: javni Euroleague API (api-live.euroleague.net / live.euroleague.net)
 
@@ -77,3 +78,10 @@ Kod takmičenja: `E` = Evroliga (`U` = Evrokup). Kod sezone: `E` + početna godi
 - [ ] Snimiti primere odgovora (JSON fixture) za Boxscore pre, tokom i posle utakmice, i za DNP igrača.
 - [ ] Potvrditi kako API označava odloženu/otkazanu utakmicu.
 - [ ] Pročitati Terms of Use Euroleague Basketball.
+
+## 7.7 Ponuda kladionica (BR-36, FR-26, P-23)
+- Kladionice: **Mozzart, Meridian, BalkanBet**. Nijedna nema javno dokumentovan API; Meridian je 01.11.2026. vraćao 401 bez tokena (`docs/learnings.md`).
+- Pristup isključivo preko adapter sloja `OddsProvider` (po jedna implementacija po kladionici + lažna za testove), sa servera; nikad iz browsera.
+- Pozadinski posao `oddsPoll` radi samo za otvoreno kolo dok su predlozi otvoreni, osvežava svaku kladionicu na ~10 min, sa ograničenjem broja zahteva i pauzom posle greške (403/429). Neuspeh jedne kladionice ne utiče na ostale ni na ostatak aplikacije.
+- Uparivanje igrača: ime iz ponude poredi se sa `normalizeName(full_name)` igrača dva kluba sa te utakmice; neupareni se beleže u log i ne prikazuju.
+- **Pre implementacije (verifikacija, na dan kola Evrolige, sa produkcionog VM-a u Frankfurtu):** za svaku kladionicu utvrditi da li i od kada ima poene igrača Evrolige, kojim zahtevom ih sajt preuzima i da li je potreban (anonimni) token, da li zahtev prolazi sa VM-a (geo-blokada, zaštita od botova) i format odgovora. Kladionica koja ne prođe ne implementira se. Nalazi se upisuju u `docs/learnings.md`.

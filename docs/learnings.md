@@ -21,6 +21,9 @@ Stvari naučene tokom razvoja koje nisu očigledne iz koda. Dopunjavati kako pro
 - `gameStatus` je uvek `"Confirmed"` — odlaganje/otkazivanje se ne vidi u feed-u.
 - Imena iz feed-a su "PREZIME, IME" velikim slovima; pri title-case čuvati inicijale (`TJ`) i sufikse (`III`).
 
+- Forma igrača (FR-29) nema poseban endpoint: koristi se isti `Boxscore` kao za live. Posle kraja utakmice čuva se red za **sve** igrače u `player_game_stats` i `games.boxscore_saved_at`; stare utakmice dopunjava `boxscoreBackfill` (≤ 3 zahteva po ticku, pauza 2 min posle live pollinga, staje na prvoj grešci). Posle prvog deploy-a backfill sezone traje ~1–2 h (≈ 10 utakmica po kolu Evrolige). Igrači iz boxscore-a koji nisu u tabeli `players` se preskaču.
+- Red bez `player_game_stats` reda i dalje znači „nije izabran/nije pročitan” samo za igrače iz tipova; za formu odsustvo reda znači da igrač nije bio u zapisniku (povređen/van sastava) i takva utakmica se ne prikazuje.
+
 ## Ponuda kladionica (provera 01.11.2026; odluka: ne radi se, OP-12)
 
 - Mozzart i Meridian nemaju javno dokumentovan API. Meridianov `online.meridianbet.com/betshop/api` vraća 401 bez tokena.
@@ -37,7 +40,7 @@ Stvari naučene tokom razvoja koje nisu očigledne iz koda. Dopunjavati kako pro
 - Izvedeno stanje (nizovi, ❄, 🔥, blejm) se nikad ne čuva — `computeDerived()` nad celom istorijom; posle direktnih izmena baze (skripte) restartovati aplikaciju ili pozvati `POST /api/admin/recalc`, jer je keš u memoriji.
 
 - `player_game_stats` se puni samo za tipove koji postoje dok se utakmica prati. Tip prihvaćen posle kraja utakmice nema red, a izostanak reda se računa kao DNP; zato `runResolvePending` prvo dopunjava poene iz boxscore-a. U kolu #10 (27.10.2026.) Larkin (4 poena, 22:26) je pogrešno dobio DNP, a sve upućuje na ovaj uzrok (audit log nije proveren); ispravlja se ručnim razrešenjem.
-- Više predloga istog člana u kolu može ostati `accepted`, a tip je samo jedan: kolo #10 je imalo Lučića i Llulla, a u tip je ušao Llull (ispravljeno 03.11.2026.). Status predloga zato ne dokazuje šta je odigrano. Korekcija igrača zadržava staru granicu, pa je granicu po potrebi ispraviti posebno.
+- Više predloga istog člana u kolu može ostati `accepted`, a tip je samo jedan: kolo #10 je imalo Lučića i Llulla, a u tip je ušao Llull (ispravljeno 03.11.2026.). Status predloga zato ne dokazuje šta je odigrano. Od 16.11.2026. (P-23) prihvatanje predloga prethodni `accepted` za isto mesto prebacuje u `superseded`, ali starija kola i direktan unos admina (bez predloga) i dalje mogu odstupati. Korekcija igrača zadržava staru granicu, pa je granicu po potrebi ispraviti posebno.
 - Preskakanje kola (suspenzija, BR-37) u bazi izgleda isto kao hlađenje: tip ekipe sa `cooldown_for_member_id`. Razlika se vidi samo iz `sanctions.served_round_id` — zato `loadDerivedInputs` učitava odslužene suspenzije, a svako mesto koje iz `picks` zaključuje „na hlađenju” mora da ih isključi (`RoundDerived.suspendedMemberIds`).
 - `proposals.created_at` se upisuje iz `deps.now()` (ne DB default), jer se po njemu proverava da li je predlog dat pre početka utakmice (kasno prihvatanje, `late_accept`).
 
@@ -57,6 +60,9 @@ Stvari naučene tokom razvoja koje nisu očigledne iz koda. Dopunjavati kako pro
 - Procena troška u Oracle čarobnjaku prikazuje cenu boot volumena bez Always Free popusta — stvarni trošak je 0.
 
 ## Frontend
+
+- Nizovi rezultata se prikazuju hronološki sa leva na desno (BR-40, P-25). `MemberStatsDto.last10` je do 23.11.2026. stizao od najnovijeg, a profil ga je crtao kao da je od najstarijeg — sada server šalje od najstarijeg.
+- Proslava dobitnog tiketa (`Celebration`) se pamti u `localStorage` ključem `vc-celebrated-<roundId>`; kolo dobijeno pre više od 24 h ne pokreće konfete (pregled istorije).
 
 - `@fastify/static` je registrovan sa `wildcard: false` — lista fajlova se pravi pri startu servera. Posle `npm run build -w web` na živom serveru novi (heširani) asset-i padaju na SPA fallback i vraćaju `index.html` → prazna stranica. Posle build-a restartovati server.
 - Tema: `html[data-theme="light"|"dark"]` (ThemeToggle, `localStorage` ključ `vc-theme`); bez atributa važi `prefers-color-scheme`. Tamna paleta je u `app.css` dvaput (media upit + `[data-theme='dark']`) — menjati oba bloka. Tema se primenjuje pre iscrtavanja iz `web/public/theme.js` (CSP zabranjuje inline skripte).

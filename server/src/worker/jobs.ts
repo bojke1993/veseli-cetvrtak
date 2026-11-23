@@ -10,7 +10,7 @@ import type { Deps } from '../deps.js';
 import type { Game, SyncType } from '../db/schema.js';
 import { toNum } from '../domain/money.js';
 import { liveStatus } from '../domain/pick.js';
-import { dayInBelgrade, TIMEZONE } from '../domain/season.js';
+import { dayInBelgrade, seasonForDate, TIMEZONE } from '../domain/season.js';
 import { writeAudit } from '../services/audit.js';
 import { lockRound } from '../services/rounds.js';
 import { applyPickResult, computeGamePickResults, resolveGame } from '../services/resolution.js';
@@ -37,6 +37,8 @@ export const BACKOFF_STEPS_MS = [30_000, 60_000, 2 * MIN, 5 * MIN];
 interface WorkerState {
   backoff: Map<number, { failures: number; nextAt: number }>;
   requests: number[];
+  /** Last time livePoll actually polled a game; the box score backfill yields to live polling. */
+  lastLivePollAt: number;
 }
 
 const states = new WeakMap<Deps, WorkerState>();
@@ -44,7 +46,7 @@ const states = new WeakMap<Deps, WorkerState>();
 function state(deps: Deps): WorkerState {
   let s = states.get(deps);
   if (!s) {
-    s = { backoff: new Map(), requests: [] };
+    s = { backoff: new Map(), requests: [], lastLivePollAt: 0 };
     states.set(deps, s);
   }
   return s;
@@ -196,6 +198,7 @@ export async function runLivePoll(deps: Deps): Promise<LivePollResult> {
     );
   }
 
+  if (result.polled.length > 0) state(deps).lastLivePollAt = now.getTime();
   if (touchedGames.length > 0) {
     await markRoundsInProgress(deps);
     await publishLive(deps, touchedGames);
@@ -224,6 +227,7 @@ async function pollGame(deps: Deps, game: Game, boxReserved: boolean): Promise<b
     !header.live && !box.live && total > 0 && now.getTime() >= game.scheduled_at.getTime() + MIN_GAME_DURATION_MS;
 
   await upsertPickedStats(deps, game.id, box.lines, finished);
+  if (finished) await storeFullBoxscore(deps, game.id, box.lines);
 
   await deps.db
     .updateTable('games')
@@ -305,6 +309,82 @@ async function upsertPickedStats(
     written++;
   }
   return written;
+}
+
+/**
+ * FR-29: stores the final box score of every player of a finished game (player form) and
+ * marks the game so the backfill does not fetch it again. Unknown player codes are skipped.
+ */
+export async function storeFullBoxscore(
+  deps: Deps,
+  gameId: number,
+  lines: Array<{ playerCode: string; points: number; secondsPlayed: number; fouls: number | null }>,
+): Promise<number> {
+  const now = deps.now();
+  const codes = [...new Set(lines.map((l) => l.playerCode))];
+  const players =
+    codes.length > 0
+      ? await deps.db.selectFrom('players').select(['id', 'external_code']).where('external_code', 'in', codes).execute()
+      : [];
+  const idByCode = new Map(players.map((p) => [p.external_code!, p.id]));
+  let written = 0;
+  for (const l of lines) {
+    const playerId = idByCode.get(l.playerCode);
+    if (playerId === undefined) continue;
+    const values = { points: l.points, seconds_played: l.secondsPlayed, fouls: l.fouls, is_final: 1 as const, updated_at: now };
+    await deps.db
+      .insertInto('player_game_stats')
+      .values({ game_id: gameId, player_id: playerId, ...values })
+      .onDuplicateKeyUpdate(values)
+      .execute();
+    written++;
+  }
+  await deps.db.updateTable('games').set({ boxscore_saved_at: now }).where('id', '=', gameId).execute();
+  return written;
+}
+
+// ---------- boxscoreBackfill (FR-29, NFR-26) ----------
+
+/** NFR-26: at most this many box score requests per tick, and only while nothing is polled live. */
+export const BACKFILL_PER_TICK = 3;
+/** The backfill pauses this long after the last live poll. */
+export const BACKFILL_LIVE_PAUSE_MS = 2 * MIN;
+
+/**
+ * Fetches final box scores of finished games (current and previous season, newest first)
+ * that were never stored in full. Stops at the first error or when the budget is used up.
+ */
+export async function runBoxscoreBackfill(deps: Deps): Promise<number[]> {
+  const now = deps.now().getTime();
+  if (now - state(deps).lastLivePollAt < BACKFILL_LIVE_PAUSE_MS) return [];
+  const season = seasonForDate(dayInBelgrade(deps.now()));
+  const previous = `E${Number(season.slice(1)) - 1}`;
+  const games = await deps.db
+    .selectFrom('games')
+    .select(['id', 'season_code', 'game_code'])
+    .where('status', '=', 'final')
+    .where('is_manual', '=', 0)
+    .where('boxscore_saved_at', 'is', null)
+    .where('season_code', 'in', [season, previous])
+    .orderBy('scheduled_at', 'desc')
+    .limit(BACKFILL_PER_TICK)
+    .execute();
+  const stored: number[] = [];
+  for (const game of games) {
+    if (inBackoff(deps, game.id) || !reserveRequests(deps, 1)) break;
+    try {
+      const box = await deps.provider.getBoxscore(game.season_code, game.game_code);
+      if (box.live) break; // not final at the source yet; try again later
+      await storeFullBoxscore(deps, game.id, box.lines);
+      recordSuccess(deps, game.id);
+      stored.push(game.id);
+    } catch (e) {
+      recordFailure(deps, game.id);
+      logJob('boxscoreBackfill', 'error', { gameId: game.id, error: String(e) });
+      break;
+    }
+  }
+  return stored;
 }
 
 /** REQ-11.6: a locked round becomes in_progress once any of its games has started. */

@@ -5,6 +5,7 @@ import type { Game } from '../db/schema.js';
 import { normalizeName } from '../domain/text.js';
 import { notFound, unprocessable } from '../http/errors.js';
 import { gameDto, gameNotStarted, loadClubs, playerDto, shortDay } from './dto.js';
+import { loadPlayerForms } from './form.js';
 
 export const SEARCH_LIMIT = 10;
 
@@ -61,7 +62,7 @@ export async function searchPlayers(
   ]);
   const now = deps.now();
 
-  const items = rows.map((p): PlayerSearchItem & { rank: number } => {
+  const items = rows.map((p): Omit<PlayerSearchItem, 'form'> & { rank: number } => {
     const base = playerDto(p, clubs);
     if (!day) {
       const used = usedPlayerIds.has(p.id);
@@ -95,7 +96,8 @@ export async function searchPlayers(
     return tokens.every((t) => text.includes(t));
   });
   const result = clubQuery ? items : items.slice(0, SEARCH_LIMIT);
-  return result.map(({ rank: _rank, ...rest }) => rest);
+  const forms = await loadPlayerForms(deps, result.map((r) => r.id));
+  return result.map(({ rank: _rank, ...rest }) => ({ ...rest, form: forms.get(rest.id)! }));
 }
 
 /** REQ-04.5: manual player ("ručno dodat"). */

@@ -283,27 +283,29 @@ function GameDaySelect({ round }: { round: RoundDetailDto }) {
   );
 }
 
-/** Countdown warning < 60 min before the first game (REQ-11.5); isolated so only it re-renders every second. */
-function StartCountdown({ firstGameAt, isAdmin }: { firstGameAt: string | null; isAdmin: boolean }) {
+/**
+ * Countdown to the first game among the picks, when member proposals and votes close (BR-28, P-23);
+ * a warning in the last 60 min (REQ-11.5). Isolated so only it re-renders every second.
+ */
+function StartCountdown({ firstGameAt, proposalsOpen, isAdmin }: { firstGameAt: string | null; proposalsOpen: boolean; isAdmin: boolean }) {
   const now = useNow(1000);
   const msToStart = firstGameAt ? new Date(firstGameAt).getTime() - now : null;
-  if (msToStart === null) return null;
-  if (msToStart > 0 && msToStart < 60 * 60 * 1000) {
-    return (
-      <p className="alert alert-warn" role="alert">
-        <span aria-hidden="true">⏰</span> Prva utakmica počinje za <strong>{formatCountdown(msToStart)}</strong>
-        {isAdmin && ' — zaključaj kolo na vreme!'}
-      </p>
-    );
-  }
-  if (msToStart <= 0) {
+  if (!proposalsOpen || (msToStart !== null && msToStart <= 0)) {
     return (
       <p className="alert alert-error" role="alert">
-        Prva utakmica je počela, a kolo nije zaključeno. Tipovi čije su utakmice počele ne mogu se menjati.
+        Prva utakmica je počela — predlozi i glasanje su zatvoreni.
+        {isAdmin && ' Kolo nije zaključeno: dopuni ga i zaključaj. Tipovi čije su utakmice počele ne mogu se menjati.'}
       </p>
     );
   }
-  return null;
+  if (msToStart === null) return null;
+  const soon = msToStart < 60 * 60 * 1000;
+  return (
+    <p className={soon ? 'alert alert-warn' : 'alert'} role={soon ? 'alert' : 'status'}>
+      <span aria-hidden="true">⏰</span> Predlozi se zatvaraju za <strong>{formatCountdown(msToStart)}</strong> (početak prve utakmice)
+      {isAdmin && soon && ' — zaključaj kolo na vreme!'}
+    </p>
+  );
 }
 
 function EditorBody({ round }: { round: RoundDetailDto }) {
@@ -344,7 +346,7 @@ function EditorBody({ round }: { round: RoundDetailDto }) {
         {isAdmin && <GameDaySelect round={round} />}
       </section>
 
-      <StartCountdown firstGameAt={round.firstGameAt} isAdmin={isAdmin} />
+      <StartCountdown firstGameAt={round.firstGameAt} proposalsOpen={round.proposalsOpen} isAdmin={isAdmin} />
 
       <div className="pick-cards">
         {picks.map((p) =>
