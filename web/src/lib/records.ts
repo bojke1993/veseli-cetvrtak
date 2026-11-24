@@ -30,15 +30,47 @@ export function recordValue(r: Pick<TeamRecordDto, 'code' | 'value'>): string {
   }
 }
 
-/** BR-38: member badges. */
-export const BADGE_META: Record<BadgeCode, { emoji: string; label: string; description: string }> = {
-  sniper: { emoji: '🎯', label: 'Snajper', description: '5 pogodaka zaredom' },
-  brave: { emoji: '🦁', label: 'Hrabri', description: 'Pogođen tip sa kvotom 2,00 ili većom' },
-  perfect_month: { emoji: '💯', label: 'Savršen mesec', description: 'Svi tipovi u mesecu pogođeni (najmanje 3)' },
-  near_miss: { emoji: '🤏', label: 'Za dlaku', description: 'Promašaj za pola poena' },
-  ice: { emoji: '🧊', label: 'Ledeni', description: 'Odslužio hlađenje' },
-  blame_king: { emoji: '👑', label: 'Kralj blejma', description: 'Najviše blejmova u sezoni' },
+/** BR-38: member badges. `rule` is the longer explanation shown in the badge guide. */
+export const BADGE_META: Record<BadgeCode, { emoji: string; label: string; description: string; rule: string }> = {
+  sniper: {
+    emoji: '🎯',
+    label: 'Snajper',
+    description: '5 pogodaka zaredom',
+    rule: 'Niz od 5 pogođenih tipova zaredom. Osvaja se svaki put kada niz dostigne 5.',
+  },
+  brave: {
+    emoji: '🦁',
+    label: 'Hrabri',
+    description: 'Pogođen tip sa kvotom 2,00 ili većom',
+    rule: 'Pogođen tip čija je kvota 2,00 ili veća.',
+  },
+  perfect_month: {
+    emoji: '💯',
+    label: 'Savršen mesec',
+    description: 'Svi tipovi u mesecu pogođeni (najmanje 3)',
+    rule: 'Svi lični tipovi u kalendarskom mesecu su pogođeni, a bilo ih je najmanje 3.',
+  },
+  near_miss: {
+    emoji: '🤏',
+    label: 'Za dlaku',
+    description: 'Promašaj za pola poena',
+    rule: 'Promašaj za pola poena, npr. „više 14,5”, a igrač dao 14 poena.',
+  },
+  ice: {
+    emoji: '🧊',
+    label: 'Ledeni',
+    description: 'Odslužio hlađenje',
+    rule: 'Odslužio hlađenje ❄ posle 5 promašaja zaredom.',
+  },
+  blame_king: {
+    emoji: '👑',
+    label: 'Kralj blejma',
+    description: 'Najviše blejmova u sezoni',
+    rule: 'Najviše blejmova u sezoni, ali samo ako je sam na vrhu (bez deljenog prvog mesta).',
+  },
 };
+
+export const BADGE_ORDER: BadgeCode[] = ['sniper', 'brave', 'perfect_month', 'near_miss', 'ice', 'blame_king'];
 
 export const NEAR_MISS_MESSAGES = [
   'Pola poena. Pola! Neko je u Evroligi namerno promašio slobodno bacanje.',

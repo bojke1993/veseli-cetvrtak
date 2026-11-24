@@ -6,6 +6,7 @@ import { memberLabel, useMemberMap } from '../components/MemberName';
 import { StatsFilter, useStatsQuery } from '../components/StatsFilter';
 import { Card, EmptyState, QueryView } from '../components/ui';
 import { formatDate, formatMoney, formatPercent } from '../lib/format';
+import { BadgeGuide } from '../components/BadgeGuide';
 import { RECORD_META, recordValue } from '../lib/records';
 
 const BUCKET_LABEL: Record<OutcomeBucket['key'], string> = {
@@ -229,6 +230,9 @@ export default function StatsPage() {
               </div>
               <Card title="Kuća slavnih">
                 <HallOfFame records={s.records} />
+              </Card>
+              <Card title="Bedževi — šta znače">
+                <BadgeGuide />
               </Card>
               <Card title="Raspodela ishoda">
                 <Distribution buckets={s.distribution} />

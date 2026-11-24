@@ -1857,6 +1857,34 @@ input[aria-invalid='true'] {
   font-weight: 600;
   font-size: 0.9rem;
 }
+.badge-guide-toggle {
+  margin-top: 10px;
+}
+.badge-guide {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.badge-guide li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.badge-guide-emoji {
+  font-size: 1.4rem;
+  line-height: 1.2;
+}
+.badge-guide-missing .badge-guide-emoji {
+  filter: grayscale(1);
+  opacity: 0.45;
+}
+.badge-guide-owned {
+  color: var(--pos);
+  font-weight: 600;
+}
 .badge-count {
   font-variant-numeric: tabular-nums;
   color: var(--muted);

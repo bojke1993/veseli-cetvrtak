@@ -3,6 +3,7 @@ import { screen } from '@testing-library/react';
 import type { TeamRecordDto } from '@api';
 import { HallOfFame } from './StatsPage';
 import { BadgeList } from './MemberProfilePage';
+import { BadgeGuide } from '../components/BadgeGuide';
 import { recordValue } from '../lib/records';
 import { MEMBERS, mockFetch, renderWithProviders } from '../test/utils';
 
@@ -47,5 +48,14 @@ describe('FR-28 — Kuća slavnih i bedževi', () => {
     expect(screen.getByText('Snajper')).toBeInTheDocument();
     expect(screen.getByText('×2')).toBeInTheDocument();
     expect(screen.getByText(/Promašaj za pola poena, prvi put u kolu #9/)).toBeInTheDocument();
+  });
+
+  it('badge guide lists every badge with its meaning and marks the earned ones', () => {
+    renderWithProviders(<BadgeGuide earned={['brave']} />);
+    expect(screen.getAllByRole('listitem')).toHaveLength(6);
+    expect(screen.getByText('Kralj blejma')).toBeInTheDocument();
+    expect(screen.getByText(/kvota 2,00 ili veća/)).toBeInTheDocument();
+    expect(screen.getByText(/osvojen/, { selector: '.badge-guide-owned' })).toBeInTheDocument();
+    expect(screen.getAllByText(/nije osvojen/)).toHaveLength(5);
   });
 });

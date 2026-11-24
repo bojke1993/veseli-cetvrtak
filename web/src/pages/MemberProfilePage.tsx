@@ -9,6 +9,7 @@ import { Card, QueryView } from '../components/ui';
 import { SanctionList } from './DisciplinePage';
 import { formatDate, formatMoney, formatPercent, lineLabel, streakText } from '../lib/format';
 import { BADGE_META, nearMissMessage } from '../lib/records';
+import { BadgeGuide } from '../components/BadgeGuide';
 import type { MemberStatsDto } from '@api';
 
 function MemberHero({ id }: { id: number }) {
@@ -91,6 +92,10 @@ export default function MemberProfilePage() {
           <>
             <Card title="Bedževi">
               <BadgeList badges={s.badges} />
+              <details className="small badge-guide-toggle">
+                <summary>Svi bedževi i šta znače</summary>
+                <BadgeGuide earned={s.badges.map((b) => b.code)} />
+              </details>
             </Card>
             <div className="stat-tiles">
               <div className="stat-tile">

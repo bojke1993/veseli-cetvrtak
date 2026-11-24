@@ -91,11 +91,12 @@ Sadržaj zavisi od stanja aktuelnog kola:
 - Grafikon kretanja bilansa kroz kola (linija).
 - Statistika "Ekipa".
 - Sekcija „Kuća slavnih” (FR-28): rekordi sa članom i linkom na kolo.
+- Kartica „Bedževi — šta znače”: spisak svih bedževa (BR-38) sa objašnjenjem.
 - Filter perioda.
 
 ### EKR-09 — Statistika članova i profil člana
 - Tabela: član, pogođeni, promašeni, %, blejm, broj uplata, uplaćeno, trenutni niz, najduži niz pogodaka/promašaja, hlađenja, vatrice; sortiranje po kolonama; na telefonu horizontalni skrol sa fiksiranom prvom kolonom.
-- Klik na člana → profil: svi pokazatelji iz FR-18, bedževi i „Za dlaku” (FR-28), niz poslednjih 10 tipova (najstariji levo, najnoviji desno), % za Više/Manje, omiljeni igrači, lista njegovih tipova (link na kola).
+- Klik na člana → profil: svi pokazatelji iz FR-18, bedževi i „Za dlaku” (FR-28) uz rasklopivi spisak „Svi bedževi i šta znače” (osvojeni označeni, neosvojeni posivljeni), niz poslednjih 10 tipova (najstariji levo, najnoviji desno), % za Više/Manje, omiljeni igrači, lista njegovih tipova (link na kola).
 
 ### EKR-10 — Blejm rang lista
 - Rang lista iz FR-19; prvo mesto istaknuto (šaljivo, npr. "Kralj blejma"); red "Ekipa" na dnu.
