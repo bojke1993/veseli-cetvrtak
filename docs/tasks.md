@@ -108,3 +108,11 @@ Plan i odluke: `docs/plan-ponuda-kladionica.md`.
 | T-84 | UI: `PlayerForm` u pretrazi i kartici tipa | REQ-42 | ☑ |
 | T-85 | `domain/chance.ts`, šanse u detalju kola, indikator i proslava (`Celebration`) | REQ-43 | ☑ |
 
+## Faza 6 — Chat ekipe (P-26, 24.11.2026.)
+
+| ID | Zadatak | REQ | Status |
+|----|---------|-----|--------|
+| T-86 | Specifikacija: BR-41, P-26, FR-31, NFR-27, REQ-44, EKR-15, model, uloge | REQ-44 | ☑ |
+| T-87 | Migracija `005_chat`, servis i rute `/api/chat/*`, SSE `/api/chat/stream`, praćenje prisutnosti | REQ-44 | ☑ |
+| T-88 | UI: ekran Chat, online tačke, broj nepročitanih u meniju | REQ-44 | ☑ |
+

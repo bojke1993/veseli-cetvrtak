@@ -458,3 +458,18 @@ Povučeno odlukom tima (P-20): prva verzija nema obaveštenja van aplikacije (pu
 **KP:**
 - KP1: Korisnici sa podešavanjem „smanji pokrete” (prefers-reduced-motion) ne vide animacije, samo poruku.
 - KP2: Proslava se ne ponavlja pri ponovnom otvaranju istog kola na istom uređaju.
+
+## FR-31 — Chat ekipe
+**Opis:** Prijavljeni članovi razmenjuju poruke u zajedničkom chatu i vide ko je trenutno online (BR-41, P-26).
+**Akter:** član, admin · **Prioritet:** C
+**Preduslovi:** član je prijavljen.
+**Tok:**
+1. Član otvara „Chat” (EKR-15); vidi poslednjih 50 poruka (najstarija gore, najnovija dole) i članove sa oznakom online/offline.
+2. Član piše poruku i šalje je (Enter ili dugme); poruka se odmah pojavljuje svim članovima koji imaju otvorenu aplikaciju.
+3. Dugme „Starije poruke” učitava prethodnih 50.
+4. Član briše svoju poruku; admin može obrisati bilo koju.
+**KP:**
+- KP1: Gost ne vidi chat ni u meniju; API vraća 401 bez prijave.
+- KP2: Online status se menja najkasnije 30 s posle zatvaranja aplikacije; offline član ima „viđen pre …”.
+- KP3: Broj nepročitanih (tuđih) poruka prikazuje se uz stavku „Chat” u meniju i nestaje kada član otvori chat.
+- KP4: Najviše 5 poruka u 10 s po članu; prazna poruka i poruka duža od 1000 znakova se odbijaju.

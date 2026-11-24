@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react';
 import { Link, NavLink, Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAdminTasks, useLogout } from '../api/queries';
+import { useChatState } from '../api/chat';
+import { useChatStream } from '../hooks/useChatStream';
 import { useAuth } from '../auth/AuthContext';
 import { useConnection } from '../hooks/LiveContext';
 import { ThemeToggle } from './ThemeToggle';
@@ -51,6 +53,12 @@ export function Layout() {
   const { me, isAdmin } = useAuth();
   const loc = useLocation();
   const { items, taskCount } = useMoreItems();
+  // BR-41: an open chat stream is what makes a member "online" — keep it open on every page.
+  const chatEnabled = !!me && !me.mustChangePassword;
+  useChatStream(chatEnabled ? me.memberId : null);
+  const chat = useChatState(chatEnabled);
+  const unread = chat.data?.unread ?? 0;
+  const primary = me ? [...PRIMARY, { to: '/chat', label: 'Chat', icon: '💬', end: false }] : PRIMARY;
 
   if (me?.mustChangePassword && loc.pathname !== '/lozinka') {
     return <Navigate to="/lozinka" replace />;
@@ -84,13 +92,18 @@ export function Layout() {
 
       <nav className="nav" aria-label="Glavna navigacija">
         <ul className="nav-primary">
-          {PRIMARY.map((i) => (
+          {primary.map((i) => (
             <li key={i.to}>
               <NavLink to={i.to} end={i.end} className="nav-link">
                 <span className="nav-icon" aria-hidden="true">
                   {i.icon}
                 </span>
                 <span>{i.label}</span>
+                {i.to === '/chat' && unread > 0 && (
+                  <span className="nav-badge nav-badge-float" aria-label={`${unread} nepročitanih poruka`}>
+                    {unread > 99 ? '99+' : unread}
+                  </span>
+                )}
               </NavLink>
             </li>
           ))}
@@ -101,7 +114,7 @@ export function Layout() {
               </span>
               <span>Još</span>
               {taskCount > 0 && (
-                <span className="nav-badge" aria-label={`${taskCount} otvorenih zadataka`}>
+                <span className="nav-badge nav-badge-float" aria-label={`${taskCount} otvorenih zadataka`}>
                   {taskCount}
                 </span>
               )}

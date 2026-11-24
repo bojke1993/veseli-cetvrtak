@@ -254,6 +254,7 @@ export function useLogout() {
       qc.setQueryData<MeResponse>(keys.me, { me: null });
       qc.removeQueries({ queryKey: ['admin'] });
       qc.removeQueries({ queryKey: ['audit'] });
+      qc.removeQueries({ queryKey: ['chat'] });
       invalidateRoundData(qc);
     },
   });

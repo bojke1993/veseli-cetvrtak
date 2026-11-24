@@ -113,6 +113,29 @@ export function todayBelgrade(now = new Date()): string {
   return `${p.year}-${p.month}-${p.day}`;
 }
 
+/** "Viđen …" text for chat presence: "upravo", "pre 5 min", "pre 2 h", "juče u 20:30", "15.10.2026." */
+export function formatAgo(iso: string | null | undefined, now = Date.now()): string {
+  if (!iso) return DASH;
+  const t = new Date(iso).getTime();
+  if (Number.isNaN(t)) return DASH;
+  const min = Math.floor((now - t) / 60_000);
+  if (min < 1) return 'upravo';
+  if (min < 60) return `pre ${min} min`;
+  const today = todayBelgrade(new Date(now));
+  const day = todayBelgrade(new Date(t));
+  if (day === today) return `pre ${Math.floor(min / 60)} h`;
+  if (day === todayBelgrade(new Date(now - 86_400_000))) return `juče u ${formatTime(iso)}`;
+  return formatDate(iso);
+}
+
+/** Day separator in the chat: "Danas", "Juče" or "15.10.2026." */
+export function formatChatDay(iso: string, now = Date.now()): string {
+  const day = todayBelgrade(new Date(iso));
+  if (day === todayBelgrade(new Date(now))) return 'Danas';
+  if (day === todayBelgrade(new Date(now - 86_400_000))) return 'Juče';
+  return formatDate(iso);
+}
+
 /** Seconds → "23:05" */
 export function formatSecondsPlayed(sec: number | null | undefined): string {
   if (!isNum(sec)) return DASH;

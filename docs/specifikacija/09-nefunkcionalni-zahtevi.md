@@ -35,3 +35,4 @@
 - **NFR-22 — Logovanje i praćenje.** Strukturirani logovi worker-a; upozorenje adminu ako live poller ne uspe 5 puta zaredom.
 - **NFR-23 — Troškovi (P-21).** Budžet je 0 EUR: rešenje mora da radi na besplatnom hostingu (besplatni planovi za web aplikaciju, bazu i pozadinske poslove) i besplatnom Euroleague API-ju. Arhitektura mora uzeti u obzir ograničenja besplatnih planova (npr. "uspavljivanje" servera — live poller mora biti pokrenut zakazanim poslom pre početka utakmica).
 - **NFR-26 — Prikupljanje forme igrača (FR-29).** Preuzimanje boxscore-a starih utakmica koristi samo budžet zahteva koji live praćenje ne troši (najviše 3 zahteva po ciklusu workera) i staje pri grešci; live praćenje uvek ima prednost.
+- **NFR-27 — Chat u realnom vremenu (FR-31).** Poruke i promene online statusa stižu preko posebne SSE veze dostupne samo prijavljenim članovima (`/api/chat/stream`), bez dodatnih servisa i biblioteka; poruka se kod ostalih članova pojavljuje za manje od 2 s.

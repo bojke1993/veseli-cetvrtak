@@ -21,6 +21,7 @@ const AuditPage = lazy(() => import('./pages/AuditPage'));
 const TasksPage = lazy(() => import('./pages/TasksPage'));
 const SettingsPage = lazy(() => import('./pages/SettingsPage'));
 const DisciplinePage = lazy(() => import('./pages/DisciplinePage'));
+const ChatPage = lazy(() => import('./pages/ChatPage'));
 
 export function createQueryClient() {
   return new QueryClient({
@@ -57,6 +58,7 @@ export function AppRoutes() {
         <Route path="lozinka" element={<RequireAuth><ChangePasswordPage /></RequireAuth>} />
         <Route path="audit" element={<RequireAuth><Lazy><AuditPage /></Lazy></RequireAuth>} />
         <Route path="zadaci" element={<RequireAuth admin><Lazy><TasksPage /></Lazy></RequireAuth>} />
+        <Route path="chat" element={<RequireAuth><Lazy><ChatPage /></Lazy></RequireAuth>} />
         <Route path="podesavanja" element={<RequireAuth><Lazy><SettingsPage /></Lazy></RequireAuth>} />
         <Route path="*" element={<p className="alert">Strana nije pronađena.</p>} />
       </Route>

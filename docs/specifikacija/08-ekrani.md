@@ -118,3 +118,9 @@ Sadržaj zavisi od stanja aktuelnog kola:
 - Javna lista disciplinskih mera (FR-27): 🟨 opomena / 🟥 preskakanje kola, član, kolo-povod, obrazloženje, ko i kada, status (aktivna, pretvorena u preskakanje kola, preskače sledeće kolo, odsluženo u kolu #N, poništena).
 - Admin: forma "Nova mera" (član, mera, kolo-povod, obrazloženje) sa napomenom kada će opomena značiti preskakanje kola; dugme "Poništi" (uz razlog) za mere bez posledica.
 - Dostupno iz menija "Još"; mere člana prikazuju se i na profilu člana (EKR-09).
+
+### EKR-15 — Chat (FR-31)
+- Samo za prijavljene članove; stavka „Chat” u glavnom meniju sa brojem nepročitanih poruka.
+- Gore: članovi sa zelenom tačkom i „online” ili sivom tačkom i „viđen pre …”.
+- Poruke: najstarija gore, najnovija dole; svoje poruke desno, tuđe levo sa imenom; vreme slanja; razdelnik po danu; „Starije poruke” na vrhu.
+- Dole: polje za unos (Enter šalje, Shift+Enter novi red) i dugme „Pošalji”; brisanje preko dugmeta uz poruku, uz potvrdu u samoj aplikaciji.

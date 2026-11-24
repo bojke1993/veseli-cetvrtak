@@ -64,6 +64,8 @@ Stvari naučene tokom razvoja koje nisu očigledne iz koda. Dopunjavati kako pro
 - Nizovi rezultata se prikazuju hronološki sa leva na desno (BR-40, P-25). `MemberStatsDto.last10` je do 23.11.2026. stizao od najnovijeg, a profil ga je crtao kao da je od najstarijeg — sada server šalje od najstarijeg.
 - Proslava dobitnog tiketa (`Celebration`) se pamti u `localStorage` ključem `vc-celebrated-<roundId>`; kolo dobijeno pre više od 24 h ne pokreće konfete (pregled istorije).
 
+- Chat (BR-41): „online” = član ima otvorenu vezu `/api/chat/stream` (otvara je `Layout` na svakoj strani). Ko je online drži se samo u memoriji servera (`chat/presence.ts`, 30 s tolerancije), pa posle restarta servera svi su offline dok se klijenti ponovo ne povežu (EventSource to radi sam za ~5 s). Telefon u pozadini posle nekog vremena prekida vezu → član postaje offline.
+
 - `@fastify/static` je registrovan sa `wildcard: false` — lista fajlova se pravi pri startu servera. Posle `npm run build -w web` na živom serveru novi (heširani) asset-i padaju na SPA fallback i vraćaju `index.html` → prazna stranica. Posle build-a restartovati server.
 - Tema: `html[data-theme="light"|"dark"]` (ThemeToggle, `localStorage` ključ `vc-theme`); bez atributa važi `prefers-color-scheme`. Tamna paleta je u `app.css` dvaput (media upit + `[data-theme='dark']`) — menjati oba bloka. Tema se primenjuje pre iscrtavanja iz `web/public/theme.js` (CSP zabranjuje inline skripte).
 - Snimci ekrana bez Chrome ekstenzije: headless Chrome sa `--remote-debugging-port` + CDP preko Node `WebSocket`-a (`Emulation.setDeviceMetricsOverride`, `Page.captureScreenshot`); `--screenshot` sa `--virtual-time-budget` visi zbog SSE veze.

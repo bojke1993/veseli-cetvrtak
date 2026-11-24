@@ -63,6 +63,10 @@ Kolona **Izvor** povezuje zahtev sa specifikacijom (FR = funkcionalni zahtev, BR
 | REQ-38 | Isporuka kao jedan Docker image na besplatnom hostingu | zahtev naručioca (stack), NFR-23 |
 | REQ-39 | Ponuda kladionica za izabranog igrača | FR-26, BR-36, NFR-25, P-23 |
 | REQ-40 | Disciplinske mere (opomena, preskakanje kola) | FR-27, BR-37, P-24 |
+| REQ-41 | Rekordi, bedževi i „za dlaku” | FR-28, BR-38, P-25 |
+| REQ-42 | Forma igrača pri izboru tipa | FR-29, BR-40, NFR-26, P-25 |
+| REQ-43 | Live šanse tiketa i proslava | FR-30, BR-39, P-25 |
+| REQ-44 | Chat ekipe i online status | FR-31, BR-41, NFR-27, P-26 |
 
 ---
 
@@ -543,6 +547,17 @@ Kriterijumi prihvatanja:
 3. KADA tiket postane dobitan, ONDA sistem ĆE jednom po kolu i uređaju prikazati konfete i pokrenuti kratku vibraciju (ako je uređaj podržava).
 4. AKO korisnik ima uključeno smanjenje pokreta, ONDA sistem NEĆE prikazivati animacije.
 
+### REQ-44 — Chat ekipe i online status
+**Kao** član, **želim** da se dopisujem sa ekipom u aplikaciji i vidim ko je online.
+**Izvor:** FR-31, BR-41, NFR-27, P-26
+
+1. AKO korisnik nije prijavljen, ONDA sistem NEĆE prikazati chat ni podatke o tome ko je online (API vraća 401).
+2. KADA član pošalje poruku dužine 1–1000 znakova, ONDA sistem ĆE je sačuvati i odmah dostaviti svim članovima sa otvorenom aplikacijom.
+3. DOK član ima otvorenu aplikaciju, sistem ĆE ga prikazivati kao online; KADA zatvori aplikaciju, ONDA sistem ĆE ga najkasnije za 30 s prikazati kao offline uz vreme kada je poslednji put viđen.
+4. Sistem ĆE prikazivati broj nepročitanih tuđih poruka uz stavku „Chat” u meniju.
+5. KADA autor ili admin obriše poruku, ONDA sistem ĆE je ukloniti kod svih članova; brisanje tuđe poruke ĆE se upisati u audit log.
+6. AKO član pošalje više od 5 poruka u 10 s, ONDA sistem ĆE odbiti poruku (429).
+
 ### REQ-38 — Isporuka kao jedan Docker image na besplatnom hostingu
 **Kao** administrator, **želim** da se cela aplikacija pokreće iz jednog Docker image-a, **kako bi** postavljanje i održavanje bilo jednostavno i besplatno.
 **Izvor:** zahtev naručioca (tehnološki stack), NFR-23, P-21
@@ -581,11 +596,15 @@ Pitanja koja specifikacija nije rešavala ili su bila u suprotnosti sa novim teh
 | FR-28 | REQ-41 |
 | FR-29 | REQ-42 |
 | FR-30 | REQ-43 |
+| FR-31 | REQ-44 |
 | FR-23 (povučeno) | REQ-32.4 (izričito bez obaveštenja) |
 | BR-01…BR-36 | REQ-03, REQ-06…REQ-23, REQ-31, REQ-02 |
 | BR-37 | REQ-40 |
 | BR-38 | REQ-41 |
 | BR-39 | REQ-43 |
 | BR-40 | REQ-42 |
+| BR-41 | REQ-44 |
 | NFR-01…NFR-25 | REQ-13, REQ-34…REQ-38 |
+| NFR-26 | REQ-42 |
+| NFR-27 | REQ-44 |
 | Poglavlje 7 (integracije) | REQ-04, REQ-05, REQ-13, REQ-14, REQ-33 |

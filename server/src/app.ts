@@ -9,11 +9,12 @@ import { HttpError } from './http/errors.js';
 import { loadSessionMember, SESSION_COOKIE } from './http/auth.js';
 import { registerRoutes } from './routes/index.js';
 import { registerLiveRoutes } from './live/routes.js';
+import { registerChatRoutes, type ChatRouteOptions } from './chat/routes.js';
 
 const MUTATING = new Set(['POST', 'PUT', 'PATCH', 'DELETE']);
 const PASSWORD_CHANGE_ALLOWED = new Set(['/api/auth/login', '/api/auth/logout', '/api/auth/change-password']);
 
-export async function buildApp(deps: Deps, opts: { logger?: boolean } = {}): Promise<FastifyInstance> {
+export async function buildApp(deps: Deps, opts: { logger?: boolean; chat?: ChatRouteOptions } = {}): Promise<FastifyInstance> {
   const app = Fastify({
     logger: opts.logger ?? false,
     trustProxy: true,
@@ -75,6 +76,7 @@ export async function buildApp(deps: Deps, opts: { logger?: boolean } = {}): Pro
   await app.register(async (api) => {
     await registerRoutes(api, deps);
     await registerLiveRoutes(api, deps);
+    await registerChatRoutes(api, deps, opts.chat);
   }, { prefix: '/api' });
 
   const publicDir = deps.config.publicDir;

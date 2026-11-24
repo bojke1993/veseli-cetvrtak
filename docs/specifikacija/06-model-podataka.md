@@ -235,6 +235,17 @@ Samo dodavanje (append-only), bez izmene i brisanja (FR-22).
 
 Mesto suspendovanog člana u kolu je PICK sa `kind = team` i `cooldown_for_member_id = član`, kao kod hlađenja; razlika (suspenzija, ne hlađenje) se izvodi iz `SANCTION.served_round_id`.
 
+### CHAT_MESSAGE (Poruka u chatu) — BR-41, FR-31
+| Atribut | Tip | Opis |
+|---------|-----|------|
+| id | int | rastući; služi za straničenje i za „pročitano do” |
+| member_id | FK → MEMBER | autor |
+| body | string(1000) | tekst poruke |
+| created_at | datetime | vreme slanja |
+| deleted_at, deleted_by | datetime?, FK → MEMBER? | brisanje (poruka se dalje ne prikazuje) |
+
+MEMBER dobija `chat_read_id` (poslednja pročitana poruka, za broj nepročitanih) i `last_seen_at` (kada je poslednji put bio online). Ko je **trenutno** online drži se samo u memoriji servera (otvorene veze), ne u bazi.
+
 ### SYNC_RUN (Evidencija sinhronizacija)
 `id`, `type` (`players`, `schedule`, `live`, `final`, `recheck`), `started_at`, `finished_at`, `status` (`ok`/`error`), `error_message`, `items_changed`. Koristi se za upozorenja o zastarelim podacima (FR-03 KP2, FR-13 KP2).
 

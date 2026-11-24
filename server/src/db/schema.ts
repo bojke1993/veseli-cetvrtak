@@ -40,7 +40,8 @@ export type AuditAction =
   | 'late_accept'
   | 'sanction_issue'
   | 'sanction_revoke'
-  | 'suspension_served';
+  | 'suspension_served'
+  | 'chat_delete';
 
 export interface MembersTable {
   id: number; // 1..4, fixed
@@ -55,6 +56,10 @@ export interface MembersTable {
   failed_attempts: Generated<number>;
   locked_until: Date | null;
   created_at: CreatedAt;
+  /** BR-41: id of the last chat message the member has read. */
+  chat_read_id: Generated<number>;
+  /** BR-41: when the member was last online (set when they go offline). */
+  last_seen_at: Date | null;
 }
 
 export interface SessionsTable {
@@ -233,6 +238,16 @@ export interface SyncRunsTable {
   items_changed: number | null;
 }
 
+/** BR-41: team chat message; deleted ones are hidden. */
+export interface ChatMessagesTable {
+  id: Generated<number>;
+  member_id: number;
+  body: string;
+  created_at: Date;
+  deleted_at: Date | null;
+  deleted_by: number | null;
+}
+
 export interface Database {
   members: MembersTable;
   sessions: SessionsTable;
@@ -248,6 +263,7 @@ export interface Database {
   audit_log: AuditLogTable;
   sync_runs: SyncRunsTable;
   sanctions: SanctionsTable;
+  chat_messages: ChatMessagesTable;
 }
 
 export type Member = Selectable<MembersTable>;
@@ -261,3 +277,4 @@ export type PickUpdate = Updateable<PicksTable>;
 export type Proposal = Selectable<ProposalsTable>;
 export type AuditEntry = Selectable<AuditLogTable>;
 export type Sanction = Selectable<SanctionsTable>;
+export type ChatMessage = Selectable<ChatMessagesTable>;

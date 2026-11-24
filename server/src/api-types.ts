@@ -543,3 +543,31 @@ export interface ImportCommitResponse { imported: number }
 /** SSE on GET /live/stream. Event names: 'round', 'live', 'ping'. */
 export interface RoundEvent { roundId: number }
 export interface LiveEvent { roundId: number; picks: Array<{ slot: number; live: PickLiveDto }>; game?: GameDto }
+
+// ---------- Chat (BR-41, FR-31) — members only ----------
+
+export interface ChatMessageDto {
+  id: number;
+  memberId: number;
+  body: string;
+  createdAt: string;
+}
+export interface ChatPresenceDto {
+  memberId: number;
+  online: boolean;
+  /** When the member was last online; null while online or if never seen. */
+  lastSeenAt: string | null;
+}
+/** GET /chat/messages?before=&limit= — oldest first; `hasMore` = older messages exist. */
+export interface ChatMessagesResponse { messages: ChatMessageDto[]; hasMore: boolean }
+/** GET /chat/state and POST /chat/read */
+export interface ChatStateResponse { presence: ChatPresenceDto[]; unread: number; readId: number }
+export interface SendChatMessageRequest { body: string }
+export interface SendChatMessageResponse { message: ChatMessageDto }
+export interface MarkChatReadRequest { id: number }
+/**
+ * SSE on GET /chat/stream (members only). Events: 'message' (ChatMessageDto), 'delete' (ChatDeleteEvent),
+ * 'presence' (ChatPresenceEvent), 'ping'.
+ */
+export interface ChatDeleteEvent { id: number }
+export interface ChatPresenceEvent { presence: ChatPresenceDto[] }
