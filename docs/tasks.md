@@ -116,3 +116,11 @@ Plan i odluke: `docs/plan-ponuda-kladionica.md`.
 | T-87 | Migracija `005_chat`, servis i rute `/api/chat/*`, SSE `/api/chat/stream`, praćenje prisutnosti | REQ-44 | ☑ |
 | T-88 | UI: ekran Chat, online tačke, broj nepročitanih u meniju | REQ-44 | ☑ |
 
+## Faza 7 — Neuplaćen tiket i upozorenje (P-27, 25.11.2026.)
+
+| ID | Zadatak | REQ | Status |
+|----|---------|-----|--------|
+| T-89 | Specifikacija: BR-42, P-27, FR-32, REQ-45, model, EKR-14 | REQ-45 | ☑ |
+| T-90 | Migracija `006_round_note_notice` (uklj. ispravku kola #18 i upozorenje Tozislavu), `PUT /rounds/:id/note`, bilans bez neuplaćenih, eskalacija upozorenje → opomena | REQ-45 | ☑ |
+| T-91 | UI: napomena i „tiket nije uplaćen” u detalju/istoriji, admin forma, ⚠️ upozorenje na Disciplini i uz ime | REQ-45 | ☑ |
+

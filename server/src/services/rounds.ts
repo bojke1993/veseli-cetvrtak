@@ -60,6 +60,8 @@ export const ACTIVE_STATUSES: RoundStatus[] = ['open', 'locked', 'in_progress'];
 export const MAX_STAKE = 1_000_000;
 export const MAX_ODDS = 1_000;
 export const MAX_AMOUNT = 9_999_999_999;
+/** BR-42: maximum length of a round note. */
+export const ROUND_NOTE_MAX = 1000;
 
 const STATUS_LABEL: Record<RoundStatus, string> = {
   open: 'Otvoreno',
@@ -182,6 +184,8 @@ function summaryBase(round: Round, picks: Pick[], derived: DerivedState): Omit<R
     suspendedMemberIds: rd?.suspendedMemberIds ?? [],
     hasCorrections: round.has_corrections === 1,
     cooldownInconsistent: rd?.cooldownInconsistent ?? false,
+    ticketNotPlaced: round.ticket_not_placed === 1,
+    note: round.note,
   };
 }
 
@@ -1295,6 +1299,47 @@ export async function setActualWin(
       oldValue: num(round.actual_win),
       newValue: round2(amount),
       reason,
+    });
+  });
+  deps.derived.invalidate();
+  deps.bus.roundChanged(round.id);
+}
+
+/**
+ * BR-42: the admin marks the ticket as not placed (the round then counts in neither stake nor
+ * win) and/or sets a public note. A not-placed ticket needs a note explaining why.
+ */
+export async function setRoundNote(
+  deps: Deps,
+  actor: SessionMember,
+  roundId: number,
+  input: { ticketNotPlaced: boolean; note: string | null },
+): Promise<void> {
+  const round = await getRoundOr404(deps.db, roundId);
+  const note = input.note?.trim() || null;
+  if (note !== null && note.length > ROUND_NOTE_MAX) throw unprocessable(`Napomena može imati najviše ${ROUND_NOTE_MAX} znakova.`);
+  if (input.ticketNotPlaced && note === null) throw unprocessable('Uz neuplaćen tiket napomena je obavezna.');
+  if (input.ticketNotPlaced && round.status === 'open') throw conflict('Otvoreno kolo još nema tiket — prvo ga zaključaj.');
+  const before = { ticketNotPlaced: round.ticket_not_placed === 1, note: round.note };
+  const after = { ticketNotPlaced: input.ticketNotPlaced, note };
+  if (before.ticketNotPlaced === after.ticketNotPlaced && before.note === after.note) return;
+  await deps.db.transaction().execute(async (trx) => {
+    await trx
+      .updateTable('rounds')
+      .set({ ticket_not_placed: input.ticketNotPlaced ? 1 : 0, note })
+      .where('id', '=', round.id)
+      .execute();
+    await writeAudit(trx, {
+      at: deps.now(),
+      actorMemberId: actor.id,
+      action: 'round_note',
+      roundId: round.id,
+      entity: 'round',
+      entityId: round.id,
+      field: 'ticket_not_placed',
+      oldValue: before,
+      newValue: after,
+      reason: note,
     });
   });
   deps.derived.invalidate();

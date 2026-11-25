@@ -77,6 +77,8 @@ export function roundDetail(over: Partial<RoundDetailDto> = {}): RoundDetailDto 
     suspendedMemberIds: [],
     hasCorrections: false,
     cooldownInconsistent: false,
+    ticketNotPlaced: false,
+    note: null,
     lockedAt: null,
     lockedBy: null,
     resolvedAt: null,
@@ -126,6 +128,8 @@ export function roundSummary(id: number, over: Partial<RoundSummaryDto> = {}): R
     suspendedMemberIds: [],
     hasCorrections: false,
     cooldownInconsistent: false,
+    ticketNotPlaced: false,
+    note: null,
     picks: [1, 2, 3, 4].map((slot) => ({
       slot,
       kind: 'personal' as const,

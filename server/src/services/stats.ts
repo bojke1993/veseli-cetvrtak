@@ -45,6 +45,8 @@ interface StatRound {
   payerMemberId: number | null;
   /** Amount won (void round = stake). */
   won: number;
+  /** BR-42: ticket not placed — stake and win are 0. */
+  notPlaced: boolean;
   provisional: boolean;
   picks: StatPick[];
 }
@@ -63,7 +65,7 @@ async function loadRounds(deps: StatsDeps, q: StatsQuery): Promise<StatRound[]> 
     .selectFrom('rounds')
     .select([
       'id', 'number', 'game_day', 'season_code', 'status', 'stake', 'total_odds',
-      'payer_member_id', 'actual_win', 'actual_win_provisional',
+      'payer_member_id', 'actual_win', 'actual_win_provisional', 'ticket_not_placed',
     ])
     .where('status', 'in', ['won', 'lost', 'void']);
   const season = q.season ?? currentSeason(deps);
@@ -107,9 +109,11 @@ async function loadRounds(deps: StatsDeps, q: StatsQuery): Promise<StatRound[]> 
 
   return rows.map((r) => {
     const status = r.status as StatRound['status'];
-    const stake = toNum(r.stake) ?? 0;
+    const notPlaced = r.ticket_not_placed === 1;
+    // BR-42: a ticket that was not placed has no stake and no win.
+    const stake = notPlaced ? 0 : (toNum(r.stake) ?? 0);
     const totalOdds = toNum(r.total_odds);
-    let won = toNum(r.actual_win);
+    let won = notPlaced ? 0 : toNum(r.actual_win);
     if (won === null) {
       if (status === 'void') won = stake;
       else if (status === 'won') won = totalOdds !== null ? round2(stake * totalOdds) : 0;
@@ -125,7 +129,8 @@ async function loadRounds(deps: StatsDeps, q: StatsQuery): Promise<StatRound[]> 
       totalOdds,
       payerMemberId: r.payer_member_id,
       won,
-      provisional: Boolean(r.actual_win_provisional),
+      notPlaced,
+      provisional: !notPlaced && Boolean(r.actual_win_provisional),
       picks: byRound.get(r.id) ?? [],
     };
   });
@@ -301,7 +306,7 @@ function buildMemberStats(
 
   for (const r of rounds) {
     const d = derived.rounds.get(r.id);
-    if (r.payerMemberId === memberId) {
+    if (r.payerMemberId === memberId && !r.notPlaced) {
       payments++;
       paidTotal += r.stake;
     }

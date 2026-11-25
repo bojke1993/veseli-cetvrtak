@@ -116,6 +116,7 @@ Tiket može dobiti status *Gubitan* i pre kraja svih utakmica, čim je neki tip 
 
 **BR-37 — Disciplinske mere (P-24).** Admin može članu izreći disciplinsku meru uz **obavezno obrazloženje** i, po želji, kolo koje je povod. Mere su:
 - **Opomena** (🟨) — upozorenje bez posledica na tiket.
+- **Upozorenje** (⚠️, blaža mera, dodato BR-42) — dva aktivna upozorenja = opomena.
 - **Preskakanje kola** (🟥, suspenzija) — član ne bira lični tip u **sledećem kolu koje se otvori**; umesto njega se igra tip ekipe, kao kod hlađenja (BR-26, BR-27: član na suspenziji ne predlaže i ne glasa u tom kolu).
 
 Pravila:
@@ -143,3 +144,8 @@ Pravila:
 **BR-40 — Forma igrača (P-25).** Pri izboru igrača prikazuje se njegovih **poslednjih 5 završenih utakmica Evrolige** (poeni, protivnik, DNP ako nije ušao), poređanih **hronološki: najstarija levo, najnovija desno**, prosek poena (bez DNP) i istorija ekipe sa tim igračem (koliko puta je biran i koliko pogođen). Pošto je uneta granica, prikazuje se i koliko je puta u tih 5 utakmica bio iznad nje. I ostali nizovi u aplikaciji (npr. „Poslednjih 10 tipova” na profilu) prikazuju se istim redosledom.
 
 **BR-41 — Chat ekipe (P-26).** Aplikacija ima jedan zajednički chat (bez direktnih poruka) dostupan **samo prijavljenim članovima**; to je izuzetak od javnog pregleda (BR-35) — gost ne vidi ni poruke ni ko je online. Poruka ima autora, tekst (1–1000 znakova, bez slika i fajlova) i vreme slanja; ne može se menjati. Autor može da obriše svoju poruku, a admin bilo koju (brisanje tuđe poruke upisuje se u audit log). Poruke se čuvaju trajno. Član je **online** dok ima otvorenu aplikaciju (aktivna veza sa serverom), uz toleranciju od 30 s na kratke prekide; inače je offline i prikazuje se kada je poslednji put viđen. Nema obaveštenja van aplikacije (P-20): u meniju se prikazuje broj nepročitanih poruka. Chat ne utiče ni na jedno pravilo igre.
+
+**BR-42 — Neuplaćen tiket, napomena na kolu i upozorenje (P-27).**
+1. Admin može zaključeno, kolo u toku ili razrešeno kolo označiti sa **„tiket nije uplaćen”**, uz obaveznu javnu napomenu (razlog). Takvo kolo **ne ulazi u bilans**: uplata i dobitak se računaju kao 0 (ukupno uloženo, dobitak, bilans, ROI, uplate člana, rekordi dobitka i kvote tiketa). Tipovi i ishod kola i dalje ulaze u statistiku (pogoci, nizovi, hlađenje, vatrice, blejm), jer su tipovi odigrani i javno izabrani. Oznaka se može ukloniti; izmene se upisuju u audit log.
+2. Admin može svakom kolu dodati javnu **napomenu** (i bez oznake neuplaćenog tiketa).
+3. **Upozorenje** (⚠️) je najblaža disciplinska mera (dopuna BR-37): bez posledica na tiket. Kada član dobije **drugo aktivno upozorenje**, sistem automatski izriče **opomenu** 🟨 i oba upozorenja postaju iskorišćena; ta opomena dalje podleže BR-37 (druga aktivna opomena = preskakanje kola). Upozorenja ne zastarevaju; poništavanje upozorenja koje je dovelo do opomene poništava i tu opomenu (i preskakanje kola do kog je ona dovela, ako još nije primenjeno), a ostala upozorenja ponovo postaju aktivna.

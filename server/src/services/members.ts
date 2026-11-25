@@ -50,6 +50,7 @@ export async function listMembers(deps: Deps): Promise<MemberDto[]> {
       ...memberStreak(derived, m.id, season),
       onCooldown: cooldown.has(m.id),
       warnings: sc?.warnings ?? 0,
+      notices: sc?.notices ?? 0,
       suspended: sc?.suspended ?? false,
       recentWarning: sc?.recentWarning ?? false,
     };

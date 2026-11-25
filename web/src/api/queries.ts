@@ -1,6 +1,7 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient, type QueryClient } from '@tanstack/react-query';
 import type {
   ActualWinRequest,
+  RoundNoteRequest,
   IssueSanctionRequest,
   IssueSanctionResponse,
   RevokeSanctionRequest,
@@ -315,6 +316,10 @@ export function useManualResolve(roundId: number) {
 
 export function useActualWin(roundId: number) {
   return useRoundMutation((body: ActualWinRequest) => api.post<RoundResponse>(`/rounds/${roundId}/actual-win`, body));
+}
+
+export function useRoundNote(roundId: number) {
+  return useRoundMutation((body: RoundNoteRequest) => api.put<RoundResponse>(`/rounds/${roundId}/note`, body));
 }
 
 export function useDeleteRound(roundId: number) {

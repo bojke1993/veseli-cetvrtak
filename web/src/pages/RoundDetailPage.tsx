@@ -10,6 +10,7 @@ import { AdminActionsMenu } from '../components/round/AdminActions';
 import { RoundEditor } from '../components/round/RoundEditor';
 import { RoundFlags } from '../components/RoundCard';
 import { QueryView } from '../components/ui';
+import { SANCTION_META } from '../lib/sanctions';
 import {
   formatDate,
   formatDateTime,
@@ -32,14 +33,26 @@ function RoundSanctions({ roundId }: { roundId: number }) {
       <ul className="simple-list">
         {items.map((s) => (
           <li key={s.id}>
-            <span role="img" aria-label={s.kind === 'warning' ? 'opomena' : 'preskakanje kola'}>
-              {s.kind === 'warning' ? '🟨' : '🟥'}
+            <span role="img" aria-label={SANCTION_META[s.kind].label.toLowerCase()}>
+              {SANCTION_META[s.kind].icon}
             </span>{' '}
-            <MemberName id={s.memberId} showStatus={false} /> — {s.kind === 'warning' ? 'opomena' : 'preskakanje kola'}: {s.reason}
+            <MemberName id={s.memberId} showStatus={false} /> — {SANCTION_META[s.kind].label.toLowerCase()}: {s.reason}
           </li>
         ))}
       </ul>
       <Link to="/disciplina">Sve disciplinske mere ›</Link>
+    </div>
+  );
+}
+
+/** BR-42: admin note on the round; a ticket that was not placed does not count in the balance. */
+function RoundNote({ round }: { round: Pick<RoundDetailDto, 'note' | 'ticketNotPlaced'> }) {
+  if (!round.note && !round.ticketNotPlaced) return null;
+  return (
+    <div className={`alert round-note${round.ticketNotPlaced ? ' alert-warn' : ''}`} role="note">
+      <strong>{round.ticketNotPlaced ? '🚫 Tiket nije uplaćen' : '📝 Napomena'}</strong>
+      {round.note && <p>{round.note}</p>}
+      {round.ticketNotPlaced && <p className="small muted">Kolo se ne računa u bilans (uplata i dobitak = 0); tipovi i dalje ulaze u statistiku.</p>}
     </div>
   );
 }
@@ -193,7 +206,7 @@ export function RoundDetailView({ round }: { round: RoundDetailDto }) {
           </div>
           <div>
             <dt>Uplata</dt>
-            <dd>{formatMoney(round.stake)}</dd>
+            <dd>{round.ticketNotPlaced ? <span className="not-placed">nije uplaćeno</span> : formatMoney(round.stake)}</dd>
           </div>
           <div>
             <dt>Ukupna kvota</dt>
@@ -210,8 +223,8 @@ export function RoundDetailView({ round }: { round: RoundDetailDto }) {
           <div>
             <dt>Stvarni dobitak</dt>
             <dd>
-              {formatMoney(round.actualWin)}
-              {round.actualWinProvisional && <span className="muted"> (privremeno)</span>}
+              {round.ticketNotPlaced ? '—' : formatMoney(round.actualWin)}
+              {round.actualWinProvisional && !round.ticketNotPlaced && <span className="muted"> (privremeno)</span>}
             </dd>
           </div>
           <div>
@@ -222,6 +235,7 @@ export function RoundDetailView({ round }: { round: RoundDetailDto }) {
           </div>
         </dl>
         <RoundFlags round={round} />
+        <RoundNote round={round} />
         <RoundSanctions roundId={round.id} />
         {round.fireChanges.length > 0 && (
           <p className="small">

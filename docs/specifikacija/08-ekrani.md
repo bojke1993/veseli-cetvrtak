@@ -115,7 +115,7 @@ Sadržaj zavisi od stanja aktuelnog kola:
 - Svaki zadatak vodi direktno na mesto rešavanja.
 
 ### EKR-14 — Disciplina
-- Javna lista disciplinskih mera (FR-27): 🟨 opomena / 🟥 preskakanje kola, član, kolo-povod, obrazloženje, ko i kada, status (aktivna, pretvorena u preskakanje kola, preskače sledeće kolo, odsluženo u kolu #N, poništena).
+- Javna lista disciplinskih mera (FR-27, FR-32): ⚠️ upozorenje / 🟨 opomena / 🟥 preskakanje kola, član, kolo-povod, obrazloženje, ko i kada, status (aktivna, pretvorena u preskakanje kola, preskače sledeće kolo, odsluženo u kolu #N, poništena).
 - Admin: forma "Nova mera" (član, mera, kolo-povod, obrazloženje) sa napomenom kada će opomena značiti preskakanje kola; dugme "Poništi" (uz razlog) za mere bez posledica.
 - Dostupno iz menija "Još"; mere člana prikazuju se i na profilu člana (EKR-09).
 

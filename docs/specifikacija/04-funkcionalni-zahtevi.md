@@ -473,3 +473,15 @@ Povučeno odlukom tima (P-20): prva verzija nema obaveštenja van aplikacije (pu
 - KP2: Online status se menja najkasnije 30 s posle zatvaranja aplikacije; offline član ima „viđen pre …”.
 - KP3: Broj nepročitanih (tuđih) poruka prikazuje se uz stavku „Chat” u meniju i nestaje kada član otvori chat.
 - KP4: Najviše 5 poruka u 10 s po članu; prazna poruka i poruka duža od 1000 znakova se odbijaju.
+
+## FR-32 — Neuplaćen tiket, napomena na kolu i upozorenje
+**Opis:** Admin označava kolo čiji tiket nije uplaćen i dodaje javnu napomenu; izriče blažu meru „upozorenje” (BR-42, P-27).
+**Akter:** admin · **Prioritet:** B
+**Tok:**
+1. U detalju kola admin bira „⋯ → Napomena / tiket nije uplaćen”, upisuje napomenu i po potrebi štiklira „Tiket nije uplaćen”.
+2. Detalj kola, kartica u istoriji i tabela istorije prikazuju „🚫 Tiket nije uplaćen” i napomenu umesto uplate i dobitka.
+3. Na ekranu Disciplina (EKR-14) admin bira meru ⚠️ Upozorenje; drugo aktivno upozorenje automatski postaje opomena 🟨.
+**KP:**
+- KP1: Neuplaćen tiket ne menja ukupno uloženo, dobitak ni bilans; tipovi tog kola i dalje ulaze u statistiku članova.
+- KP2: Neuplaćen tiket bez napomene se odbija (422); oznaka se ne može staviti na otvoreno kolo (409).
+- KP3: Uz ime člana sa aktivnim upozorenjem prikazuje se ⚠️.

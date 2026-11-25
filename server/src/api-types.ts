@@ -48,6 +48,8 @@ export interface MemberStatus {
   onCooldown: boolean;
   /** BR-37: active warnings (not revoked, not yet turned into a suspension). */
   warnings: number;
+  /** BR-42: active notices (not revoked, not yet turned into a warning). */
+  notices: number;
   /** BR-37: sits out the active round, or the next round to be opened, on a suspension. */
   suspended: boolean;
   /** BR-37: got a warning after the last resolved round (profile shows a joke until the next round is resolved). */
@@ -69,8 +71,8 @@ export interface ResetPasswordResponse { temporaryPassword: string }
 
 // ---------- Disciplinary measures (BR-37) ----------
 
-export type SanctionKind = 'warning' | 'suspension';
-/** warning: active | escalated (turned into a suspension); suspension: pending | served; both: revoked. */
+export type SanctionKind = 'notice' | 'warning' | 'suspension';
+/** notice/warning: active | escalated (turned into a warning / suspension); suspension: pending | served; all: revoked. */
 export type SanctionStatus = 'active' | 'escalated' | 'pending' | 'served' | 'revoked';
 
 export interface SanctionDto {
@@ -84,9 +86,9 @@ export interface SanctionDto {
   reason: string;
   issuedBy: number;
   issuedAt: string;
-  /** Suspension created automatically by the second active warning. */
+  /** Created automatically: a warning from the second notice, a suspension from the second warning. */
   escalation: boolean;
-  /** Warning: the suspension it led to. */
+  /** Notice/warning: the measure it led to. */
   consumedById: number | null;
   /** Suspension: the round the member sat out. */
   servedRoundId: number | null;
@@ -95,10 +97,12 @@ export interface SanctionDto {
   revokedBy: number | null;
   revokeReason: string | null;
 }
-export interface SanctionsResponse { items: SanctionDto[]; warningsForSuspension: number }
+export interface SanctionsResponse { items: SanctionDto[]; warningsForSuspension: number; noticesForWarning: number }
 export interface IssueSanctionRequest { memberId: number; kind: SanctionKind; roundId?: number | null; reason: string }
 export interface IssueSanctionResponse extends SanctionsResponse { createdIds: number[] }
 export interface RevokeSanctionRequest { reason: string }
+/** BR-42: admin marks the ticket as not placed and/or sets the round note. */
+export interface RoundNoteRequest { ticketNotPlaced: boolean; note: string | null }
 
 // ---------- Players & games ----------
 
@@ -270,6 +274,10 @@ export interface RoundSummaryDto {
   suspendedMemberIds: number[];
   hasCorrections: boolean;
   cooldownInconsistent: boolean;
+  /** BR-42: the ticket was not placed — no stake, no win, not in the balance. */
+  ticketNotPlaced: boolean;
+  /** BR-42: public note on the round. */
+  note: string | null;
   picks: Array<Pick<PickDto, 'slot' | 'kind' | 'memberId' | 'cooldownForMemberId' | 'line' | 'direction' | 'result'> & { playerName: string | null }>;
 }
 

@@ -331,10 +331,12 @@ export function HistoryPage() {
                         <td>
                           <RoundStatusBadge status={r.status} />
                         </td>
-                        <td className="num">{formatMoney(r.stake)}</td>
+                        <td className="num">
+                          {r.ticketNotPlaced ? <s title="Tiket nije uplaćen">{formatMoney(r.stake)}</s> : formatMoney(r.stake)}
+                        </td>
                         <td>{r.payerMemberId != null ? <MemberName id={r.payerMemberId} showStatus={false} /> : '—'}</td>
                         <td className="num">{formatMoney(r.potentialWin)}</td>
-                        <td className="num">{formatMoney(r.actualWin)}</td>
+                        <td className="num">{r.ticketNotPlaced ? '—' : formatMoney(r.actualWin)}</td>
                         <td>
                           <ul className="pick-mini-inline">
                             {[...r.picks]

@@ -20,7 +20,7 @@ export function toSummary(r: RoundDetailDto): RoundSummaryDto {
   };
 }
 
-export function RoundFlags({ round }: { round: Pick<RoundSummaryDto, 'cooldownMemberIds' | 'suspendedMemberIds' | 'hasCorrections' | 'source' | 'cooldownInconsistent' | 'actualWinProvisional'> }) {
+export function RoundFlags({ round }: { round: Pick<RoundSummaryDto, 'cooldownMemberIds' | 'suspendedMemberIds' | 'hasCorrections' | 'source' | 'cooldownInconsistent' | 'actualWinProvisional' | 'ticketNotPlaced'> }) {
   return (
     <span className="flags">
       {round.cooldownMemberIds.length > 0 && (
@@ -52,7 +52,12 @@ export function RoundFlags({ round }: { round: Pick<RoundSummaryDto, 'cooldownMe
       {round.hasCorrections && <span className="flag flag-warn">✎ ispravljeno</span>}
       {round.source === 'import' && <span className="flag">⇩ uvezeno</span>}
       {round.cooldownInconsistent && <span className="flag flag-bad">⚠ nekonzistentno hlađenje</span>}
-      {round.actualWinProvisional && <span className="flag flag-warn">≈ privremen dobitak</span>}
+      {round.actualWinProvisional && !round.ticketNotPlaced && <span className="flag flag-warn">≈ privremen dobitak</span>}
+      {round.ticketNotPlaced && (
+        <span className="flag flag-bad" title="Tiket nije uplaćen — kolo se ne računa u bilans">
+          🚫 tiket nije uplaćen
+        </span>
+      )}
     </span>
   );
 }
@@ -99,14 +104,20 @@ export function RoundCard({ round }: { round: RoundSummaryDto }) {
       </div>
       <div className="round-card-stats small">
         {round.outcomeLabel && <span className="outcome">{round.outcomeLabel}</span>}
-        <span>Uplata {formatMoney(round.stake)}</span>
-        {round.payerMemberId != null && (
-          <span>
-            uplatio <MemberName id={round.payerMemberId} showStatus={false} />
-          </span>
+        {round.ticketNotPlaced ? (
+          <span className="not-placed">🚫 Tiket nije uplaćen</span>
+        ) : (
+          <>
+            <span>Uplata {formatMoney(round.stake)}</span>
+            {round.payerMemberId != null && (
+              <span>
+                uplatio <MemberName id={round.payerMemberId} showStatus={false} />
+              </span>
+            )}
+            <span>Pot. {formatMoney(round.potentialWin)}</span>
+            {round.actualWin != null && <span>Dobitak {formatMoney(round.actualWin)}</span>}
+          </>
         )}
-        <span>Pot. {formatMoney(round.potentialWin)}</span>
-        {round.actualWin != null && <span>Dobitak {formatMoney(round.actualWin)}</span>}
         {round.blame != null && (
           <span>
             Blejm: <BlameName value={round.blame} />

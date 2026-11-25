@@ -67,6 +67,7 @@ Kolona **Izvor** povezuje zahtev sa specifikacijom (FR = funkcionalni zahtev, BR
 | REQ-42 | Forma igrača pri izboru tipa | FR-29, BR-40, NFR-26, P-25 |
 | REQ-43 | Live šanse tiketa i proslava | FR-30, BR-39, P-25 |
 | REQ-44 | Chat ekipe i online status | FR-31, BR-41, NFR-27, P-26 |
+| REQ-45 | Neuplaćen tiket, napomena na kolu i upozorenje | FR-32, BR-42, P-27 |
 
 ---
 
@@ -558,6 +559,16 @@ Kriterijumi prihvatanja:
 5. KADA autor ili admin obriše poruku, ONDA sistem ĆE je ukloniti kod svih članova; brisanje tuđe poruke ĆE se upisati u audit log.
 6. AKO član pošalje više od 5 poruka u 10 s, ONDA sistem ĆE odbiti poruku (429).
 
+### REQ-45 — Neuplaćen tiket, napomena na kolu i upozorenje
+**Kao** admin, **želim** da označim kolo čiji tiket nije uplaćen i da izreknem blažu meru, **kako bi** bilans bio tačan, a propust zabeležen.
+**Izvor:** FR-32, BR-42, P-27
+
+1. KADA admin označi kolo sa „tiket nije uplaćen” uz napomenu, ONDA sistem ĆE to kolo računati sa uplatom i dobitkom 0 u bilansu i statistici novca, a tipove tog kola ĆE i dalje računati u statistiku članova.
+2. AKO admin označi neuplaćen tiket bez napomene, ONDA sistem ĆE odbiti izmenu.
+3. Sistem ĆE javno prikazivati napomenu kola i oznaku neuplaćenog tiketa u detalju kola i istoriji.
+4. KADA član dobije drugo aktivno upozorenje, ONDA sistem ĆE automatski izreći opomenu i označiti oba upozorenja kao iskorišćena.
+5. Sistem ĆE izmenu napomene i oznake upisati u audit log.
+
 ### REQ-38 — Isporuka kao jedan Docker image na besplatnom hostingu
 **Kao** administrator, **želim** da se cela aplikacija pokreće iz jednog Docker image-a, **kako bi** postavljanje i održavanje bilo jednostavno i besplatno.
 **Izvor:** zahtev naručioca (tehnološki stack), NFR-23, P-21
@@ -597,6 +608,7 @@ Pitanja koja specifikacija nije rešavala ili su bila u suprotnosti sa novim teh
 | FR-29 | REQ-42 |
 | FR-30 | REQ-43 |
 | FR-31 | REQ-44 |
+| FR-32 | REQ-45 |
 | FR-23 (povučeno) | REQ-32.4 (izričito bez obaveštenja) |
 | BR-01…BR-36 | REQ-03, REQ-06…REQ-23, REQ-31, REQ-02 |
 | BR-37 | REQ-40 |
@@ -604,6 +616,7 @@ Pitanja koja specifikacija nije rešavala ili su bila u suprotnosti sa novim teh
 | BR-39 | REQ-43 |
 | BR-40 | REQ-42 |
 | BR-41 | REQ-44 |
+| BR-42 | REQ-45 |
 | NFR-01…NFR-25 | REQ-13, REQ-34…REQ-38 |
 | NFR-26 | REQ-42 |
 | NFR-27 | REQ-44 |

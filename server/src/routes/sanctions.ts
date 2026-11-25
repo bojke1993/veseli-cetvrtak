@@ -24,7 +24,7 @@ export async function registerSanctionRoutes(app: FastifyInstance, deps: Deps): 
           additionalProperties: false,
           properties: {
             memberId: memberIdSchema,
-            kind: { type: 'string', enum: ['warning', 'suspension'] },
+            kind: { type: 'string', enum: ['notice', 'warning', 'suspension'] },
             roundId: { anyOf: [{ type: 'null' }, { type: 'integer', minimum: 1 }] },
             reason: { type: 'string', minLength: 1, maxLength: 900 },
           },

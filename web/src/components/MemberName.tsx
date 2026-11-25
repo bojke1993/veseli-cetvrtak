@@ -27,12 +27,14 @@ export function StatusIcons({
   fire,
   streak = 0,
   warnings = 0,
+  notices = 0,
   suspended = false,
 }: {
   cooldown?: boolean;
   fire?: boolean;
   streak?: number;
   warnings?: number;
+  notices?: number;
   suspended?: boolean;
 }) {
   const double = streak >= DOUBLE_FIRE_STREAK;
@@ -51,6 +53,16 @@ export function StatusIcons({
           title={warnings === 1 ? 'Opomena — sledeća znači preskakanje kola' : `${warnings} opomene`}
         >
           🟨{warnings > 1 ? `×${warnings}` : ''}
+        </span>
+      )}
+      {notices > 0 && (
+        <span
+          className="status-icon"
+          role="img"
+          aria-label={notices === 1 ? 'upozorenje' : `${notices} upozorenja`}
+          title={notices === 1 ? 'Upozorenje — sledeće znači opomenu' : `${notices} upozorenja`}
+        >
+          ⚠️
         </span>
       )}
       {cooldown && (
@@ -96,6 +108,7 @@ export function MemberName({
           fire={m?.status.hasFire}
           streak={m?.status.streak}
           warnings={m?.status.warnings}
+          notices={m?.status.notices}
           suspended={m?.status.suspended}
         />}
     </span>

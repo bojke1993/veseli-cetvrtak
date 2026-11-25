@@ -6,22 +6,23 @@ import { useAuth } from '../auth/AuthContext';
 import { MemberName, useMemberList } from '../components/MemberName';
 import { Card, EmptyState, Modal, MutationError, QueryView } from '../components/ui';
 import { formatDateTime } from '../lib/format';
+import { SANCTION_META } from '../lib/sanctions';
 
-const KIND_LABEL: Record<SanctionKind, string> = { warning: 'Opomena', suspension: 'Preskakanje kola' };
-const KIND_ICON: Record<SanctionKind, string> = { warning: '🟨', suspension: '🟥' };
+const KIND_LABEL = Object.fromEntries(Object.entries(SANCTION_META).map(([k, v]) => [k, v.label])) as Record<SanctionKind, string>;
+const KIND_ICON = Object.fromEntries(Object.entries(SANCTION_META).map(([k, v]) => [k, v.icon])) as Record<SanctionKind, string>;
 
 function statusText(s: SanctionDto): string {
   switch (s.status) {
     case 'active':
-      return 'aktivna';
+      return s.kind === 'notice' ? 'aktivno' : 'aktivna';
     case 'escalated':
-      return 'pretvorena u preskakanje kola';
+      return s.kind === 'notice' ? 'pretvoreno u opomenu' : 'pretvorena u preskakanje kola';
     case 'pending':
       return 'preskače sledeće kolo';
     case 'served':
       return s.servedRoundNumber !== null ? `odsluženo u kolu #${s.servedRoundNumber}` : 'odsluženo';
     case 'revoked':
-      return 'poništena';
+      return s.kind === 'notice' ? 'poništeno' : 'poništena';
   }
 }
 
@@ -37,6 +38,12 @@ function RevokeDialog({ sanction, onClose }: { sanction: SanctionDto; onClose: (
       <form className="form" onSubmit={submit}>
         {sanction.kind === 'warning' && sanction.status === 'escalated' && (
           <p className="small">Poništava se i preskakanje kola do kog je ova opomena dovela; ostale opomene ponovo postaju aktivne.</p>
+        )}
+        {sanction.kind === 'notice' && sanction.status === 'escalated' && (
+          <p className="small">
+            Poništava se i opomena do koje je ovo upozorenje dovelo (i ono što je ta opomena izazvala); ostala upozorenja ponovo postaju
+            aktivna.
+          </p>
         )}
         <div className="field">
           <label htmlFor="revoke-reason">Razlog poništavanja</label>
@@ -93,7 +100,7 @@ export function SanctionList({ memberId }: { memberId?: number }) {
                   </div>
                   <div className={s.status === 'revoked' ? 'sanction-revoked' : undefined}>{s.reason}</div>
                   <div className="small muted">
-                    {formatDateTime(s.issuedAt)} · {s.escalation ? 'automatski (druga opomena)' : <>izrekao <MemberName id={s.issuedBy} showStatus={false} /></>}
+                    {formatDateTime(s.issuedAt)} · {s.escalation ? (s.kind === 'warning' ? 'automatski (drugo upozorenje)' : 'automatski (druga opomena)') : <>izrekao <MemberName id={s.issuedBy} showStatus={false} /></>}
                     {s.revokedAt && (
                       <>
                         {' · poništeno '}
@@ -121,7 +128,7 @@ function IssueForm() {
   const rounds = useRounds({});
   const issue = useIssueSanction();
   const [memberId, setMemberId] = useState<number | ''>('');
-  const [kind, setKind] = useState<SanctionKind>('warning');
+  const [kind, setKind] = useState<SanctionKind>('notice');
   const [roundId, setRoundId] = useState<number | ''>('');
   const [reason, setReason] = useState('');
   const [done, setDone] = useState<string | null>(null);
@@ -135,11 +142,12 @@ function IssueForm() {
       { memberId, kind, roundId: roundId === '' ? null : roundId, reason: reason.trim() },
       {
         onSuccess: (res) => {
-          setDone(
-            res.createdIds.length > 1
-              ? `Izrečena opomena — to je ${res.warningsForSuspension}. opomena, pa ${target?.displayName ?? 'član'} preskače sledeće kolo.`
-              : `Izrečeno: ${KIND_LABEL[kind].toLowerCase()}.`,
-          );
+          const created = res.createdIds.map((id) => res.items.find((x) => x.id === id)?.kind);
+          const who = target?.displayName ?? 'član';
+          let msg = `Izrečeno: ${KIND_LABEL[kind].toLowerCase()}.`;
+          if (created.includes('warning') && kind === 'notice') msg = `Izrečeno upozorenje — to je ${res.noticesForWarning}. upozorenje, pa ${who} dobija opomenu 🟨.`;
+          if (created.includes('suspension') && kind !== 'suspension') msg += ` To je ${res.warningsForSuspension}. opomena, pa ${who} preskače sledeće kolo.`;
+          setDone(msg);
           setReason('');
         },
       },
@@ -155,6 +163,7 @@ function IssueForm() {
           {members.map((m) => (
             <option key={m.id} value={m.id}>
               {m.displayName}
+              {m.status.notices > 0 ? ` (upozorenja: ${m.status.notices})` : ''}
               {m.status.warnings > 0 ? ` (opomene: ${m.status.warnings})` : ''}
             </option>
           ))}
@@ -163,12 +172,18 @@ function IssueForm() {
       <fieldset className="field radio-group">
         <legend>Mera</legend>
         <label>
+          <input type="radio" name="sanction-kind" checked={kind === 'notice'} onChange={() => setKind('notice')} /> ⚠️ Upozorenje
+        </label>
+        <label>
           <input type="radio" name="sanction-kind" checked={kind === 'warning'} onChange={() => setKind('warning')} /> 🟨 Opomena
         </label>
         <label>
           <input type="radio" name="sanction-kind" checked={kind === 'suspension'} onChange={() => setKind('suspension')} /> 🟥 Preskakanje
           kola
         </label>
+        {kind === 'notice' && target && target.status.notices > 0 && (
+          <small className="hint">{target.displayName} već ima upozorenje — ovo upozorenje znači opomenu 🟨.</small>
+        )}
         {kind === 'warning' && target && target.status.warnings > 0 && (
           <small className="hint">
             {target.displayName} već ima opomenu — ova opomena znači preskakanje sledećeg kola.
@@ -206,7 +221,8 @@ export default function DisciplinePage() {
     <div className="page">
       <h1>Disciplina</h1>
       <p className="muted">
-        🟨 Opomena · 🟥 preskakanje kola. Druga aktivna opomena znači preskakanje sledećeg kola — umesto člana igra se tip ekipe.
+        ⚠️ Upozorenje · 🟨 opomena · 🟥 preskakanje kola. Drugo aktivno upozorenje postaje opomena, a druga aktivna opomena znači
+        preskakanje sledećeg kola — umesto člana igra se tip ekipe.
       </p>
       {isAdmin && (
         <Card title="Nova mera">

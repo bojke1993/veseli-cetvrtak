@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import type { CorrectionField, CorrectionResponse, Direction, ManualResolveRequest, PlayerDto, RoundDetailDto } from '@api';
-import { useActualWin, useCorrection, useManualResolve, useUnlockRound } from '../../api/queries';
+import { useActualWin, useCorrection, useManualResolve, useRoundNote, useUnlockRound } from '../../api/queries';
 import { formatMoney, parseDecimal } from '../../lib/format';
 import { PickOwner } from '../LiveView';
 import { useMemberList } from '../MemberName';
@@ -8,7 +8,7 @@ import { PlayerAutocomplete } from '../PlayerAutocomplete';
 import { PlayerInfo } from '../PlayerInfo';
 import { Modal, MutationError } from '../ui';
 
-type Action = 'unlock' | 'correct' | 'resolve' | 'actualWin';
+type Action = 'unlock' | 'correct' | 'resolve' | 'actualWin' | 'note';
 
 function ReasonField({ value, onChange }: { value: string; onChange: (v: string) => void }) {
   return (
@@ -335,6 +335,49 @@ function ActualWinForm({ round, onClose }: { round: RoundDetailDto; onClose: () 
   );
 }
 
+/** BR-42: public note on the round and "ticket not placed" (the round then drops out of the balance). */
+function NoteForm({ round, onClose }: { round: RoundDetailDto; onClose: () => void }) {
+  const save = useRoundNote(round.id);
+  const [notPlaced, setNotPlaced] = useState(round.ticketNotPlaced);
+  const [note, setNote] = useState(round.note ?? '');
+  const canNotPlace = round.status !== 'open';
+  const missingNote = notPlaced && !note.trim();
+  const submit = (e: FormEvent) => {
+    e.preventDefault();
+    if (missingNote) return;
+    save.mutate({ ticketNotPlaced: notPlaced, note: note.trim() || null }, { onSuccess: onClose });
+  };
+  return (
+    <Modal title="Napomena na kolu" onClose={onClose}>
+      <form className="form" onSubmit={submit}>
+        <label className="checkbox">
+          <input type="checkbox" checked={notPlaced} disabled={!canNotPlace} onChange={(e) => setNotPlaced(e.target.checked)} /> 🚫 Tiket nije
+          uplaćen
+        </label>
+        <p className="small muted">
+          {canNotPlace
+            ? 'Neuplaćen tiket se ne računa u bilans (uplata i dobitak = 0), a tipovi i dalje ulaze u statistiku.'
+            : 'Otvoreno kolo još nema tiket.'}
+        </p>
+        <div className="field">
+          <label htmlFor="round-note">Napomena (javna)</label>
+          <textarea id="round-note" value={note} rows={3} maxLength={1000} onChange={(e) => setNote(e.target.value)} />
+          {missingNote && <small className="hint">Uz neuplaćen tiket napomena je obavezna.</small>}
+        </div>
+        <MutationError error={save.error} />
+        <div className="btn-row">
+          <button type="button" className="btn" onClick={onClose}>
+            Nazad
+          </button>
+          <button type="submit" className="btn btn-primary" disabled={save.isPending || missingNote}>
+            Sačuvaj
+          </button>
+        </div>
+      </form>
+    </Modal>
+  );
+}
+
 /** Admin "⋯" menu on the round detail (EKR-07). */
 export function AdminActionsMenu({ round, initialAction, initialSlot }: { round: RoundDetailDto; initialAction?: Action | null; initialSlot?: number }) {
   const [open, setOpen] = useState(false);
@@ -369,6 +412,11 @@ export function AdminActionsMenu({ round, initialAction, initialSlot }: { round:
               Razreši tip ručno
             </button>
           </li>
+          <li role="none">
+            <button type="button" role="menuitem" onClick={() => choose('note')}>
+              Napomena / tiket nije uplaćen
+            </button>
+          </li>
           {resolved && (
             <li role="none">
               <button type="button" role="menuitem" onClick={() => choose('actualWin')}>
@@ -382,6 +430,7 @@ export function AdminActionsMenu({ round, initialAction, initialSlot }: { round:
       {action === 'correct' && <CorrectionForm round={round} onClose={close} />}
       {action === 'resolve' && <ResolveForm round={round} onClose={close} initialSlot={initialSlot} />}
       {action === 'actualWin' && <ActualWinForm round={round} onClose={close} />}
+      {action === 'note' && <NoteForm round={round} onClose={close} />}
     </div>
   );
 }

@@ -138,6 +138,8 @@ Jedinstvenost: (`game_id`, `player_id`); indeks po `player_id`. Tokom utakmice s
 | resolved_at | datetime? | |
 | has_corrections | bool | FR-12 KP3 |
 | cooldown_inconsistent | bool | BR-30 |
+| ticket_not_placed | bool | BR-42: tiket nije uplaćen — kolo se ne računa u bilans |
+| note | string(1000)? | BR-42: javna napomena admina |
 
 ### PICK (Tip)
 | Atribut | Tip | Opis |
@@ -224,12 +226,12 @@ Samo dodavanje (append-only), bez izmene i brisanja (FR-22).
 |---------|-----|------|
 | id | int | |
 | member_id | FK → MEMBER | kome je mera izrečena |
-| kind | enum | `warning` (opomena), `suspension` (preskakanje kola) |
+| kind | enum | `notice` (upozorenje, BR-42), `warning` (opomena), `suspension` (preskakanje kola) |
 | round_id | FK → ROUND? | kolo koje je povod (informativno) |
 | reason | string | obrazloženje (obavezno) |
 | issued_by, issued_at | FK → MEMBER, datetime | ko i kada je izrekao |
-| escalation | bool | preskakanje kola nastalo automatski iz druge opomene |
-| consumed_by_id | FK → SANCTION? | opomena: preskakanje kola u koje je pretvorena |
+| escalation | bool | mera nastala automatski: opomena iz drugog upozorenja, preskakanje kola iz druge opomene |
+| consumed_by_id | FK → SANCTION? | upozorenje/opomena: mera u koju je pretvorena |
 | served_round_id | FK → ROUND? | preskakanje kola: kolo u kome je član preskočio (postavlja se pri otvaranju kola) |
 | revoked_at, revoked_by, revoke_reason | | poništavanje (uz razlog) |
 

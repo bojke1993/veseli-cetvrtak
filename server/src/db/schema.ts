@@ -41,7 +41,8 @@ export type AuditAction =
   | 'sanction_issue'
   | 'sanction_revoke'
   | 'suspension_served'
-  | 'chat_delete';
+  | 'chat_delete'
+  | 'round_note';
 
 export interface MembersTable {
   id: number; // 1..4, fixed
@@ -153,6 +154,10 @@ export interface RoundsTable {
   locked_by: number | null; // null with locked_at set = system
   resolved_at: Date | null;
   has_corrections: Bool;
+  /** BR-42: the ticket was not placed — the round does not count in the balance. */
+  ticket_not_placed: Generated<number>;
+  /** BR-42: public note on the round (admin). */
+  note: Generated<string | null>;
 }
 
 export interface PicksTable {
@@ -209,7 +214,7 @@ export interface AuditLogTable {
   reason: string | null;
 }
 
-export type SanctionKind = 'warning' | 'suspension';
+export type SanctionKind = 'notice' | 'warning' | 'suspension';
 
 /** BR-37: disciplinary measure. A suspension is served in the first round opened after it (served_round_id). */
 export interface SanctionsTable {
@@ -220,8 +225,8 @@ export interface SanctionsTable {
   reason: string;
   issued_by: number;
   issued_at: Date;
-  escalation: Bool; // suspension created automatically by the second active warning
-  consumed_by_id: number | null; // warning: the escalation suspension it led to
+  escalation: Bool; // created automatically: warning from the 2nd notice, suspension from the 2nd warning
+  consumed_by_id: number | null; // notice/warning: the escalated measure it led to
   served_round_id: number | null; // suspension: round the member sat out
   revoked_at: Date | null;
   revoked_by: number | null;

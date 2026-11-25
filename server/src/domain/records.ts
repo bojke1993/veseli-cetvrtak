@@ -25,6 +25,8 @@ export interface RecordRound {
   totalOdds: number | null;
   /** Amount won (void round = stake). */
   won: number;
+  /** BR-42: ticket not placed — no money records. */
+  notPlaced?: boolean;
   picks: RecordPick[];
 }
 
@@ -96,7 +98,7 @@ export function computeRecords(rounds: RecordRound[], derived: DerivedState, mem
   const at = (r: RecordRound) => ({ roundId: r.id, roundNumber: r.number });
 
   for (const r of rounds) {
-    if (r.status === 'won') {
+    if (r.status === 'won' && !r.notPlaced) {
       offer({ code: 'biggest_win', value: round2(r.won), memberId: null, playerName: null, ...at(r) });
       if (r.totalOdds !== null) offer({ code: 'top_ticket_odds', value: r.totalOdds, memberId: null, playerName: null, ...at(r) });
     }

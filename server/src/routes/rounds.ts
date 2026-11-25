@@ -8,6 +8,7 @@ import type {
   CurrentRoundResponse,
   DeleteRoundRequest,
   ManualResolveRequest,
+  RoundNoteRequest,
   RoundResponse,
   RoundsQuery,
   RoundsResponse,
@@ -29,6 +30,7 @@ import {
   lockRound,
   manualResolve,
   setActualWin,
+  setRoundNote,
   setPick,
   unlockRound,
   updateRound,
@@ -250,6 +252,29 @@ export async function registerRoundRoutes(app: FastifyInstance, deps: Deps): Pro
     },
     async (request) => {
       await setActualWin(deps, request.member!, request.params.id, request.body.amount, request.body.reason);
+      return detail(request, request.params.id);
+    },
+  );
+
+  app.put<IdParams & { Body: RoundNoteRequest }>(
+    '/rounds/:id/note',
+    {
+      preHandler: requireAdmin,
+      schema: {
+        params: idParams,
+        body: {
+          type: 'object',
+          required: ['ticketNotPlaced', 'note'],
+          additionalProperties: false,
+          properties: {
+            ticketNotPlaced: { type: 'boolean' },
+            note: { anyOf: [{ type: 'null' }, { type: 'string', maxLength: 1000 }] },
+          },
+        },
+      },
+    },
+    async (request) => {
+      await setRoundNote(deps, request.member!, request.params.id, request.body);
       return detail(request, request.params.id);
     },
   );
