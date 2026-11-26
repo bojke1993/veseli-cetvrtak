@@ -5,7 +5,7 @@ Opis sadržaja i ponašanja, bez vizuelnog dizajna. Primarni uređaj je **telefo
 ## 8.1 Navigacija
 - Telefon: donja traka sa 5 stavki — **Početna**, **Kolo** (aktuelno), **Istorija**, **Statistika**, **Još** (Blejm lista, Audit log, Podešavanja, Odjava).
 - Desktop: ista struktura kao bočni meni.
-- Admin vidi bedž sa brojem otvorenih zadataka (EKR-13) na stavci "Još". Nema obaveštenja van aplikacije (P-20).
+- Admin vidi bedž sa brojem otvorenih zadataka (EKR-13) na stavci "Još". Nema obaveštenja van aplikacije (P-20), osim push obaveštenja za chat (P-28).
 - **Gost** (neprijavljen, BR-35) vidi Početnu, Kolo, Istoriju i Statistiku u režimu samo za pregled; umesto akcija prikazuje se dugme "Prijavi se". Audit log i Podešavanja nisu dostupni.
 - Statistički ekrani imaju izbor sezone (podrazumevano aktuelna, opcija "Sve sezone").
 - Ikonice statusa svuda uz ime člana: ❄ (na hlađenju u aktuelnom/narednom kolu), 🔥 (aktivna vatrica; od 6 pogodaka zaredom prikazuje se 🔥🔥 — samo prikaz, i dalje je jedna vatrica), sa tekstualnim opisom za čitače ekrana.
@@ -123,4 +123,7 @@ Sadržaj zavisi od stanja aktuelnog kola:
 - Samo za prijavljene članove; stavka „Chat” u glavnom meniju sa brojem nepročitanih poruka.
 - Gore: članovi sa zelenom tačkom i „online” ili sivom tačkom i „viđen pre …”.
 - Poruke: najstarija gore, najnovija dole; svoje poruke desno, tuđe levo sa imenom; vreme slanja; razdelnik po danu; „Starije poruke” na vrhu.
-- Dole: polje za unos (Enter šalje, Shift+Enter novi red) i dugme „Pošalji”; brisanje preko dugmeta uz poruku, uz potvrdu u samoj aplikaciji.
+- Dole: dugme sa smajlijima (skoro korišćeni + grupe), polje za unos (Enter šalje, Shift+Enter novi red) i dugme „Pošalji”; brisanje preko dugmeta uz poruku, uz potvrdu u samoj aplikaciji. Poruka od 1–3 emodžija prikazuje se uvećano.
+- Desno gore: zvono 🔔/🔕 uključuje i isključuje zvuk novih poruka (pamti se na uređaju).
+- Ispod članova, jednom po uređaju: ponuda „Uključi” obaveštenja (P-28); na iPhone-u van početnog ekrana uputstvo kako dodati aplikaciju na početni ekran. Isto se podešava u Podešavanjima, kartica „Obaveštenja” (uključi/isključi, probno obaveštenje, zvuk).
+- Strana je visoka tačno koliko i vidljivi deo ekrana (i kad se otvori tastatura), pa se skroluje samo lista poruka; dok član kuca na telefonu, meni i spisak članova se sklanjaju. Kad je član odskrolovao gore, dugme ↓ sa brojem novih poruka vraća ga na dno.

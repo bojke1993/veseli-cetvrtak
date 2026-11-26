@@ -4,6 +4,12 @@ import type { FastifyInstance } from 'fastify';
 import type {
   ChatMessagesResponse,
   ChatStateResponse,
+  ChatVisibilityRequest,
+  PushEndpointRequest,
+  PushKeyResponse,
+  PushStatusResponse,
+  PushSubscribeRequest,
+  PushTestResponse,
   MarkChatReadRequest,
   SendChatMessageRequest,
   SendChatMessageResponse,
@@ -14,6 +20,18 @@ import { HttpError } from '../http/errors.js';
 import { SSE_PING_MS } from '../live/routes.js';
 import { idParams, type IdParams } from '../routes/schemas.js';
 import { Presence, PRESENCE_GRACE_MS } from './presence.js';
+import {
+  chatPayload,
+  deleteSubscription,
+  getVapidKeys,
+  hasSubscription,
+  pushToMembers,
+  saveSubscription,
+  Watchers,
+  webPushSender,
+  type PushResult,
+  type PushSender,
+} from './push.js';
 import {
   CHAT_MAX_LENGTH,
   CHAT_PAGE_SIZE,
@@ -35,7 +53,26 @@ type ChatEvent = { type: 'message' | 'delete' | 'presence'; data: unknown };
 export interface ChatRouteOptions {
   /** Tests shorten the offline grace period. */
   presenceGraceMs?: number;
+  /** Tests replace the real Web Push sender. */
+  pushSender?: PushSender;
 }
+
+/** Push services of the browsers we support; other endpoints are refused (no requests to arbitrary hosts). */
+const PUSH_HOSTS = ['googleapis.com', 'push.apple.com', 'mozilla.com', 'notify.windows.com'];
+
+export function isAllowedPushEndpoint(endpoint: string): boolean {
+  let url: URL;
+  try {
+    url = new URL(endpoint);
+  } catch {
+    return false;
+  }
+  if (url.protocol !== 'https:') return false;
+  const host = url.hostname.toLowerCase();
+  return PUSH_HOSTS.some((h) => host === h || host.endsWith(`.${h}`));
+}
+
+const endpointSchema = { type: 'string', minLength: 10, maxLength: 700 } as const;
 
 /** BR-41 / FR-31: members-only chat — REST under /chat and an SSE stream with messages and presence. */
 export async function registerChatRoutes(app: FastifyInstance, deps: Deps, opts: ChatRouteOptions = {}): Promise<void> {
@@ -71,6 +108,12 @@ export async function registerChatRoutes(app: FastifyInstance, deps: Deps, opts:
     }
     recent.push(now);
     sent.set(memberId, recent);
+  };
+
+  const pushSender = opts.pushSender ?? webPushSender;
+  const watchers = new Watchers();
+  const logPush = (r: PushResult): void => {
+    for (const err of r.errors) app.log.warn({ err }, 'web push failed');
   };
 
   const state = async (memberId: number): Promise<ChatStateResponse> => ({
@@ -118,6 +161,18 @@ export async function registerChatRoutes(app: FastifyInstance, deps: Deps, opts:
       // The author has obviously read everything up to their own message.
       await markRead(deps, member.id, message.id);
       publish({ type: 'message', data: message });
+      // P-28: push to the other members who are not looking at the app right now.
+      const now = deps.now().getTime();
+      void deps.db
+        .selectFrom('members')
+        .select('id')
+        .execute()
+        .then((rows) => {
+          const others = rows.map((r) => r.id).filter((id) => id !== member.id && !watchers.isWatching(id, now));
+          return pushToMembers(deps, pushSender, others, chatPayload(message, member.displayName));
+        })
+        .then(logPush)
+        .catch((err: unknown) => app.log.error(err));
       return { message };
     },
   );
@@ -152,6 +207,93 @@ export async function registerChatRoutes(app: FastifyInstance, deps: Deps, opts:
       return state(request.member!.id);
     },
   );
+
+  app.post<{ Body: ChatVisibilityRequest }>(
+    '/chat/visibility',
+    {
+      preHandler: requireMember,
+      schema: {
+        body: {
+          type: 'object',
+          required: ['clientId', 'visible'],
+          additionalProperties: false,
+          properties: { clientId: { type: 'string', minLength: 1, maxLength: 64 }, visible: { type: 'boolean' } },
+        },
+      },
+    },
+    async (request) => {
+      watchers.set(request.member!.id, request.body.clientId, request.body.visible, deps.now().getTime());
+      return { ok: true };
+    },
+  );
+
+  app.get('/push/key', { preHandler: requireMember }, async (): Promise<PushKeyResponse> => ({
+    publicKey: (await getVapidKeys(deps)).publicKey,
+  }));
+
+  app.post<{ Body: PushSubscribeRequest }>(
+    '/push/subscribe',
+    {
+      preHandler: requireMember,
+      schema: {
+        body: {
+          type: 'object',
+          required: ['endpoint', 'keys'],
+          // PushSubscription.toJSON() also has expirationTime.
+          properties: {
+            endpoint: endpointSchema,
+            keys: {
+              type: 'object',
+              required: ['p256dh', 'auth'],
+              properties: {
+                p256dh: { type: 'string', minLength: 10, maxLength: 200 },
+                auth: { type: 'string', minLength: 4, maxLength: 100 },
+              },
+            },
+          },
+        },
+      },
+    },
+    async (request) => {
+      if (!isAllowedPushEndpoint(request.body.endpoint)) {
+        throw new HttpError(422, 'unprocessable', 'Ovaj pregledač ne podržava obaveštenja.');
+      }
+      await saveSubscription(deps, request.member!.id, request.body, request.headers['user-agent']);
+      return { ok: true };
+    },
+  );
+
+  const endpointBody = {
+    body: { type: 'object', required: ['endpoint'], additionalProperties: false, properties: { endpoint: endpointSchema } },
+  };
+
+  app.post<{ Body: PushEndpointRequest }>(
+    '/push/unsubscribe',
+    { preHandler: requireMember, schema: endpointBody },
+    async (request) => {
+      await deleteSubscription(deps, request.member!.id, request.body.endpoint);
+      return { ok: true };
+    },
+  );
+
+  app.post<{ Body: PushEndpointRequest }>(
+    '/push/status',
+    { preHandler: requireMember, schema: endpointBody },
+    async (request): Promise<PushStatusResponse> => ({
+      subscribed: await hasSubscription(deps, request.member!.id, request.body.endpoint),
+    }),
+  );
+
+  app.post('/push/test', { preHandler: requireMember }, async (request): Promise<PushTestResponse> => {
+    const r = await pushToMembers(deps, pushSender, [request.member!.id], {
+      title: '🔔 Veseli četvrtak',
+      body: 'Obaveštenja rade! Ovako ćeš videti nove poruke iz chata.',
+      url: '/chat',
+      tag: 'vc-test',
+    });
+    logPush(r);
+    return { sent: r.sent };
+  });
 
   app.get('/chat/stream', { preHandler: requireMember }, (request, reply) => {
     const memberId = request.member!.id;

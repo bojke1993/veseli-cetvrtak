@@ -253,6 +253,24 @@ export interface ChatMessagesTable {
   deleted_by: number | null;
 }
 
+/** BR-41 / P-28: a device's Web Push subscription. */
+export interface PushSubscriptionsTable {
+  id: Generated<number>;
+  member_id: number;
+  endpoint: string;
+  p256dh: string;
+  auth: string;
+  user_agent: string | null;
+  created_at: Date;
+  last_success_at: Date | null;
+}
+
+/** Key/value server settings (e.g. the VAPID key pair). */
+export interface AppSettingsTable {
+  name: string;
+  value: string;
+}
+
 export interface Database {
   members: MembersTable;
   sessions: SessionsTable;
@@ -269,6 +287,8 @@ export interface Database {
   sync_runs: SyncRunsTable;
   sanctions: SanctionsTable;
   chat_messages: ChatMessagesTable;
+  push_subscriptions: PushSubscriptionsTable;
+  app_settings: AppSettingsTable;
 }
 
 export type Member = Selectable<MembersTable>;

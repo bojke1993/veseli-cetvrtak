@@ -2092,11 +2092,94 @@ input[aria-invalid='true'] {
 }
 
 /* FR-31 / EKR-15 — chat */
+/*
+ * While the chat is open the app is exactly as tall as the visible viewport (--app-h is set from
+ * visualViewport, so it shrinks with the mobile keyboard) and the page itself never scrolls —
+ * only the message list does. Without this the whole page could scroll on phones and the chat
+ * would slide out of view.
+ */
+html.chat-open,
+html.chat-open body {
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+html.chat-open .app {
+  height: var(--app-h, 100dvh);
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+html.chat-open .topbar {
+  flex: none;
+}
+html.chat-open .main {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 10px;
+}
 .chat-page {
-  /* Fill the viewport between the top bar and the bottom navigation; only the message list scrolls. */
-  height: calc(100dvh - var(--topbar-h, calc(64px + env(safe-area-inset-top, 0px))) - var(--nav-h) - env(safe-area-inset-bottom, 0px) - 32px);
-  min-height: 360px;
+  flex: 1;
+  min-height: 0;
   gap: 10px;
+}
+@media (max-width: 899px) {
+  html.chat-open .main {
+    padding: 10px 10px 8px;
+  }
+  /* Typing on a phone: give the keyboard's space to the messages (nav and presence come back on blur). */
+  html.chat-open.chat-typing .app {
+    padding-bottom: 0;
+  }
+  html.chat-open.chat-typing .nav,
+  html.chat-open.chat-typing .chat-head {
+    display: none;
+  }
+}
+.chat-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.chat-head > section {
+  flex: 1;
+  min-width: 0;
+}
+.chat-sound {
+  flex: none;
+  min-width: var(--tap);
+  min-height: var(--tap);
+  font-size: 1.1rem;
+}
+.chat-scroll-wrap {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.chat-jump {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  width: var(--tap);
+  height: var(--tap);
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 1.2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+.chat-jump .nav-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
 }
 .presence-list {
   list-style: none;
@@ -2164,6 +2247,7 @@ input[aria-invalid='true'] {
   min-height: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   background: var(--surface-2);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -2229,6 +2313,78 @@ input[aria-invalid='true'] {
 .chat-body {
   white-space: pre-wrap;
 }
+.chat-bubble.is-emoji {
+  background: none;
+  border-color: transparent;
+  padding: 0 4px;
+}
+.chat-msg.is-mine .chat-bubble.is-emoji {
+  background: none;
+  border-color: transparent;
+  color: var(--text);
+}
+.chat-bubble.is-emoji .chat-body {
+  font-size: 2.2rem;
+  line-height: 1.15;
+}
+.emoji-wrap {
+  position: relative;
+  flex: none;
+}
+.emoji-toggle {
+  width: var(--tap);
+  height: var(--tap);
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.emoji-toggle[aria-expanded='true'] {
+  background: var(--primary-soft);
+  border-color: var(--primary);
+}
+.emoji-panel {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 0;
+  z-index: 40;
+  width: min(340px, calc(100vw - 24px));
+  max-height: min(300px, 45vh);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+}
+.emoji-group {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--muted);
+  margin: 4px 4px 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.emoji-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(38px, 1fr));
+}
+.emoji-btn {
+  height: 40px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  font-size: 1.45rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.emoji-btn:hover,
+.emoji-btn:focus-visible {
+  background: var(--surface-2);
+}
 .chat-meta {
   display: inline-flex;
   align-items: center;
@@ -2284,8 +2440,59 @@ input[aria-invalid='true'] {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
-@media (min-width: 900px) {
-  .chat-page {
-    height: calc(100dvh - var(--topbar-h, calc(64px + env(safe-area-inset-top, 0px))) - 48px);
+@media (max-width: 599px) {
+  /* One compact row of four members instead of a 2×2 grid. */
+  .presence-list {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 4px;
+  }
+  .presence {
+    flex-direction: column;
+    gap: 2px;
+    padding: 4px 2px;
+    text-align: center;
+  }
+  .presence-text {
+    align-items: center;
+    max-width: 100%;
+    font-size: 0.8rem;
+  }
+  .presence-text .small {
+    font-size: 0.68rem;
+  }
+}
+
+/* P-28 — Web Push settings and the one-time offer in the chat */
+.push-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.push-settings p {
+  margin: 0;
+}
+.push-settings .check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: var(--tap);
+}
+.push-prompt {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  padding: 8px 12px;
+  border-radius: var(--radius);
+  background: var(--primary-soft);
+  border: 1px solid var(--border);
+}
+.push-prompt p {
+  margin: 0;
+  flex: 1 1 220px;
+}
+@media (max-width: 899px) {
+  html.chat-open.chat-typing .push-prompt {
+    display: none;
   }
 }

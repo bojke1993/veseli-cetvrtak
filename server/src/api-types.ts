@@ -579,3 +579,20 @@ export interface MarkChatReadRequest { id: number }
  */
 export interface ChatDeleteEvent { id: number }
 export interface ChatPresenceEvent { presence: ChatPresenceDto[] }
+
+// ---------- Web Push for chat (BR-41, P-28) — members only ----------
+
+/** GET /push/key — the server's VAPID public key (base64url) for PushManager.subscribe. */
+export interface PushKeyResponse { publicKey: string }
+/** POST /push/subscribe — a browser PushSubscription.toJSON() (endpoint + keys). */
+export interface PushSubscribeRequest { endpoint: string; keys: { p256dh: string; auth: string } }
+/** POST /push/unsubscribe and POST /push/status */
+export interface PushEndpointRequest { endpoint: string }
+export interface PushStatusResponse { subscribed: boolean }
+/** POST /push/test — sends a test notification to the caller's own devices. */
+export interface PushTestResponse { sent: number }
+/**
+ * POST /chat/visibility — heartbeat while the app is visible in a tab (`clientId` is random per
+ * tab). Members who are looking at the app get no push for new messages.
+ */
+export interface ChatVisibilityRequest { clientId: string; visible: boolean }

@@ -19,6 +19,7 @@
     "kysely": "^0.29.6",
     "luxon": "^3.7.2",
     "mysql2": "^3.24.6",
+    "web-push": "^4.0.0",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz",
     "zod": "^4.6.7"
   },
@@ -26,6 +27,7 @@
     "@types/bcryptjs": "^2.4.6",
     "@types/luxon": "^3.7.6",
     "@types/node": "^26.6.5",
+    "@types/web-push": "^3.6.4",
     "mysql-memory-server": "^1.17.0",
     "tsx": "^4.23.15",
     "typescript": "^7.0.2",

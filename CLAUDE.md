@@ -17,7 +17,7 @@ Trenutna faza: **specifikacija** (nema koda). Stack još nije izabran.
 - Tip ekipe (umesto člana na hlađenju) pripisuje se "Ekipi", ne ulazi u lične nizove.
 - **Disciplina** (BR-37): admin izriče opomenu 🟨 ili preskakanje kola 🟥 uz obrazloženje; 2. aktivna opomena = preskakanje sledećeg kola (tip ekipe, ali nije hlađenje — ne dira nizove).
 - Na početku nove sezone Evrolige nizovi, vatrice i zakazano hlađenje se resetuju.
-- Admin je Ivanišević; ostali članovi imaju naloge (predlozi); gosti vide sve bez prijave (samo pregled). Nema obaveštenja van aplikacije.
+- Admin je Ivanišević; ostali članovi imaju naloge (predlozi); gosti vide sve bez prijave (samo pregled). Jedina obaveštenja van aplikacije su Web Push za nove poruke u chatu (P-28).
 - Istorija se uvozi iz XLS-a (Google Sheets) i tretira kao prava kola.
 - Sve statistike (nizovi, pahuljice, vatrice, blejm) su **izvedene** iz istorije kola i moraju moći da se rekalkulišu od nule.
 
@@ -40,7 +40,7 @@ Pre rada pročitati `docs/learnings.md` (tumačenje tabele istorije, ograničenj
 - Backend: Node.js · Frontend: React (servira ga backend) · Baza: **MySQL**.
 - Sve u **jednom Docker image-u** (backend + build-ovan frontend + MySQL), pozadinski worker u istom kontejneru.
 - Hosting: **besplatna VM** (npr. Oracle Cloud Always Free), MySQL podaci na trajnom volumenu, dnevni backup i van VM-a.
-- Prijava: korisničko ime + lozinka (bez e-mail servisa). PWA: samo manifest.
+- Prijava: korisničko ime + lozinka (bez e-mail servisa). PWA: manifest + service worker samo za push (`web/public/sw.js`, bez offline keša).
 - Zahtevi (REQ-xx, EARS): `docs/requirements.md`; arhitektura: `docs/design.md`; plan rada: `docs/tasks.md`.
 Pristup Euroleague API-ju isključivo preko adapter sloja (`EuroleagueProvider`), nikad direktno iz browsera.
 Detalji u `docs/specifikacija/07-integracije.md`.

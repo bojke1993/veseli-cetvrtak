@@ -45,7 +45,7 @@ koliko uplatio) nepouzdane i teške za praćenje.
 - učesnici van četvoročlanog tima,
 - druga takmičenja osim Evrolige (moguće proširenje, vidi OP-04),
 - finansijski obračun dugovanja među članovima (odluka P-14),
-- obaveštenja van aplikacije — push, Telegram, Viber (odluka P-20).
+- obaveštenja van aplikacije — Telegram, Viber, e-mail i push za sve osim chata (odluke P-20, P-28).
 
 **Dodatno u obimu:** jednokratni uvoz istorijskih kola iz Google Sheets-a (XLS/XLSX, FR-25) i javni pregled bez prijave (BR-35).
 

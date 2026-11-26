@@ -25,6 +25,8 @@ export interface AppConfig {
     userAgent: string;
   };
   timezone: string;
+  /** VAPID "subject" (contact URL or mailto:) sent to the browser push services. */
+  pushSubject: string;
 }
 
 function int(value: string | undefined, fallback: number): number {
@@ -55,5 +57,6 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): AppConfig {
       userAgent: env.EL_USER_AGENT ?? 'VeseliCetvrtak/1.0 (private, 4 users)',
     },
     timezone: 'Europe/Belgrade',
+    pushSubject: env.PUSH_SUBJECT || 'https://veseli-cetvrtak.duckdns.org',
   };
 }

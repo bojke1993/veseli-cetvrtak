@@ -66,7 +66,7 @@ Kolona **Izvor** povezuje zahtev sa specifikacijom (FR = funkcionalni zahtev, BR
 | REQ-41 | Rekordi, bedževi i „za dlaku” | FR-28, BR-38, P-25 |
 | REQ-42 | Forma igrača pri izboru tipa | FR-29, BR-40, NFR-26, P-25 |
 | REQ-43 | Live šanse tiketa i proslava | FR-30, BR-39, P-25 |
-| REQ-44 | Chat ekipe i online status | FR-31, BR-41, NFR-27, P-26 |
+| REQ-44 | Chat ekipe i online status | FR-31, BR-41, NFR-27, P-26, P-28 |
 | REQ-45 | Neuplaćen tiket, napomena na kolu i upozorenje | FR-32, BR-42, P-27 |
 
 ---
@@ -439,7 +439,7 @@ Kriterijumi prihvatanja:
 1. Sistem ĆE prikazivati listu otvorenih zadataka: nezaključeno kolo pred početak utakmice, tip za ručno razrešenje, unos stvarnog dobitka, nekonzistentno hlađenje, neuspešna sinhronizacija.
 2. DOK postoji bar jedan otvoren zadatak, sistem ĆE administratoru u navigaciji prikazivati bedž sa brojem zadataka.
 3. KADA je uslov zadatka rešen, ONDA sistem ĆE automatski zatvoriti zadatak.
-4. Sistem NEĆE slati obaveštenja van aplikacije (push, e-mail, Telegram, Viber).
+4. Sistem NEĆE slati obaveštenja van aplikacije (push, e-mail, Telegram, Viber), osim push obaveštenja o porukama u chatu (REQ-44, P-28).
 
 ### REQ-33 — Rezervni režim bez spoljnog API-ja
 **Kao** administrator, **želim** da aplikacija radi i kada Euroleague API nije dostupan, **kako bi** igra mogla da se nastavi.
@@ -462,7 +462,7 @@ Kriterijumi prihvatanja:
 1. Sistem ĆE sve ekrane prikazati funkcionalno na širini od 360 px, bez horizontalnog skrolovanja stranice (osim tabela u sopstvenom kontejneru).
 2. Sistem ĆE imati dodirne površine od najmanje 44×44 px i numeričku tastaturu za granicu, uplatu i kvotu.
 3. Sistem ĆE omogućiti administratoru da unese kompletno kolo na telefonu za ≤ 2 minuta.
-4. Sistem ĆE imati web app manifest i ikonice, tako da se može dodati na početni ekran telefona; offline keš (service worker) NIJE deo prve verzije (OQ-05).
+4. Sistem ĆE imati web app manifest i ikonice, tako da se može dodati na početni ekran telefona; offline keš NIJE deo prve verzije (OQ-05); service worker postoji samo za push obaveštenja chata (P-28).
 5. AKO uređaj izgubi vezu sa serverom, ONDA sistem ĆE prikazati oznaku "Nema veze" i nastaviti prikaz poslednjih učitanih podataka do ponovnog povezivanja.
 6. Sistem ĆE poštovati kontrast WCAG 2.1 AA i ikonice ❄/🔥 opremiti tekstualnim opisom.
 7. Sistem ĆE prikazivati UI na srpskom (latinica), datume `dd.MM.yyyy.`, vreme 24h, vremensku zonu Europe/Belgrade i decimalni zarez.
@@ -550,7 +550,7 @@ Kriterijumi prihvatanja:
 
 ### REQ-44 — Chat ekipe i online status
 **Kao** član, **želim** da se dopisujem sa ekipom u aplikaciji i vidim ko je online.
-**Izvor:** FR-31, BR-41, NFR-27, P-26
+**Izvor:** FR-31, BR-41, NFR-27, P-26, P-28
 
 1. AKO korisnik nije prijavljen, ONDA sistem NEĆE prikazati chat ni podatke o tome ko je online (API vraća 401).
 2. KADA član pošalje poruku dužine 1–1000 znakova, ONDA sistem ĆE je sačuvati i odmah dostaviti svim članovima sa otvorenom aplikacijom.
@@ -558,6 +558,9 @@ Kriterijumi prihvatanja:
 4. Sistem ĆE prikazivati broj nepročitanih tuđih poruka uz stavku „Chat” u meniju.
 5. KADA autor ili admin obriše poruku, ONDA sistem ĆE je ukloniti kod svih članova; brisanje tuđe poruke ĆE se upisati u audit log.
 6. AKO član pošalje više od 5 poruka u 10 s, ONDA sistem ĆE odbiti poruku (429).
+7. KADA član pošalje poruku, ONDA sistem ĆE poslati Web Push obaveštenje (autor i do 180 znakova teksta) na uređaje ostalih članova koji su uključili obaveštenja, osim članovima koji u poslednjih 40 s imaju aplikaciju vidljivu na nekom uređaju.
+8. AKO push servis javi da pretplata više ne postoji (404/410), ONDA sistem ĆE je obrisati; KADA se član odjavi sa uređaja, ONDA sistem ĆE ukloniti pretplatu tog uređaja.
+9. Sistem ĆE prihvatati pretplate samo za push servise pregledača (Google, Apple, Mozilla, Microsoft) preko HTTPS-a.
 
 ### REQ-45 — Neuplaćen tiket, napomena na kolu i upozorenje
 **Kao** admin, **želim** da označim kolo čiji tiket nije uplaćen i da izreknem blažu meru, **kako bi** bilans bio tačan, a propust zabeležen.

@@ -4,6 +4,7 @@ import type { ChatMessagesResponse, ChatStateResponse, Me } from '@api';
 import ChatPage from './ChatPage';
 import { Layout } from '../components/Layout';
 import { mergeMessages } from '../api/chat';
+import { isEmojiOnly } from '../components/EmojiPicker';
 import { formatAgo } from '../lib/format';
 import { MEMBERS, calledPaths, mockFetch, renderWithProviders } from '../test/utils';
 
@@ -78,6 +79,30 @@ describe('EKR-15 — chat (FR-31)', () => {
     await waitFor(() => expect(input).toHaveValue(''));
   });
 
+  it('inserts emoji from the picker and shows emoji-only messages large', async () => {
+    mockFetch({
+      '/auth/me': { me: TOZ_ME },
+      '/members': { members: MEMBERS },
+      '/chat/state': state,
+      '/chat/read': state,
+      '/chat/messages': { messages: [...messages.messages, { id: 3, memberId: 1, body: '🔥🔥', createdAt: new Date().toISOString() }], hasMore: false },
+    });
+    renderWithProviders(<ChatPage />);
+    expect((await screen.findByText('🔥🔥')).closest('.chat-bubble')).toHaveClass('is-emoji');
+    expect(screen.getByText('Može 🔥').closest('.chat-bubble')).not.toHaveClass('is-emoji');
+
+    const input = screen.getByLabelText('Poruka');
+    fireEvent.change(input, { target: { value: 'Ajmo ' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Smajliji' }));
+    fireEvent.click(screen.getByRole('button', { name: '🏀' }));
+    expect(input).toHaveValue('Ajmo 🏀');
+    // The picked emoji shows up under "recently used" next time.
+    fireEvent.click(screen.getByRole('button', { name: 'Smajliji' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Smajliji' }));
+    expect(screen.getByRole('region', { name: 'Skoro korišćeni' })).toBeInTheDocument();
+    expect(document.documentElement).toHaveClass('chat-open');
+  });
+
   it('the Chat menu item with the unread count exists only for members', async () => {
     mockFetch({ '/auth/me': { me: TOZ_ME }, '/members': { members: MEMBERS }, '/chat/state': state });
     const member = renderWithProviders(<Layout />);
@@ -94,6 +119,14 @@ describe('EKR-15 — chat (FR-31)', () => {
 });
 
 describe('chat helpers', () => {
+  it('detects emoji-only messages', () => {
+    expect(isEmojiOnly('😂')).toBe(true);
+    expect(isEmojiOnly(' 👍🏻 🔥 ')).toBe(true);
+    expect(isEmojiOnly('🔥🔥🔥🔥')).toBe(false);
+    expect(isEmojiOnly('Može 🔥')).toBe(false);
+    expect(isEmojiOnly('123')).toBe(false);
+  });
+
   it('merges messages by id, oldest first', () => {
     const a = { id: 2, memberId: 1, body: 'b', createdAt: '' };
     const b = { id: 1, memberId: 1, body: 'a', createdAt: '' };

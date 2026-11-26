@@ -11,6 +11,7 @@ import {
 } from '../api/queries';
 import { useAuth } from '../auth/AuthContext';
 import { LogoutButton } from '../components/Layout';
+import { PushSettings } from '../components/PushSettings';
 import { useMemberList } from '../components/MemberName';
 import { Card, Modal, MutationError, QueryView } from '../components/ui';
 import { formatDateTime } from '../lib/format';
@@ -319,6 +320,9 @@ export default function SettingsPage() {
         </p>
         <DisplayNameForm member={{ id: me.memberId, displayName: me.displayName }} />
         <LogoutButton />
+      </Card>
+      <Card title="Obaveštenja">
+        <PushSettings />
       </Card>
       <Card title="Promena lozinke">
         <ChangePasswordForm />

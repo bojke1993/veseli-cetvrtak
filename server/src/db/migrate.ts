@@ -6,6 +6,7 @@ import * as m003 from './migrations/003_sanctions.js';
 import * as m004 from './migrations/004_boxscore.js';
 import * as m005 from './migrations/005_chat.js';
 import * as m006 from './migrations/006_round_note_notice.js';
+import * as m007 from './migrations/007_push.js';
 
 /** Migrations are registered in code so they work identically from src (tsx) and dist (node). */
 const migrations: Record<string, Migration> = {
@@ -15,6 +16,7 @@ const migrations: Record<string, Migration> = {
   '004_boxscore': m004,
   '005_chat': m005,
   '006_round_note_notice': m006,
+  '007_push': m007,
 };
 
 const provider: MigrationProvider = {

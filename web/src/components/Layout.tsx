@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { useEffect, type ReactNode } from 'react';
 import { Link, NavLink, Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAdminTasks, useLogout } from '../api/queries';
 import { useChatState } from '../api/chat';
@@ -6,6 +6,7 @@ import { useChatStream } from '../hooks/useChatStream';
 import { useAuth } from '../auth/AuthContext';
 import { useConnection } from '../hooks/LiveContext';
 import { ThemeToggle } from './ThemeToggle';
+import { disablePush } from '../lib/push';
 import { LoginButton } from './ui';
 
 const PRIMARY = [
@@ -43,7 +44,10 @@ function ConnectionBadge() {
 export function LogoutButton({ className = 'btn' }: { className?: string }) {
   const logout = useLogout();
   return (
-    <button type="button" className={className} onClick={() => logout.mutate()} disabled={logout.isPending}>
+    <button type="button" className={className} onClick={() => {
+        // This device should stop getting the member's chat notifications.
+        void disablePush().finally(() => logout.mutate());
+      }} disabled={logout.isPending}>
       Odjavi se
     </button>
   );
@@ -58,6 +62,11 @@ export function Layout() {
   useChatStream(chatEnabled ? me.memberId : null);
   const chat = useChatState(chatEnabled);
   const unread = chat.data?.unread ?? 0;
+  // Unread count in the browser tab title, e.g. "(2) Veseli četvrtak".
+  useEffect(() => {
+    const base = document.title.replace(/^\(\d+\+?\) /, '');
+    document.title = unread > 0 ? `(${unread > 99 ? '99+' : unread}) ${base}` : base;
+  }, [unread]);
   const primary = me ? [...PRIMARY, { to: '/chat', label: 'Chat', icon: '💬', end: false }] : PRIMARY;
 
   if (me?.mustChangePassword && loc.pathname !== '/lozinka') {

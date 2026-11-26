@@ -472,6 +472,7 @@ Povučeno odlukom tima (P-20): prva verzija nema obaveštenja van aplikacije (pu
 - KP1: Gost ne vidi chat ni u meniju; API vraća 401 bez prijave.
 - KP2: Online status se menja najkasnije 30 s posle zatvaranja aplikacije; offline član ima „viđen pre …”.
 - KP3: Broj nepročitanih (tuđih) poruka prikazuje se uz stavku „Chat” u meniju i nestaje kada član otvori chat.
+- KP4 (P-28): Član koji je na uređaju uključio obaveštenja dobija push za tuđu poruku dok aplikacija nije otvorena; dok je gleda, čuje samo zvuk. Klik na obaveštenje otvara chat.
 - KP4: Najviše 5 poruka u 10 s po članu; prazna poruka i poruka duža od 1000 znakova se odbijaju.
 
 ## FR-32 — Neuplaćen tiket, napomena na kolu i upozorenje

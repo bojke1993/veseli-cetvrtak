@@ -12,7 +12,7 @@
 
 ## 9.3 Prikaz na telefonu i upotrebljivost
 - **NFR-07 — Mobile-first.** Svi ekrani potpuno funkcionalni na širini od 360 px; bez horizontalnog skrolovanja stranice (osim tabela u sopstvenom kontejneru). Dodirne površine ≥ 44×44 px.
-- **NFR-08 — PWA.** Aplikacija ima web app manifest i ikonice, pa se može dodati na početni ekran telefona. Offline keš nije deo prve verzije.
+- **NFR-08 — PWA.** Aplikacija ima web app manifest i ikonice, pa se može dodati na početni ekran telefona. Service worker (`sw.js`) služi samo za push obaveštenja chata (P-28); offline keš nije deo prve verzije.
 - **NFR-09 — Brz unos.** Admin može da unese kompletno kolo (4 tipa + tiket) za ≤ 2 minuta na telefonu; numerička tastatura za granicu, uplatu i kvotu.
 - **NFR-10 — Pristupačnost.** Statusi se ne prenose samo bojom (ikonica + tekst); kontrast prema WCAG 2.1 AA; ikonice ❄/🔥 imaju tekstualni opis.
 - **NFR-11 — Jezik i format.** UI na srpskom (latinica); datumi `dd.MM.yyyy.`, vreme 24h, vremenska zona Europe/Belgrade; brojevi sa decimalnim zarezom (14,5) i tačkom za hiljade.
